@@ -4,10 +4,12 @@ import App from "./App";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-import IssuancePage from "./pages/IssuancePage.tsx";
+import Insurance, { FormView, FaraBimaView } from "./pages/Insurance";
+import Broker from "./pages/Broker";
 import Club from "./pages/Club";
 import Prizes from "./pages/Prizes";
 import PointsReport from "./pages/PointsReport";
+import IssuancePage from "./pages/IssuancePage";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +19,11 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "dashboard",
+        element: <Home />
+
       },
       {
         path: "club",
@@ -45,6 +52,24 @@ export const router = createBrowserRouter([
       {
         path: "issuance",
         element: <IssuancePage />,
+      },
+      {
+        path: "insurance",
+        element: <Insurance />,
+        children: [
+          {
+            index: true,
+            element: <FaraBimaView />,
+          },
+          {
+            path: "create",
+            element: <FormView />,
+          }
+        ]
+      },
+      {
+        path: "broker",
+        element: <Broker />,
       },
       {
         path: "*",

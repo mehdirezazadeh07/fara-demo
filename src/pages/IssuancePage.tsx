@@ -7,8 +7,8 @@ import { Box, Card, Typography, Button, Chip, Tabs, Tab } from "@mui/material";
 import rtlPlugin from "stylis-plugin-rtl";
 import svgPaths from "../imports/Group1261157301-1/svg-fyrp5ohfta";
 import svgPathsDb from "../imports/dashboard/svg-d48flf12a8";
-import imgAvatar from "../imports/dashboard/profile.png"
 import {useNavigate} from "react-router-dom";
+import IssuanceWizard from "../components/Issuance/IssuanceWizard";
 
 const cacheRTL = createCache({
   key: "muirtl-ip",
@@ -23,11 +23,11 @@ const theme = createTheme({
     error: { main: "#ea1017" },
     background: { default: "#f5f5f5", paper: "#ffffff" },
   },
-  typography: { fontFamily: "'Vazirmatn', sans-serif" },
   shape: { borderRadius: 12 },
+  typography: { fontFamily: "'IranSans', Tahoma, sans-serif" },
   components: {
     MuiButton: {
-      styleOverrides: { root: { textTransform: "none", fontFamily: "'Vazirmatn', sans-serif" } },
+      styleOverrides: { root: { textTransform: "none", fontFamily: "'IranSans', Tahoma, sans-serif" } },
     },
   },
 });
@@ -42,54 +42,6 @@ const c = {
   border: "rgba(0,0,0,0.08)",
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Header (same as Dashboard)
-// ─────────────────────────────────────────────────────────────────────────────
-function HeaderProfile() {
-  return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: "16px", height: "55.398px", flexShrink: 0 }}>
-      <Box sx={{ width: 40, height: 40, borderRadius: "50%", bgcolor: "#fafafa", border: "3px solid #f5f5f5", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-        <img src={imgAvatar} alt="" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover" }} />
-      </Box>
-      <Box sx={{ position: "relative", flexShrink: 0 }}>
-        <Box sx={{ width: 40, height: 40, borderRadius: "19.875px", bgcolor: "#fafafa", border: "0.75px solid #f5f5f5", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <Box sx={{ width: 18, height: 18, position: "relative" }}>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-              <path d={svgPaths.pcc64600} stroke="#25282D" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="1.125" />
-              <path d={svgPaths.p2627d800} stroke="#25282D" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.125" />
-              <path d={svgPaths.p32ce5580} stroke="#25282D" strokeMiterlimit="10" strokeWidth="1.125" />
-            </svg>
-          </Box>
-        </Box>
-        <Box sx={{ position: "absolute", left: "32px", top: "7.19px", width: 8, height: 8 }}>
-          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="4" fill="#EA1017" /></svg>
-        </Box>
-      </Box>
-    </Box>
-  );
-}
-
-function HeaderLayerLeft() {
-  return (
-    <Box sx={{ width: "67.3px", height: "77.44px", position: "relative", flexShrink: 0 }}>
-      <svg width="67.3" height="77.44" viewBox="0 0 67.3 77.44" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-        <g clipPath="url(#clipIHL)"><path d={svgPathsDb.p2f3d4600} fill="white" /></g>
-        <defs><clipPath id="clipIHL"><rect width="67.3" height="77.44" fill="white" /></clipPath></defs>
-      </svg>
-    </Box>
-  );
-}
-
-function HeaderLayerRight() {
-  return (
-    <Box sx={{ width: "67.3px", height: "77.44px", position: "relative", flexShrink: 0 }}>
-      <svg width="67.3" height="77.44" viewBox="0 0 67.3 77.44" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-        <g clipPath="url(#clipIHR)"><path d={svgPathsDb.p1eef6e00} fill="white" /></g>
-        <defs><clipPath id="clipIHR"><rect width="67.3" height="77.44" fill="white" /></clipPath></defs>
-      </svg>
-    </Box>
-  );
-}
 
 function NavPillIcon({ paths, isActive }: { paths: React.ReactNode; isActive?: boolean }) {
   return (
@@ -263,8 +215,7 @@ function FloatingInput({ label, value, onChange, placeholder }: { label: string,
         placeholder={isFloating ? placeholder : ""}
         style={{
           width: "100%", height: "100%", border: "none", outline: "none",
-          padding: "0 16px", borderRadius: "10px",
-          fontFamily: "'Vazirmatn', sans-serif", fontSize: 16,
+          padding: "0 16px", borderRadius: "10px", fontSize: 16,
           backgroundColor: "transparent",
           textAlign: "right",
           direction: "rtl"
@@ -349,7 +300,7 @@ function QuickBuyPanel() {
             bgcolor: "#e8ebef",
             padding: "5px",
             borderRadius: "12px",
-            "& .MuiTab-root": { fontSize: 16, color: c.gray, textTransform: "none", fontFamily: "'Vazirmatn', sans-serif" },
+            "& .MuiTab-root": { fontSize: 16, color: c.gray, textTransform: "none" },
             "& .Mui-selected": { color: "#25282d !important" },
             "& .MuiTabs-indicator": { display: "none" },
           }}
@@ -361,27 +312,7 @@ function QuickBuyPanel() {
         {/* Form content */}
         <Box sx={{ width: 530, display: "flex", flexDirection: "column", gap: "32px", alignItems: "flex-end" }}>
           {activeTab === 0 ? (
-            <>
-              {/* Issuance Form */}
-              <FloatingInput label="مبلغ سرمایه‌گذاری" value={amount} onChange={setAmount} />
-              <Box sx={{ width: "100%", height: 56, bgcolor: "#edfff7", borderRadius: "10px", border: "1px solid #dedfe0", display: "flex", alignItems: "center", px: "20px" }}>
-                <InfoRow rightLabel="تعداد واحد (تقریبی)" rightValue="0" rightUnit="واحد" leftLabel="مبلغ هر واحد (تقریبی)" leftValue="10,121" leftUnit="ریال" />
-              </Box>
-              <Box sx={{ width: "100%", height: 56, bgcolor: "#edfff7", borderRadius: "10px", border: "1px solid #dedfe0", display: "flex", alignItems: "center", px: "20px" }}>
-                <InfoRow rightLabel="تعداد واحد (تقریبی)" rightValue="0" rightUnit="واحد" leftLabel="مبلغ هر واحد (تقریبی)" leftValue="10,121" leftUnit="ریال" />
-              </Box>
-              <FloatingInput label="کد معرف (اختیاری)" value={referralCode} onChange={setReferralCode} />
-
-                <Box sx={{ width: "100%", bgcolor: "#f9fafb", borderRadius: "10px", border: "1px solid #e9e9ea", p: "16px", display: "flex", gap: "12px", alignItems: "flex-start" }}>
-                    <Box sx={{ width: 20, height: 20, borderRadius: "4px", bgcolor: "#a0a0a0", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        <Typography sx={{ color: "white", fontSize: 16, fontWeight: "bold" }}>!</Typography>
-                    </Box>
-                    <Box>
-                        <Typography sx={{fontWeight: 700, mb: "4px"}}>زمان‌بندی پرداخت وجه</Typography>
-                        <Typography sx={{fontSize: 12, color: c.gray}}>سرمایه‌گذار محترم پرداخت وجه درخواست‌های ابطال متناسب با زمان ثبت در همان روز یا حداکثر تا ساعت ۱۰ روز کاری بعد واریز می‌شود.</Typography>
-                    </Box>
-                </Box>
-            </>
+            <IssuanceWizard />
           ) : (
             <>
               {/* Cancellation Form */}
@@ -406,31 +337,31 @@ function QuickBuyPanel() {
                     <Button variant="outlined" sx={{ mt: "8px", borderRadius: "8px" }}>جدول زمان‌بندی</Button>
                 </Box>
               </Box>
+
+              {/* Cancellation Legal text & Submit button */}
+              <Typography sx={{ fontSize: 16, color: "#25282d", textAlign: "left", width: 1 }}>
+                ابطال به منزله تایید{" "}
+                <span style={{ color: "#d48806", textDecoration: "underline", cursor: "pointer" }}>قوانین و مقررات</span>
+                {" "}است.
+              </Typography>
+
+              <Button
+                variant="contained"
+                sx={{
+                  width: "100%",
+                  bgcolor: `${c.red} !important`,
+                  borderRadius: "12px",
+                  height: 56,
+                  fontSize: 16,
+                  color: "white",
+                  boxShadow: "none",
+                  "&:hover": { boxShadow: "none", bgcolor: c.red }
+                }}
+              >
+                تایید و ادامه
+              </Button>
             </>
           )}
-
-          {/* Legal text & Submit button */}
-          <Typography sx={{ fontSize: 16, color: "#25282d", textAlign: "left", width: 1 }}>
-            {activeTab === 0 ? "صدور" : "ابطال"} به منزله تایید{" "}
-            <span style={{ color: "#d48806", textDecoration: "underline", cursor: "pointer" }}>قوانین و مقررات</span>
-            {" "}است.
-          </Typography>
-
-          <Button
-            variant="contained"
-            sx={{
-              width: "100%",
-              bgcolor: activeTab === 0 ? `${c.green} !important` : `${c.red} !important`,
-              borderRadius: "12px",
-              height: 56,
-              fontSize: 16,
-              color: "white",
-              boxShadow: "none",
-              "&:hover": { boxShadow: "none", bgcolor: activeTab === 0 ? c.green : c.red }
-            }}
-          >
-            تایید و ادامه
-          </Button>
         </Box>
       </Box>
     </Card>
@@ -584,7 +515,7 @@ function FundInfoTable() {
   ];
   return (
     <Card sx={{ width: "100%", borderRadius: "16px", border: `1px solid ${c.border}`, boxShadow: "0 1px 3px rgba(0,0,0,0.1)", p: "20px 24px" }}>
-      <Typography sx={{ fontSize: 16, fontWeight: 700, color: "#1d293d", textAlign: "right", mb: "12px" }}>اطلاعات صندوق</Typography>
+      <Typography sx={{ fontSize: 16, fontWeight: 700, color: "#1d293d", textAlign: "left", mb: "12px" }}>اطلاعات صندوق</Typography>
       {rows.map((row, i) => (
         <Box
           key={row.label}
@@ -594,8 +525,8 @@ function FundInfoTable() {
             borderBottom: i < rows.length - 1 ? "1px solid #f1f5f9" : "none",
           }}
         >
-          <Typography sx={{ fontSize: 14, fontWeight: 500, color: "#25282d" }}>{row.value}</Typography>
           <Typography sx={{ fontSize: 14, color: c.gray }}>{row.label}</Typography>
+            <Typography sx={{ fontSize: 14, fontWeight: 500, color: "#25282d" }}>{row.value}</Typography>
         </Box>
       ))}
     </Card>
@@ -625,7 +556,8 @@ function PriceChart() {
     <Card sx={{ width: "100%", borderRadius: "16px", border: `1px solid ${c.border}`, boxShadow: "0 1px 3px rgba(0,0,0,0.1)", p: "20px 24px" }}>
       {/* Header row */}
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: "16px" }}>
-        <Box sx={{ display: "flex", gap: "8px" }}>
+          <Typography sx={{ fontSize: 16, fontWeight: 700, color: "#1d293d" }}>نمودار قیمت صندوق</Typography>
+          <Box sx={{ display: "flex", gap: "8px" }}>
           {periods.map((p) => (
             <Chip
               key={p}
@@ -643,7 +575,7 @@ function PriceChart() {
             />
           ))}
         </Box>
-        <Typography sx={{ fontSize: 16, fontWeight: 700, color: "#1d293d" }}>نمودار قیمت صندوق</Typography>
+
       </Box>
 
       {/* SVG chart */}
@@ -702,7 +634,7 @@ function RecentTransactions() {
           <Box sx={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <Box sx={{ width: 40, height: 40, borderRadius: "12px", bgcolor: tx.iconBg, display: "flex", alignItems: "center", justifyContent: "center" }}>
                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d={tx.action === "خرید" ? "M7 17l9-9M9 8h7v7" : "M7 7l9 9M16 16H9V9"} stroke={tx.color === c.green ? "#00a63e" : "#ea1017"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d={tx.action === "خرید" ? "M7 17l9-9M9 8h7v7" : "M7 7l9 9M9 16h7V9"} stroke={tx.color === c.green ? "#00a63e" : "#ea1017"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px" }}>
@@ -761,7 +693,7 @@ function Announcements() {
 // Page root
 // ─────────────────────────────────────────────────────────────────────────────
 interface IssuancePageProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 export default function IssuancePage({ onBack }: IssuancePageProps) {
@@ -772,7 +704,7 @@ export default function IssuancePage({ onBack }: IssuancePageProps) {
   return (
     <CacheProvider value={cacheRTL}>
       <ThemeProvider theme={theme}>
-        <Box dir="rtl" sx={{ bgcolor: "#f5f5f5", minHeight: "100vh", fontFamily: "'Vazirmatn', sans-serif" }}>
+        <Box dir="rtl" sx={{ bgcolor: "#f5f5f5", minHeight: "100vh" }}>
           {/* Header */}
           <Box sx={{ pb: 1 }}>
               <PageBreadcrumb onBack={onBack}/>
