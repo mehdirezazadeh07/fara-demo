@@ -1,5 +1,6 @@
 import { Avatar, Box, Typography } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import svgPaths from "../../imports/dashboard/svg-d48flf12a8";
 
 import imgAvatar from "../../imports/dashboard/profile.png"
@@ -153,6 +154,8 @@ function NavPillActiveInvest() {
 }
 
 function HeaderNavBar() {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -162,8 +165,12 @@ function HeaderNavBar() {
       }}
     >
       <NavPillGift />
-      <NavPillShield />
-      <NavPillBag />
+      <Box onClick={() => navigate('/broker')}>
+        <NavPillBag />
+      </Box>
+      <Box onClick={() => navigate('/insurance')}>
+        <NavPillShield />
+      </Box>
       <NavPillStatusUp />
       <NavPillActiveInvest />
     </Box>
