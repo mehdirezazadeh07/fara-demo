@@ -2,6 +2,7 @@ import { useState } from "react"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Avatar, Box, Button, Card, Stack, Typography } from "@mui/material"
 import ojMellat from "../imports/dashboard/ojMellat.png"
+import { useNavigate } from "react-router-dom"
 const tabs = ["صدور و ابطالی", "درآمد ثابت"]
 
 function BarChartIcon() {
@@ -17,7 +18,7 @@ function BarChartIcon() {
 
 export default function FundCard2({logo}: any) {
   const [activeTab, setActiveTab] = useState(0)
-
+  const navigate = useNavigate();
   return (
         <Box
           dir="rtl"
@@ -115,9 +116,8 @@ export default function FundCard2({logo}: any) {
                   <Typography
                     sx={{
                       fontSize: "2rem",
-                      fontWeight: 900,
+                      fontWeight: 400,
                       color: "#16a34a",
-                      fontFamily: "inherit",
                       lineHeight: 1,
                     }}
                   >
@@ -169,6 +169,7 @@ export default function FundCard2({logo}: any) {
                 <Button
                   fullWidth
                   variant="outlined"
+                  onClick={() => navigate("/issuance")}
                   sx={{
                     borderRadius: "10px",
                     fontSize: "14px",
@@ -187,6 +188,7 @@ export default function FundCard2({logo}: any) {
                 <Button
                   fullWidth
                   variant="contained"
+                  onClick={() => navigate("/issuance")}
                   sx={{
                     borderRadius: "10px",
                     fontSize: "14px",
