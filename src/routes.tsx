@@ -4,6 +4,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import IssuancePage from "./pages/IssuancePage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "issuance",
+        element: <IssuancePage />,
       },
       {
         path: "*",
