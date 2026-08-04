@@ -3,6 +3,7 @@ import React from 'react'
 import svgPaths from "../../imports/dashboard/svg-d48flf12a8";
 
 import imgAvatar from "../../imports/dashboard/profile.png"
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // import imgDownload181 from "../imports/داشبورد/fb519101f35db837e23cc446965fb358636525ab.png";
 // import img1 from "../imports/داشبورد/3f5b81f1960918261f69ce332427702efb1e70de.png";
@@ -13,9 +14,10 @@ import imgAvatar from "../../imports/dashboard/profile.png"
 
 
 function HeaderLogo() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ width: "91.196px", height: "36.912px", position: "relative", flexShrink: 0 }}>
-      <Box sx={{ position: "absolute", top: "-10.84%", left: "-2.19%", right: "-2.19%", bottom: 0 }}>
+      <Box sx={{ position: "absolute", top: "-10.84%", left: "-2.19%", right: "-2.19%", bottom: 0, cursor: 'pointer' }} onClick={() => {navigate("/dashboard")}}>
         <svg width="95.1956" height="40.9117" viewBox="0 0 95.1956 40.9117" fill="none" style={{ display: "block", width: "100%", height: "100%" }}>
           <g filter="url(#logoFilter)">
             <path d={svgPaths.p26659080} fill="#727272" />
@@ -65,33 +67,69 @@ function HeaderLayerLeft() {
   );
 }
 
-function NavPillGift() {
+function NavPillGift({ active = false }: { active?: boolean }) {
+  const navigate = useNavigate();
+  const stroke = active ? "white" : "#6D6E71";
+
   return (
-    <Box sx={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", px: "16px", py: "12px", borderRadius: "9999px", bgcolor: "white", boxShadow: "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)", flexShrink: 0, cursor: "pointer" }}>
-      <Typography sx={{ fontSize: 14, color: "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>باشگاه مشتریان</Typography>
+    <Box
+      onClick={() => navigate("/club")}
+      sx={{
+        display: "flex",
+        gap: "8px",
+        alignItems: "center",
+        justifyContent: "center",
+        px: "16px",
+        py: "12px",
+        borderRadius: "9999px",
+        bgcolor: active ? "#f26822" : "white",
+        boxShadow: active
+          ? "0px 4px 12px rgba(242,104,34,0.7)"
+          : "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)",
+        flexShrink: 0,
+        cursor: "pointer",
+      }}
+    >
+      <Typography sx={{ fontSize: 14, color: active ? "white" : "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>باشگاه مشتریان</Typography>
       <Box sx={{ width: 20, height: 20, position: "relative" }}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
           <g id="gift">
-            <path d={svgPaths.p144eab80} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
-            <path d={svgPaths.pfbafc80} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
-            <path d={svgPaths.p1298f280} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
-            <path d={svgPaths.p25ce9900} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
-            <path d={svgPaths.p8291980} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.p144eab80} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.pfbafc80} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.p1298f280} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.p25ce9900} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.p8291980} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
           </g>
         </svg>
       </Box>
     </Box>
   );
 }
-function NavPillShield() {
+function NavPillShield({active = false}) {
+    const navigate = useNavigate();
+  const stroke = active ? "white" : "#6D6E71";
+
   return (
-    <Box sx={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", px: "16px", py: "12px", borderRadius: "9999px", bgcolor: "white", boxShadow: "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)", flexShrink: 0, cursor: "pointer" }}>
-      <Typography sx={{ fontSize: 14, color: "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>فرا بیمه</Typography>
+    <Box
+          onClick={() => navigate("/insurance")}
+
+     sx={{
+       display: "flex", gap: "8px", alignItems: "center",
+        justifyContent: "center", px: "16px", py: "12px",
+        borderRadius: "9999px",
+        flexShrink: 0, cursor: "pointer",
+        bgcolor: active ? "#f26822" : "white",
+        boxShadow: active
+          ? "0px 4px 12px rgba(242,104,34,0.7)"
+          : "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)",
+
+    }}>
+      <Typography sx={{ fontSize: 14, color: active ? "white" : "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>فرا بیمه</Typography>
       <Box sx={{ width: 20, height: 20, position: "relative" }}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
           <g id="shield-tick">
-            <path d={svgPaths.p31b37b00} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-            <path d={svgPaths.pea4ac80} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+            <path d={svgPaths.p31b37b00} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+            <path d={svgPaths.pea4ac80} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
           </g>
         </svg>
       </Box>
@@ -99,7 +137,7 @@ function NavPillShield() {
   );
 }
 
-function NavPillBag() {
+function NavPillBag({active = false}) {
   return (
     <Box sx={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", px: "16px", py: "12px", borderRadius: "9999px", bgcolor: "white", boxShadow: "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)", flexShrink: 0, cursor: "pointer" }}>
       <Typography sx={{ fontSize: 14, color: "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>سبدگردانی</Typography>
@@ -119,19 +157,30 @@ function NavPillBag() {
   );
 }
 
-function NavPillStatusUp() {
+function NavPillStatusUp({active = false}) {
+    const navigate = useNavigate();
+  const stroke = active ? "white" : "#6D6E71";
+
   return (
-    <Box sx={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", px: "16px", py: "12px", borderRadius: "9999px", bgcolor: "white", boxShadow: "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)", flexShrink: 0, cursor: "pointer" }}>
+    <Box
+          onClick={() => navigate("/broker")}
+     sx={{ display: "flex", gap: "8px", alignItems: "center",
+      justifyContent: "center", px: "16px", py: "12px", borderRadius: "9999px",
+        bgcolor: active ? "#f26822" : "white",
+        boxShadow: active
+          ? "0px 4px 12px rgba(242,104,34,0.7)"
+          : "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)",
+        flexShrink: 0, cursor: "pointer" }}>
       <Typography sx={{ fontSize: 14, color: "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>کارگزاری ملت</Typography>
       <Box sx={{ width: 20, height: 20, position: "relative" }}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
           <g id="status-up">
-            <path d="M5.73333 15.125V13.4" stroke="#6D6E71" strokeLinecap="round" strokeWidth="1.5" />
-            <path d="M10 15.125V11.675" stroke="#6D6E71" strokeLinecap="round" strokeWidth="1.5" />
-            <path d="M14.2667 15.125V9.94167" stroke="#6D6E71" strokeLinecap="round" strokeWidth="1.5" />
-            <path d={svgPaths.p1a31d680} stroke="#6D6E71" strokeLinecap="round" strokeWidth="1.5" />
-            <path d={svgPaths.p295a2890} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-            <path d={svgPaths.p1e16c800} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+            <path d="M5.73333 15.125V13.4"  stroke={stroke} strokeLinecap="round" strokeWidth="1.5" />
+            <path d="M10 15.125V11.675"  stroke={stroke} strokeLinecap="round" strokeWidth="1.5" />
+            <path d="M14.2667 15.125V9.94167"  stroke={stroke} strokeLinecap="round" strokeWidth="1.5" />
+            <path d={svgPaths.p1a31d680}  stroke={stroke} strokeLinecap="round" strokeWidth="1.5" />
+            <path d={svgPaths.p295a2890}  stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+            <path d={svgPaths.p1e16c800}  stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
           </g>
         </svg>
       </Box>
@@ -139,13 +188,32 @@ function NavPillStatusUp() {
   );
 }
 
-function NavPillActiveInvest() {
+function NavPillActiveInvest({ active = false }: { active?: boolean }) {
+  const navigate = useNavigate();
+
   return (
-    <Box sx={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", px: "16px", py: "12px", borderRadius: "9999px", bgcolor: "#f26822", boxShadow: "0px 4px 12px rgba(242,104,34,0.7)", flexShrink: 0, cursor: "pointer" }}>
-      <Typography sx={{ fontSize: 14, color: "white", whiteSpace: "nowrap", lineHeight: "24px" }}>سرمایه‌گذاری</Typography>
+    <Box
+      onClick={() => navigate("/issuance")}
+      sx={{
+        display: "flex",
+        gap: "8px",
+        alignItems: "center",
+        justifyContent: "center",
+        px: "16px",
+        py: "12px",
+        borderRadius: "9999px",
+        bgcolor: active ? "#f26822" : "white",
+        boxShadow: active
+          ? "0px 4px 12px rgba(242,104,34,0.7)"
+          : "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)",
+        flexShrink: 0,
+        cursor: "pointer",
+      }}
+    >
+      <Typography sx={{ fontSize: 14, color: active ? "white" : "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>سرمایه‌گذاری</Typography>
       <Box sx={{ width: 24, height: 24, position: "relative" }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-          <path d={svgPaths.p2c82bc00} fill="white" />
+          <path d={svgPaths.p2c82bc00} fill={active ? "white" : "#6D6E71"} />
         </svg>
       </Box>
     </Box>
@@ -153,6 +221,12 @@ function NavPillActiveInvest() {
 }
 
 function HeaderNavBar() {
+  const { pathname } = useLocation();
+  const isClub = pathname.startsWith("/club");
+  const isBroker = pathname.startsWith("/broker");
+  const isIssuance = pathname.startsWith("/issuance");
+  const isInsurance = pathname.startsWith("/insurance");
+
   return (
     <Box
       sx={{
@@ -161,11 +235,11 @@ function HeaderNavBar() {
         borderRadius: "9999px", flexShrink: 0, width: "687px",
       }}
     >
-      <NavPillGift />
-      <NavPillShield />
-      <NavPillBag />
-      <NavPillStatusUp />
-      <NavPillActiveInvest />
+      <NavPillGift active={isClub} />
+      <NavPillShield active={isInsurance} />
+      <NavPillBag active={false} />
+      <NavPillStatusUp active={isBroker} />
+      <NavPillActiveInvest active={isIssuance} />
     </Box>
   );
 }
@@ -184,6 +258,7 @@ function HeaderLayerRight() {
   );
 }
 function HeaderProfile() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: "16px", height: "55.398px", flexShrink: 0 }}>
       {/* Profile circle */}
@@ -191,10 +266,10 @@ function HeaderProfile() {
         sx={{
           width: 40, height: 40, borderRadius: "50%",
           bgcolor: "#fafafa", border: "3px solid #f5f5f5",
-          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, cursor: 'pointer'
         }}
       >
-        <Avatar src={imgAvatar} sx={{ width: 32, height: 32 }} />
+        <Avatar src={imgAvatar} sx={{ width: 32, height: 32 }} onClick={() => navigate('/profile')} />
       </Box>
       {/* Notification */}
       <Box sx={{ position: "relative", flexShrink: 0 }}>

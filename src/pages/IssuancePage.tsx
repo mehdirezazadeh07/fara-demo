@@ -693,7 +693,7 @@ function Announcements() {
 // Page root
 // ─────────────────────────────────────────────────────────────────────────────
 interface IssuancePageProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 export default function IssuancePage({ onBack }: IssuancePageProps) {
