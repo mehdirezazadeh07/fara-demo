@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from '@mui/material'
-import React from 'react'
+import { useLocation, useNavigate } from "react-router-dom";
 import svgPaths from "../../imports/dashboard/svg-d48flf12a8";
 
 import imgAvatar from "../../imports/dashboard/profile.png"
@@ -65,18 +65,38 @@ function HeaderLayerLeft() {
   );
 }
 
-function NavPillGift() {
+function NavPillGift({ active = false }: { active?: boolean }) {
+  const navigate = useNavigate();
+  const stroke = active ? "white" : "#6D6E71";
+
   return (
-    <Box sx={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", px: "16px", py: "12px", borderRadius: "9999px", bgcolor: "white", boxShadow: "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)", flexShrink: 0, cursor: "pointer" }}>
-      <Typography sx={{ fontSize: 14, color: "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>باشگاه مشتریان</Typography>
+    <Box
+      onClick={() => navigate("/club")}
+      sx={{
+        display: "flex",
+        gap: "8px",
+        alignItems: "center",
+        justifyContent: "center",
+        px: "16px",
+        py: "12px",
+        borderRadius: "9999px",
+        bgcolor: active ? "#f26822" : "white",
+        boxShadow: active
+          ? "0px 4px 12px rgba(242,104,34,0.7)"
+          : "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)",
+        flexShrink: 0,
+        cursor: "pointer",
+      }}
+    >
+      <Typography sx={{ fontSize: 14, color: active ? "white" : "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>باشگاه مشتریان</Typography>
       <Box sx={{ width: 20, height: 20, position: "relative" }}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
           <g id="gift">
-            <path d={svgPaths.p144eab80} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
-            <path d={svgPaths.pfbafc80} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
-            <path d={svgPaths.p1298f280} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
-            <path d={svgPaths.p25ce9900} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
-            <path d={svgPaths.p8291980} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.p144eab80} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.pfbafc80} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.p1298f280} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.p25ce9900} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
+            <path d={svgPaths.p8291980} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5" />
           </g>
         </svg>
       </Box>
@@ -139,13 +159,32 @@ function NavPillStatusUp() {
   );
 }
 
-function NavPillActiveInvest() {
+function NavPillActiveInvest({ active = true }: { active?: boolean }) {
+  const navigate = useNavigate();
+
   return (
-    <Box sx={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", px: "16px", py: "12px", borderRadius: "9999px", bgcolor: "#f26822", boxShadow: "0px 4px 12px rgba(242,104,34,0.7)", flexShrink: 0, cursor: "pointer" }}>
-      <Typography sx={{ fontSize: 14, color: "white", whiteSpace: "nowrap", lineHeight: "24px" }}>سرمایه‌گذاری</Typography>
+    <Box
+      onClick={() => navigate("/")}
+      sx={{
+        display: "flex",
+        gap: "8px",
+        alignItems: "center",
+        justifyContent: "center",
+        px: "16px",
+        py: "12px",
+        borderRadius: "9999px",
+        bgcolor: active ? "#f26822" : "white",
+        boxShadow: active
+          ? "0px 4px 12px rgba(242,104,34,0.7)"
+          : "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)",
+        flexShrink: 0,
+        cursor: "pointer",
+      }}
+    >
+      <Typography sx={{ fontSize: 14, color: active ? "white" : "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>سرمایه‌گذاری</Typography>
       <Box sx={{ width: 24, height: 24, position: "relative" }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-          <path d={svgPaths.p2c82bc00} fill="white" />
+          <path d={svgPaths.p2c82bc00} fill={active ? "white" : "#6D6E71"} />
         </svg>
       </Box>
     </Box>
@@ -153,6 +192,9 @@ function NavPillActiveInvest() {
 }
 
 function HeaderNavBar() {
+  const { pathname } = useLocation();
+  const isClub = pathname.startsWith("/club");
+
   return (
     <Box
       sx={{
@@ -161,11 +203,11 @@ function HeaderNavBar() {
         borderRadius: "9999px", flexShrink: 0, width: "687px",
       }}
     >
-      <NavPillGift />
+      <NavPillGift active={isClub} />
       <NavPillShield />
       <NavPillBag />
       <NavPillStatusUp />
-      <NavPillActiveInvest />
+      <NavPillActiveInvest active={!isClub} />
     </Box>
   );
 }
