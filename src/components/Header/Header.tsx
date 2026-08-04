@@ -7,8 +7,7 @@ export default function Header() {
 
   return (
     <>
-                <MainHeader />
-
+      <MainHeader />
     </>
   );
 }
