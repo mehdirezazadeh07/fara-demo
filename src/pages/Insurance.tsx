@@ -298,7 +298,7 @@ export function FormView() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-8/12 mx-auto px-4 py-8">
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
         <StepIndicator current={step} />
 
@@ -686,6 +686,10 @@ export function FormView() {
                       <span className="text-gray-500">نقص عضو حادثه</span>
                       <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
                     </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500">سرمایه هزینه‌های پزشکی حادثه</span>
+                      <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                    </div>
                   </div>
                 </div>
 
@@ -696,16 +700,16 @@ export function FormView() {
                   </div>
                   <div className="p-4 space-y-3 text-xs">
                     <div className="flex justify-between items-center pb-2 border-b border-gray-50">
-                      <span className="text-gray-500">اندوخته با سود ۱۶٪</span>
-                      <span className="font-bold text-orange-600">۲,۱۵۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      <span className="text-gray-500">اندوخته با سود علی‌الحساب ۱۶-۱۳-۱۰٪</span>
+                      <span className="font-bold text-blue-600">۱,۰۰۰,۰۰۰,۰۰۰<span className="text-[10px] text-blue-400 font-normal">ریال</span></span>
                     </div>
                     <div className="flex justify-between items-center pb-2 border-b border-gray-50">
-                      <span className="text-gray-500">پیش‌بینی اندوخته ۲۵٪</span>
-                      <span className="font-bold text-orange-600">۲,۸۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      <span className="text-gray-500">اندوخته با سود پیش‌بینی ۲۵٪</span>
+                      <span className="font-bold text-blue-600">۱,۰۰۰,۰۰۰,۰۰۰<span className="text-[10px] text-blue-400 font-normal">ریال</span></span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-500">معافیت از پرداخت حق‌بیمه</span>
-                      <span className="font-bold text-emerald-600">دارد</span>
+                      <span className="text-gray-500">اندوخته با سود پیش‌بینی ۲۲٪</span>
+                      <span className="font-bold text-blue-600">۱,۰۰۰,۰۰۰,۰۰۰<span className="text-[10px] text-grabluey-400 font-normal">ریال</span></span>
                     </div>
                   </div>
                 </div>
