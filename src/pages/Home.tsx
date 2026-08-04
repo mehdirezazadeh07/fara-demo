@@ -140,8 +140,8 @@ function OrangeBar({ height = 6 }: { height?: number }) {
   );
 }
 
-function HeroSection({ defaultOpen = false }: { defaultOpen?: boolean }) {
-    const [open, setOpen] = useState(defaultOpen);
+function HeroSection({ defaultOpen = true }: { defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
 
   return (
     <Card
