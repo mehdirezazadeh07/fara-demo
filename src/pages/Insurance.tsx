@@ -215,22 +215,19 @@ export function FaraBimaView() {
                 <p>
                   ارائه پوشش‌های بیمه‌ای و سرمایه گذاری با قابلیت تبدیل شدن به مستمری در صورت درخواست بیمه‌گذار.
                 </p>
-              </div>
-
-              <div className="flex justify-center pt-4">
-                <button
-                  onClick={() => navigate("/insurance/create")}
-                  className="px-12 py-3 rounded-xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors shadow-md"
-                >
+                <div className="flex justify-end pt-4">
+                <button onClick={() => navigate("/insurance/create")}
+                  className="px-12 py-3 rounded-xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors shadow-md">
                   شروع
                 </button>
+              </div>
               </div>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gray-900 text-white">
+                  <tr className="bg-gray-100 text-gray-700">
                     {['شماره', 'نام بیمه‌گذار', 'نوع بیمه', 'تاریخ شروع', 'تاریخ پایان', 'مبلغ (ریال)', 'وضعیت'].map((col) => (
                       <th key={col} className="px-4 py-3 text-right font-semibold whitespace-nowrap">{col}</th>
                     ))}
