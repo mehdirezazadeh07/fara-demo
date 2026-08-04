@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from '@mui/material'
-import { useLocation, useNavigate } from "react-router-dom";
+import React from 'react'
 import svgPaths from "../../imports/dashboard/svg-d48flf12a8";
 
 import imgAvatar from "../../imports/dashboard/profile.png"
@@ -208,11 +208,6 @@ function NavPillActiveInvest({ active = false }: { active?: boolean }) {
 }
 
 function HeaderNavBar() {
-  const { pathname } = useLocation();
-  const isClub = pathname.startsWith("/club");
-  const isProfile = pathname.startsWith("/profile");
-  const isIssuance = pathname.startsWith("/issuance");
-
   return (
     <Box
       sx={{
@@ -221,11 +216,11 @@ function HeaderNavBar() {
         borderRadius: "9999px", flexShrink: 0, width: "687px",
       }}
     >
-      <NavPillGift active={isClub} />
-      <NavPillShield active={isProfile} />
+      <NavPillGift />
+      <NavPillShield />
       <NavPillBag />
       <NavPillStatusUp />
-      <NavPillActiveInvest active={isIssuance} />
+      <NavPillActiveInvest />
     </Box>
   );
 }
