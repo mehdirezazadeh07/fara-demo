@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Outlet, useNavigate } from "react-router-dom";
-// import KaregozariView from './KaregozariPage'
+import { Outlet, useNavigate } from "react-router-dom"
 
 type View = 'landing' | 'history' | 'form' | 'farabima' | 'karegozari'
 
@@ -10,9 +9,10 @@ const historyData = [
   { id: 3, name: 'رضا احمدی', type: 'بیمه خودرو', start: '۱۴۰۱/۰۶/۰۱', end: '۱۴۰۲/۰۶/۰۱', amount: '۳,۲۰۰,۰۰۰', status: 'منقضی' },
   { id: 4, name: 'مریم حسینی', type: 'بیمه آتش‌سوزی', start: '۱۴۰۲/۰۵/۲۰', end: '۱۴۰۳/۰۵/۲۰', amount: '۹۵۰,۰۰۰', status: 'فعال' },
   { id: 5, name: 'امیر صادقی', type: 'بیمه عمر', start: '۱۴۰۱/۱۱/۱۰', end: '۱۴۰۲/۱۱/۱۰', amount: '۴,۱۰۰,۰۰۰', status: 'منقضی' },
-  { id: 6, name: 'زهرا موسوی', type: 'بیمه درمان', start: '۱۴۰۲/۰۸/۰۱', end: '۱۴۰۳/۰۸/۰۱', amount: '۲,۰۰۰,۰۰۰', status: 'فعال' },
+  { id: 6, name: 'زهرا موسوی', type: 'بیمه درمان', start: '۱۴۰۲/۰۸/۰۱', end: '۱۴۰۳/۰۸/۰۱', amount: '۲,۰۰۰۰,۰۰۰', status: 'فعال' },
   { id: 7, name: 'حسن رضایی', type: 'بیمه خودرو', start: '۱۴۰۲/۰۲/۱۲', end: '۱۴۰۳/۰۲/۱۲', amount: '۲,۷۵۰,۰۰۰', status: 'فعال' },
 ]
+
 const formSteps = ['شرایط و قوانین', 'مشخصات', 'اطلاعات سرمایه‌گذاری', 'اطلاعات تکمیلی']
 
 interface Beneficiary {
@@ -29,14 +29,12 @@ interface InsuranceForm {
   birthDate: string
   gender: string
   mobile: string
-  // health questions
   hasDisease: '' | 'yes' | 'no'
   diseaseDesc: string
   hasSurgery: '' | 'yes' | 'no'
   surgeryDesc: string
   hasSmoke: '' | 'yes' | 'no'
   address: string
-  // beneficiaries
   beneficiaries: Beneficiary[]
 }
 
@@ -57,15 +55,18 @@ const initialInsuranceForm: InsuranceForm = {
   beneficiaries: [emptyBeneficiary()],
 }
 
-function Navbar({ view, setView }: { view: View; setView: (v: View) => void }) {
+function Navbar({ setView }: { view: View; setView: (v: View) => void }) {
   return (
-    <nav style={{ backgroundColor: '#fff', borderBottom: '1px solid #f1f2f4' }} className="sticky top-0 z-50">
+    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src="/logo192.png" alt="logo" className="h-8 w-auto opacity-90" />
+          <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-white font-bold text-xs">
+            ما
+          </div>
+          <span className="font-bold text-gray-800 text-sm">بیمه ما</span>
         </div>
 
-        <div className="flex items-center gap-3 mx-auto">
+        <div className="flex items-center gap-2 mx-auto">
           {[
             { key: 'club', label: 'باشگاه مشتریان' },
             { key: 'farabima', label: 'فرا بیمه' },
@@ -76,8 +77,11 @@ function Navbar({ view, setView }: { view: View; setView: (v: View) => void }) {
             <button
               key={it.key}
               onClick={() => setView(it.key === 'farabima' ? 'farabima' : it.key === 'kargo' ? 'karegozari' : 'landing')}
-              className={`px-4 py-2 rounded-full text-sm font-medium shadow-sm transition-all ${it.key === 'farabima' ? 'bg-orange-500 text-white' : 'bg-white text-gray-600 border border-gray-100 hover:shadow-md'}`}
-              style={{ boxShadow: it.key === 'farabima' ? '0 4px 14px rgba(232,160,32,0.18)' : undefined }}
+              className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+                it.key === 'farabima'
+                  ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                  : 'bg-white text-gray-600 border border-gray-100 hover:bg-gray-50'
+              }`}
             >
               {it.label}
             </button>
@@ -85,9 +89,13 @@ function Navbar({ view, setView }: { view: View; setView: (v: View) => void }) {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">🔔</button>
-          <div className="w-9 h-9 rounded-full overflow-hidden">
-            <img src="https://i.pravatar.cc/40" alt="avatar" className="w-full h-full object-cover" />
+          <button className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-100">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </button>
+          <div className="w-9 h-9 rounded-full bg-gray-200 border border-gray-200 overflow-hidden flex items-center justify-center text-gray-600 font-bold text-xs">
+            کاربر
           </div>
         </div>
       </div>
@@ -97,127 +105,21 @@ function Navbar({ view, setView }: { view: View; setView: (v: View) => void }) {
 
 function HeroBanner({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
-    <div
-      style={{ background: 'linear-gradient(135deg, #E8A020 0%, #C8880A 100%)' }}
-      className="w-full relative overflow-hidden"
-    >
-      <div className="max-w-5xl mx-auto px-4 py-8 flex items-center justify-between">
-        <div className="text-white z-10">
+    <div className="w-full bg-gradient-to-r from-amber-500 to-orange-500 relative overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between relative z-10">
+        <div className="text-white">
           <h1 className="text-2xl font-bold mb-1">{title}</h1>
-          {subtitle && <p className="text-orange-100 text-sm">{subtitle}</p>}
+          {subtitle && <p className="text-orange-100 text-xs font-medium">{subtitle}</p>}
         </div>
-        <img
-          src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=300&h=150&fit=crop&auto=format"
-          alt="نمای شهر"
-          className="h-28 w-48 object-cover rounded-xl opacity-80 hidden sm:block"
-        />
+        <div className="hidden sm:flex items-center justify-center w-28 h-20 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
+          <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
       </div>
-      {/* Decorative circles */}
-      <div className="absolute -left-8 -top-8 w-32 h-32 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }} />
-      <div className="absolute left-16 bottom-0 w-20 h-20 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.05)' }} />
+      <div className="absolute -left-8 -top-8 w-32 h-32 rounded-full bg-white/5 pointer-events-none" />
+      <div className="absolute left-20 -bottom-10 w-24 h-24 rounded-full bg-white/5 pointer-events-none" />
     </div>
-  )
-}
-
-function LandingView({ setView }: { setView: (v: View) => void }) {
-  return (
-    <>
-      <HeroBanner title="فریا بیمه ما" subtitle="بهترین خدمات بیمه‌ای با کمترین هزینه برای شما و خانواده‌تان" />
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        <div className="flex flex-col sm:flex-row items-start gap-6">
-          <div className="bg-white rounded-2xl shadow-md w-full sm:w-3/5 p-6">
-            <div className="rounded-lg overflow-hidden mb-4">
-              <div className="px-4 py-3" style={{ background: 'linear-gradient(90deg,#E8A020,#C8880A)', color: '#fff', borderRadius: 8 }}>
-                <h2 className="text-xl font-bold">فریا بیمه ما</h2>
-                <p className="text-sm mt-1 text-orange-50">بهترین خدمات بیمه‌ای با کمترین هزینه</p>
-              </div>
-            </div>
-
-            <div className="text-gray-600 text-sm leading-8 space-y-3 mb-4">
-              <p>
-                فریا بیمه ما یک پلتفرم نوین در حوزه خدمات بیمه‌ای است که با هدف ارائه ساده‌ترین و سریع‌ترین روش برای دریافت انواع بیمه‌نامه راه‌اندازی شده است. ما معتقدیم که هر ایرانی باید به راحتی به خدمات بیمه‌ای باکیفیت دسترسی داشته باشد.
-              </p>
-              <p>
-                با استفاده از این پلتفرم می‌توانید در کمتر از ۱۰ دقیقه بیمه‌نامه خود را دریافت کنید. انواع بیمه‌های عمر، درمان، خودرو، آتش‌سوزی و مسئولیت در این پلتفرم در دسترس شماست.
-              </p>
-              <p>
-                تیم ما متشکل از متخصصان باسابقه در صنعت بیمه است که ۲۴ ساعته پاسخگوی نیازهای شما هستند. ما به شفافیت، سرعت و کیفیت خدمات اهمیت می‌دهیم.
-              </p>
-            </div>
-
-            <div className="mt-4 flex items-center justify-start">
-              <button
-                onClick={() => setView('form')}
-                className="px-8 py-2 rounded-lg text-white font-semibold shadow-md"
-                style={{ backgroundColor: '#111827' }}
-              >
-                شروع
-              </button>
-            </div>
-          </div>
-
-          <div className="hidden sm:block w-full sm:w-2/5">
-            <div className="bg-white rounded-2xl shadow-sm p-3 h-full flex items-center justify-center" style={{ minHeight: 220 }}>
-              <img
-                src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&h=360&fit=crop&auto=format"
-                alt="نمای شهر"
-                className="w-full h-48 object-cover rounded-lg"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  )
-}
-
-function HistoryView() {
-  return (
-    <>
-      <HeroBanner title="تاریخچه بیمه‌نامه‌ها" subtitle="لیست تمام بیمه‌نامه‌های ثبت‌شده در سیستم" />
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr style={{ backgroundColor: 'var(--primary)' }} className="text-white">
-                  {['شماره', 'نام بیمه‌گذار', 'نوع بیمه', 'تاریخ شروع', 'تاریخ پایان', 'مبلغ (ریال)', 'وضعیت'].map((col) => (
-                    <th key={col} className="px-4 py-3 text-right font-semibold whitespace-nowrap">{col}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {historyData.map((row, i) => (
-                  <tr
-                    key={row.id}
-                    className="border-b border-gray-100 hover:bg-orange-50 transition-colors"
-                    style={{ backgroundColor: i % 2 === 0 ? '#fff' : '#fafafa' }}
-                  >
-                    <td className="px-4 py-3 text-gray-500">{row.id}</td>
-                    <td className="px-4 py-3 font-medium text-gray-800">{row.name}</td>
-                    <td className="px-4 py-3 text-gray-600">{row.type}</td>
-                    <td className="px-4 py-3 text-gray-600">{row.start}</td>
-                    <td className="px-4 py-3 text-gray-600">{row.end}</td>
-                    <td className="px-4 py-3 text-gray-600">{row.amount}</td>
-                    <td className="px-4 py-3">
-                      <span
-                        className="px-2 py-0.5 rounded-full text-xs font-medium"
-                        style={{
-                          backgroundColor: row.status === 'فعال' ? '#dcfce7' : '#fee2e2',
-                          color: row.status === 'فعال' ? '#16a34a' : '#dc2626',
-                        }}
-                      >
-                        {row.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </>
   )
 }
 
@@ -226,34 +128,44 @@ function StepIndicator({ current }: { current: number }) {
   const progressWidth = current === 0 ? 0 : (current / (formSteps.length - 1)) * 100
 
   return (
-    <div className="w-full mb-8">
-      <div className="max-w-5xl mx-auto px-4" dir="rtl">
+    <div className="w-full mb-10">
+      <div className="max-w-3xl mx-auto px-4" dir="rtl">
         <div className="relative py-4">
-          <div className="absolute" style={{ right: '12.5%', width: '75%', top: '1.8rem', zIndex: 0 }}>
-            <div className="absolute inset-x-0 h-px bg-gray-200" />
-            <div className="absolute right-0 h-px bg-black" style={{ width: `${progressWidth}%` }} />
+          <div className="absolute" style={{ right: '12.5%', width: '75%', top: '2.2rem', zIndex: 0 }}>
+            <div className="absolute inset-x-0 h-0.5 bg-gray-200" />
+            <div className="absolute right-0 h-0.5 bg-gray-900 transition-all duration-300" style={{ width: `${progressWidth}%` }} />
           </div>
           <div className="grid grid-cols-4 gap-0 relative">
             {formSteps.map((label, i) => {
               const isActive = i === current
               const isCompleted = i < current
-              const circleColor = isCompleted || isActive ? '#111827' : '#f3f4f6'
-              const circleBorder = isCompleted || isActive ? '2px solid #fff' : '1px solid #e5e7eb'
-              const textColor = isCompleted || isActive ? '#fff' : '#9ca3af'
               return (
                 <div key={label} className="flex flex-col items-center text-center">
                   <div className="relative z-10">
                     <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
-                      style={{ backgroundColor: circleColor, color: textColor, border: circleBorder, boxShadow: isActive ? '0 4px 10px rgba(0,0,0,0.1)' : undefined }}
+                      className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                        isCompleted
+                          ? 'bg-gray-900 text-white'
+                          : isActive
+                          ? 'bg-gray-900 text-white ring-4 ring-gray-100'
+                          : 'bg-white text-gray-400 border border-gray-200'
+                      }`}
                     >
-                      {isCompleted ? '✓' : i + 1}
+                      {isCompleted ? (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        i + 1
+                      )}
                     </div>
                   </div>
 
-                  <div className="mt-2">
-                    <div className="text-xs" style={{ color: isActive ? 'var(--primary-dark)' : '#9ca3af', fontWeight: isActive ? 700 : 500 }}>{label}</div>
-                    <div className="text-[11px] text-gray-400 mt-1">{sublabels[i]}</div>
+                  <div className="mt-3">
+                    <div className={`text-xs ${isActive || isCompleted ? 'font-bold text-gray-900' : 'font-medium text-gray-400'}`}>
+                      {label}
+                    </div>
+                    <div className="text-[10px] text-gray-400 mt-0.5">{sublabels[i]}</div>
                   </div>
                 </div>
               )
@@ -267,74 +179,52 @@ function StepIndicator({ current }: { current: number }) {
 
 export function FaraBimaView() {
   const [tab, setTab] = useState<'info' | 'history'>('info')
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <>
-      {/* Hero */}
-      <div
-        style={{ background: 'linear-gradient(135deg, #E8A020 0%, #C8880A 100%)' }}
-        className="w-full relative overflow-hidden"
-      >
-        <div className="max-w-5xl mx-auto px-4 py-10 flex items-center justify-between">
-          <div className="text-white z-10 flex-1">
-            <button className="mb-4 border border-white/60 text-white text-xs px-4 py-1.5 rounded-full hover:bg-white/10 transition-colors">
+      <div className="w-full bg-gradient-to-r from-amber-500 to-orange-500 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-6 py-10 flex items-center justify-between relative z-10">
+          <div className="text-white flex-1">
+            <button className="mb-4 border border-white/40 bg-white/10 text-white text-xs px-4 py-1.5 rounded-full hover:bg-white/20 transition-colors backdrop-blur-sm">
               دریافت فایل راهنما
             </button>
-            <h1 className="text-3xl font-extrabold mb-2 tracking-wide">فـرا بیمـه مـا</h1>
-            <p className="text-orange-100 text-sm">صدور بیمه زندگی و مستمری از طریق اعطای تسهیلات بانکی</p>
+            <h1 className="text-3xl font-black mb-2 tracking-wide">فـرا بیمـه مـا</h1>
+            <p className="text-orange-100 text-xs">صدور بیمه زندگی و مستمری از طریق اعطای تسهیلات بانکی</p>
           </div>
-          {/* 3D-style house/shield icon */}
-          <div className="hidden sm:flex items-center justify-center w-40 h-36 relative">
-            <div className="relative">
-              {/* House shape composed of divs */}
-              <div className="text-7xl select-none" style={{ filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.25))' }}>
-                🏠
-              </div>
-              <div
-                className="absolute -bottom-1 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-lg"
-                style={{ backgroundColor: '#fff', color: 'var(--primary)' }}
-              >
-                %
-              </div>
-            </div>
+          <div className="hidden sm:flex items-center justify-center w-32 h-32 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20">
+            <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
           </div>
         </div>
-        <div className="absolute -left-8 -top-8 w-32 h-32 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.08)' }} />
-        <div className="absolute left-24 bottom-0 w-20 h-20 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.05)' }} />
       </div>
 
-      {/* Inner tab bar */}
       <div className="max-w-5xl mx-auto px-4 mt-6">
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="flex border-b border-gray-100">
             <button
               onClick={() => setTab('info')}
-              className="flex-1 py-3 text-sm font-semibold transition-colors"
-              style={{
-                color: tab === 'info' ? 'var(--primary-dark)' : '#6b7280',
-                borderBottom: tab === 'info' ? '2px solid var(--primary)' : '2px solid transparent',
-              }}
+              className={`flex-1 py-3.5 text-xs font-bold transition-colors ${
+                tab === 'info' ? 'text-orange-500 border-b-2 border-orange-500' : 'text-gray-400 hover:text-gray-600'
+              }`}
             >
               فرابیمه ما
             </button>
             <button
               onClick={() => setTab('history')}
-              className="flex-1 py-3 text-sm font-semibold transition-colors"
-              style={{
-                color: tab === 'history' ? 'var(--primary-dark)' : '#6b7280',
-                borderBottom: tab === 'history' ? '2px solid var(--primary)' : '2px solid transparent',
-              }}
+              className={`flex-1 py-3.5 text-xs font-bold transition-colors ${
+                tab === 'history' ? 'text-orange-500 border-b-2 border-orange-500' : 'text-gray-400 hover:text-gray-600'
+              }`}
             >
               تاریخچه
             </button>
           </div>
 
-          {/* Tab content */}
           {tab === 'info' ? (
-            <div className="p-6 space-y-5">
-              <h2 className="text-lg font-bold text-gray-800 text-center">ویژگی‌های طرح فرابیمه</h2>
-              <div className="text-gray-700 text-sm leading-9 text-center space-y-2 max-w-2xl mx-auto">
+            <div className="p-8 space-y-6">
+              <h2 className="text-base font-bold text-gray-800 text-center">ویژگی‌های طرح فرابیمه</h2>
+              <div className="text-gray-600 text-xs leading-7 text-center space-y-2 max-w-2xl mx-auto">
                 <p>
                   عرضه محصول مشترک بانک ملت و بیمه «ما» برای اولین‌بار در صنعت بیمه، ارائه بیمه زندگی و مستمری از طریق تسهیلات ویژه بانک ملت به صورت دیجیتال و آنلاین بدون نیاز به مراجعه حضوری؛
                 </p>
@@ -342,28 +232,25 @@ export function FaraBimaView() {
                 <p>
                   واریز تسهیلات بانکی تا سقف ۲٬۰۰۰٬۰۰۰٬۰۰۰ ریال به حساب اندوخته بیمه‌ای سرمایه‌گذار نزد شرکت بیمه ما بدون نیاز به چک و بدون نیاز به ضامن حداکثر تا ۴۸ ساعت پس از صدور بیمه‌نامه به صورت حساب اندوخته‌ای بیمه‌ای سرمایه‌گذار نزد شرکت بیمه ما؛
                 </p>
-                <p>ارائه پوشش‌های بیمه‌ای و سرمایه‌گذاری با قابلیت تبدیل شدن به مستمری در صورت درخواست بیمه‌گذار.</p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
                 {[
-                  { icon: '🏦', label: 'تسهیلات بانکی', desc: 'تا ۲ میلیارد ریال بدون ضامن' },
-                  { icon: '📋', label: 'بازپرداخت ۳۶ ماهه', desc: 'نرخ سود ۲۳ درصدی' },
-                  { icon: '⚡', label: 'ثبت آنلاین', desc: 'بدون مراجعه حضوری' },
+                  { label: 'تسهیلات بانکی', desc: 'تا ۲ میلیارد ریال بدون ضامن' },
+                  { label: 'بازپرداخت ۳۶ ماهه', desc: 'نرخ سود ۲۳ درصدی' },
+                  { label: 'ثبت آنلاین', desc: 'بدون مراجعه حضوری' },
                 ].map((item) => (
-                  <div key={item.label} className="flex flex-col items-center text-center p-4 rounded-xl" style={{ backgroundColor: 'var(--primary-light)' }}>
-                    <span className="text-2xl mb-2">{item.icon}</span>
-                    <p className="font-semibold text-gray-800 text-sm">{item.label}</p>
-                    <p className="text-gray-500 text-xs mt-0.5">{item.desc}</p>
+                  <div key={item.label} className="flex flex-col items-center text-center p-5 rounded-2xl bg-orange-50/50 border border-orange-100">
+                    <p className="font-bold text-gray-800 text-xs">{item.label}</p>
+                    <p className="text-gray-500 text-[11px] mt-1">{item.desc}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="flex justify-center pt-2">
+              <div className="flex justify-center pt-4">
                 <button
                   onClick={() => navigate("/insurance/create")}
-                  className="px-16 py-3 rounded-xl text-white font-bold text-sm hover:opacity-90 transition-opacity shadow-md"
-                  style={{ backgroundColor: '#1a1a1a' }}
+                  className="px-12 py-3 rounded-xl bg-gray-900 text-white font-bold text-xs hover:bg-gray-800 transition-colors shadow-md"
                 >
                   شروع
                 </button>
@@ -371,9 +258,9 @@ export function FaraBimaView() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs">
                 <thead>
-                  <tr style={{ backgroundColor: 'var(--primary)' }} className="text-white">
+                  <tr className="bg-gray-900 text-white">
                     {['شماره', 'نام بیمه‌گذار', 'نوع بیمه', 'تاریخ شروع', 'تاریخ پایان', 'مبلغ (ریال)', 'وضعیت'].map((col) => (
                       <th key={col} className="px-4 py-3 text-right font-semibold whitespace-nowrap">{col}</th>
                     ))}
@@ -381,11 +268,7 @@ export function FaraBimaView() {
                 </thead>
                 <tbody>
                   {historyData.map((row, i) => (
-                    <tr
-                      key={row.id}
-                      className="border-b border-gray-100 hover:bg-orange-50 transition-colors"
-                      style={{ backgroundColor: i % 2 === 0 ? '#fff' : '#fafafa' }}
-                    >
+                    <tr key={row.id} className={`border-b border-gray-50 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}>
                       <td className="px-4 py-3 text-gray-500">{row.id}</td>
                       <td className="px-4 py-3 font-medium text-gray-800">{row.name}</td>
                       <td className="px-4 py-3 text-gray-600">{row.type}</td>
@@ -393,13 +276,7 @@ export function FaraBimaView() {
                       <td className="px-4 py-3 text-gray-600">{row.end}</td>
                       <td className="px-4 py-3 text-gray-600">{row.amount}</td>
                       <td className="px-4 py-3">
-                        <span
-                          className="px-2 py-0.5 rounded-full text-xs font-medium"
-                          style={{
-                            backgroundColor: row.status === 'فعال' ? '#dcfce7' : '#fee2e2',
-                            color: row.status === 'فعال' ? '#16a34a' : '#dc2626',
-                          }}
-                        >
+                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${row.status === 'فعال' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                           {row.status}
                         </span>
                       </td>
@@ -411,670 +288,547 @@ export function FaraBimaView() {
           )}
         </div>
       </div>
-      <div className="pb-10" />
     </>
   )
 }
 
 export function FormView() {
-  const navigate = useNavigate();
-
   const [step, setStep] = useState(0)
   const [form, setForm] = useState<InsuranceForm>(initialInsuranceForm)
   const [insuredSameAsHolder, setInsuredSameAsHolder] = useState(true)
-  const [insuredPerson, setInsuredPerson] = useState({  
-    relation: 'خودم',
-    name: 'سنا',
-    lastName: 'رابطاط',
-    nationalId: '۰۰۷۸۵۴۳۲۱',
-    birthDate: '۱۳۶۵/۰۵/۱۵',
+
+  const [familyMember, setFamilyMember] = useState({
+    relation: 'فرزند',
+    nationalId: '',
+    birthDate: '',
+    name: '',
+    lastName: '',
+    gender: 'مرد',
+    mobile: '',
     job: '',
     postalCode: '',
+    address: '',
   })
 
   const setField = <K extends keyof InsuranceForm>(key: K, value: InsuranceForm[K]) =>
     setForm((f) => ({ ...f, [key]: value }))
 
-  const setBeneficiary = (idx: number, key: keyof Beneficiary, value: string) =>
-    setForm((f) => {
-      const b = f.beneficiaries.map((r, i) => i === idx ? { ...r, [key]: value } : r)
-      return { ...f, beneficiaries: b }
-    })
-
-  const addBeneficiary = () =>
-    setForm((f) => ({ ...f, beneficiaries: [...f.beneficiaries, emptyBeneficiary()] }))
-
-  const removeBeneficiary = (idx: number) =>
-    setForm((f) => ({ ...f, beneficiaries: f.beneficiaries.filter((_, i) => i !== idx) }))
-
-  const inp = (
-    value: string,
-    onChange: (v: string) => void,
-    placeholder = '',
-    type = 'text'
-  ) => (
-    <input
-      type={type}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder}
-      className="border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none w-full"
-      onFocus={(e) => (e.target.style.borderColor = 'var(--primary)')}
-      onBlur={(e) => (e.target.style.borderColor = '#e5e7eb')}
-    />
-  )
-
-  const Field = ({ label, value, onChange, placeholder, type }: {
-    label: string; value: string; onChange: (v: string) => void; placeholder?: string; type?: string
-  }) => (
-    <div className="flex flex-col gap-1">
-      <label className="text-sm font-medium text-gray-700">{label}</label>
-      {inp(value, onChange, placeholder, type)}
-    </div>
-  )
-
-  const RadioGroup = ({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) => (
-    <div className="flex flex-col gap-2">
-      <p className="text-sm font-medium text-gray-700">{label}</p>
-      <div className="flex gap-6">
-        {[{ v: 'yes', l: 'بله' }, { v: 'no', l: 'خیر' }].map(({ v, l }) => (
-          <label key={v} className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="radio"
-              name={label}
-              value={v}
-              checked={value === v}
-              onChange={() => onChange(v)}
-              className="accent-orange-500 w-4 h-4"
-            />
-            <span className="text-sm text-gray-700">{l}</span>
-          </label>
-        ))}
-      </div>
-    </div>
-  )
-
-  const canNext = step === 0 ? form.accepted : true
-
   const handleSubmit = () => {
     alert('بیمه‌نامه شما با موفقیت ثبت شد!')
-    // setView('landing')
   }
 
   return (
     <>
       <HeroBanner title="درخواست بیمه‌نامه" subtitle="مراحل دریافت بیمه‌نامه خود را طی کنید" />
-      <div className="max-w-8/12 mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-sm p-8">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
           <StepIndicator current={step} />
 
           {/* ── مرحله ۱: شرایط طرح ── */}
           {step === 0 && (
-            <div className="space-y-6">
-              <h3 className="font-bold text-red-600 text-center text-lg">شرایط طرح فرابیمه</h3>
+            <div className="space-y-6" dir="rtl">
+              <h3 className="font-bold text-red-600 text-center text-base">شرایط طرح فرابیمه</h3>
 
-              <div className="max-w-2xl mx-auto text-center text-gray-700 text-sm leading-8">
-                <p className="font-medium mb-3">شرایط و ضوابط استفاده از طرح فرابیمه عبارتند از:</p>
-                <div className="h-60 overflow-y-auto px-6 text-right" style={{ direction: 'rtl' }}>
-                  <ul className="list-inside space-y-4 text-sm text-gray-600">
+              <div className="max-w-2xl mx-auto text-gray-700 text-xs leading-7">
+                <p className="font-semibold mb-3 text-center text-gray-800">شرایط و ضوابط استفاده از طرح فرابیمه عبارتند از:</p>
+                <div className="h-56 overflow-y-auto px-4 py-2 border border-gray-100 rounded-xl bg-gray-50/50">
+                  <ul className="space-y-3 text-gray-600">
                     {[
                       'داشتن حساب فعال نزد بانک ملت.',
                       'تطابق مالکیت شماره تلفن همراه بیمه‌گذار با شماره همراه ثبت‌شده در حساب بانک ملت.',
                       'عدم وجود چک برگشتی و بدهی معوقه به شبکه بانکی.',
                       'کارت معافیت دائم یا پایان خدمت برای آقایان.',
-                      'عقد قرارداد درخواست وام به همراه امضای دیجیتال (لینک دانلود نرم‌افزار امضای دیجیتال).',
-                      'واریز تسهیلات بانکی تا سقف ۲,۰۰۰,۰۰۰,۰۰۰ ریال به حساب اندوخته بیمه‌ای سرمایه‌گذار نزد شرکت بیمه.',
+                      'عقد قرارداد درخواست وام به همراه امضای دیجیتال.',
+                      'واریز تسهیلات بانکی تا سقف ۲,۰۰۰,۰۰۰,۰۰۰ ریال به حساب اندوخته بیمه‌ای.',
                       'پرداخت منظم اقساط.'
                     ].map((it, idx) => (
-                      <li key={idx} className="text-sm">• {it}</li>
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2 shrink-0" />
+                        <span>{it}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               </div>
 
-              <div className="max-w-2xl mx-auto mt-6">
-                <div className="rounded-lg px-4 py-3 flex items-center gap-3" style={{ backgroundColor: '#FEF3C7', color: '#92400e' }}>
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center bg-yellow-200">⚠️</div>
-                  <div className="flex-1 text-sm">ادامه به منزله پذیرش شرایط فرابیمه است</div>
+              <div className="max-w-2xl mx-auto">
+                <div className="rounded-xl p-3.5 flex items-center gap-3 bg-amber-50 border border-amber-200 text-amber-800">
+                  <svg className="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <span className="text-xs font-medium">ادامه به منزله پذیرش شرایط فرابیمه است</span>
                 </div>
               </div>
 
-              <div className="max-w-2xl mx-auto mt-4 text-right">
-                <label className="flex items-center gap-3 cursor-pointer">
+              <div className="max-w-2xl mx-auto text-right">
+                <label className="flex items-center gap-2.5 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={form.accepted}
                     onChange={(e) => setField('accepted', e.target.checked)}
-                    className="w-4 h-4 accent-orange-500"
+                    className="w-4 h-4 rounded text-orange-500 focus:ring-orange-500 border-gray-300"
                   />
-                  <span className="text-sm text-gray-700">شرایط و قوانین را خوانده‌ام و قبول می‌کنم</span>
+                  <span className="text-xs font-semibold text-gray-700">شرایط و قوانین را خوانده‌ام و قبول می‌کنم</span>
                 </label>
               </div>
 
-              <div className="max-w-2xl mx-auto flex items-center justify-center gap-6 mt-6">
+              <div className="max-w-2xl mx-auto flex items-center justify-center gap-4 pt-4">
                 <button
                   onClick={() => setStep((s) => s + 1)}
                   disabled={!form.accepted}
-                  className="px-10 py-3 rounded-full text-sm font-semibold text-white shadow-md"
-                  style={{ backgroundColor: form.accepted ? '#111827' : '#d1d5db' }}
+                  className={`px-10 py-2.5 rounded-xl text-xs font-bold text-white transition-all shadow-md ${
+                    form.accepted ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-300 cursor-not-allowed'
+                  }`}
                 >
                   ادامه
                 </button>
-
-                <button
-                  // onClick={() => setView('landing')}
-                  className="px-8 py-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
-                >
+                <button className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50">
                   انصراف
                 </button>
               </div>
             </div>
           )}
 
-          {/* ── مرحله ۲: اطلاعات بیمه‌گذار ── */}
+          {/* ── مرحله ۲: مشخصات بیمه‌گذار / بیمه‌شده ── */}
           {step === 1 && (
-                <div className="space-y-10" dir="rtl">
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="space-y-6" dir="rtl">
+              <div className="text-xs font-bold text-gray-800 mb-2">اطلاعات بیمه‌گذار</div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 <div>
-                  <label className="text-xs text-gray-500 mb-2 block text-right">نام و نام خانوادگی</label>
+                  <label className="text-xs text-gray-500 mb-1.5 block">نام و نام خانوادگی</label>
                   <input
-                    value={insuredPerson.name + ' ' + insuredPerson.lastName}
+                    value="سنا رابطاط"
                     readOnly
                     disabled
-                    dir="rtl"
-                    className="w-full border border-gray-200 rounded-2xl bg-slate-100 px-4 py-3 text-sm text-right text-slate-500 shadow-sm cursor-not-allowed"
+                    className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 mb-2 block text-right">کد ملی</label>
+                  <label className="text-xs text-gray-500 mb-1.5 block">کد ملی</label>
                   <input
-                    value={insuredPerson.nationalId}
+                    value="۰۰۷۸۵۴۳۲۱"
                     disabled
-                    placeholder="۰۰۷۸۵۴۳۲۱"
-                    dir="rtl"
-                    className="w-full border border-gray-200 rounded-2xl bg-slate-100 px-4 py-3 text-sm text-right text-slate-500 shadow-sm cursor-not-allowed"
+                    className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 mb-2 block text-right">تاریخ تولد</label>
-                  <div className="relative">
-                    <input
-                      value={insuredPerson.birthDate}
-                      disabled
-                      placeholder="۱۳۶۵/۰۵/۱۵"
-                      dir="rtl"
-                      className="w-full border border-gray-200 rounded-2xl bg-slate-100 px-4 py-3 text-sm text-right text-slate-500 shadow-sm cursor-not-allowed"
-                    />
-                    <div className="absolute left-4 top-3 text-gray-400">📅</div>
-                  </div>
+                  <label className="text-xs text-gray-500 mb-1.5 block">تاریخ تولد</label>
+                  <input
+                    value="۱۳۶۵/۰۵/۱۵"
+                    disabled
+                    className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
+                  />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 <div>
-                  <label className="text-xs text-gray-500 mb-2 block text-right">شماره تلفن همراه</label>
-                  <div className="relative">
-                    <input
-                      value={form.mobile}
-                      onChange={(e) => setField('mobile', e.target.value)}
-                      placeholder="۰۹۱۲●●●●●●●"
-                      dir="rtl"
-                      className="w-full border border-gray-200 rounded-2xl bg-white px-4 py-3 pr-12 text-sm text-right shadow-sm"
-                    />
-                    <div className="absolute right-4 top-3 text-gray-400">📱</div>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-2 block text-right">شغل</label>
-                  <div className="relative">
-                    <select
-                      value={insuredPerson.job}
-                      onChange={(e) => setInsuredPerson((p) => ({ ...p, job: e.target.value }))}
-                      dir="rtl"
-                      className="w-full border border-gray-200 rounded-2xl bg-white px-4 py-3 pr-10 text-sm text-right shadow-sm appearance-none"
-                    >
-                      <option value="">انتخاب</option>
-                      <option value="کارمند">کارمند</option>
-                      <option value="آزاد">آزاد</option>
-                      <option value="بازنشسته">بازنشسته</option>
-                    </select>
-                    <div className="absolute left-4 top-3 text-gray-400">▾</div>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-2 block text-right">کد پستی</label>
+                  <label className="text-xs text-gray-500 mb-1.5 block">شماره تلفن همراه</label>
                   <input
-                    value={insuredPerson.postalCode}
-                    onChange={(e) => setInsuredPerson((p) => ({ ...p, postalCode: e.target.value }))}
+                    value={form.mobile}
+                    onChange={(e) => setField('mobile', e.target.value)}
+                    placeholder="۰۹۱۲●●●●●●●"
+                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs text-gray-500 mb-1.5 block">شغل</label>
+                  <select
+                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                  >
+                    <option value="">انتخاب کنید</option>
+                    <option value="کارمند">کارمند</option>
+                    <option value="آزاد">آزاد</option>
+                    <option value="بازنشسته">بازنشسته</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs text-gray-500 mb-1.5 block">کد پستی</label>
+                  <input
                     placeholder="کد پستی"
-                    dir="rtl"
-                    className="w-full border border-gray-200 rounded-2xl bg-white px-4 py-3 text-sm text-right shadow-sm"
+                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs text-gray-500 mb-2 block text-right">آدرس</label>
+                <label className="text-xs text-gray-500 mb-1.5 block">آدرس</label>
                 <textarea
                   value={form.address}
                   onChange={(e) => setField('address', e.target.value)}
                   rows={2}
-                  placeholder="آدرس"
-                  dir="rtl"
-                  className="w-full border border-gray-200 rounded-2xl bg-white px-4 py-3 text-sm resize-none text-right shadow-sm"
+                  placeholder="آدرس دقیق منزل یا محل کار"
+                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs resize-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                 />
               </div>
 
-              <div className="flex flex-col gap-3">
-                <div className="text-sm font-semibold text-red-600">بیمه‌نامه زندگی و مستمری را برای چه کسی می‌خواهید؟</div>
-                <div dir="ltr" className="inline-flex w-[14rem] overflow-hidden rounded-full border border-gray-200 bg-slate-100 p-0.5 text-[11px] shadow-sm">
-                  <button
-                    type="button"
-                    onClick={() => setInsuredSameAsHolder(false)}
-                    className={`flex-1 text-center px-3 py-1.5 rounded-full font-semibold transition ${!insuredSameAsHolder ? 'bg-white text-black shadow-sm' : 'text-gray-500'}`}
-                  >
-                    اعضای خانواده
-                  </button>
+              {/* سوییچ انتخاب ذینفع بیمه‌نامه */}
+              <div className="pt-4 border-t border-gray-100">
+                <div className="text-xs font-bold text-red-600 mb-3">بیمه‌نامه زندگی و مستمری را برای چه کسی می‌خواهید؟</div>
+                <div className="inline-flex rounded-xl bg-gray-100 p-1 border border-gray-200">
                   <button
                     type="button"
                     onClick={() => setInsuredSameAsHolder(true)}
-                    className={`flex-1 text-center px-3 py-1.5 rounded-full font-semibold transition ${insuredSameAsHolder ? 'bg-white text-black shadow-sm' : 'text-gray-500'}`}
+                    className={`px-5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      insuredSameAsHolder ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'
+                    }`}
                   >
                     خودم
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setInsuredSameAsHolder(false)}
+                    className={`px-5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      !insuredSameAsHolder ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'
+                    }`}
+                  >
+                    اعضای خانواده
                   </button>
                 </div>
               </div>
 
+              {/* ── بخش اعضای خانواده ── */}
               {!insuredSameAsHolder && (
-                <>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div className="p-6 border border-gray-200 bg-gray-50/50 rounded-2xl space-y-5">
+                  <div className="text-xs font-bold text-gray-800 border-b border-gray-200 pb-2">اطلاعات بیمه‌شده (عضو خانواده)</div>
+
+                  {/* بخش ۱: استعلام */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end bg-white p-4 rounded-xl border border-gray-100">
                     <div>
-                      <label className="text-xs text-gray-500 mb-2 block text-right">نسبت با بیمه‌گذار</label>
+                      <label className="text-xs text-gray-500 mb-1.5 block">کد ملی بیمه‌شده</label>
+                      <input
+                        value={familyMember.nationalId}
+                        onChange={(e) => setFamilyMember((p) => ({ ...p, nationalId: e.target.value }))}
+                        placeholder="کد ملی ۱۰ رقمی"
+                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs text-gray-500 mb-1.5 block">تاریخ تولد بیمه‌شده</label>
+                      <input
+                        value={familyMember.birthDate}
+                        onChange={(e) => setFamilyMember((p) => ({ ...p, birthDate: e.target.value }))}
+                        placeholder="۱۳۷۵/۰۱/۰۱"
+                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                      />
+                    </div>
+
+                    <button
+                      type="button"
+                      className="w-full py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold transition-colors shadow-sm"
+                    >
+                      استعلام بیمه‌شده
+                    </button>
+                  </div>
+
+                  {/* بخش ۲: فرم مشخصات کامل */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="text-xs text-gray-500 mb-1.5 block">نسبت با بیمه‌گذار</label>
                       <select
-                        value={insuredPerson.relation}
-                        onChange={(e) => setInsuredPerson((p) => ({ ...p, relation: e.target.value }))}
-                        dir="rtl"
-                        className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm bg-white text-right"
+                        value={familyMember.relation}
+                        onChange={(e) => setFamilyMember((p) => ({ ...p, relation: e.target.value }))}
+                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                       >
-                        <option>خودم</option>
-                        <option>همسر</option>
-                        <option>فرزند</option>
-                        <option>والدین</option>
+                        <option value="فرزند">فرزند</option>
+                        <option value="همسر">همسر</option>
+                        <option value="پدر">پدر</option>
+                        <option value="مادر">مادر</option>
+                        <option value="برادر">برادر</option>
+                        <option value="خواهر">خواهر</option>
                       </select>
                     </div>
 
                     <div>
-                      <label className="text-xs text-gray-500 mb-2 block text-right">نام</label>
+                      <label className="text-xs text-gray-500 mb-1.5 block">نام</label>
                       <input
-                        value={insuredPerson.name}
-                        onChange={(e) => setInsuredPerson((p) => ({ ...p, name: e.target.value }))}
+                        value={familyMember.name}
+                        onChange={(e) => setFamilyMember((p) => ({ ...p, name: e.target.value }))}
                         placeholder="نام"
-                        dir="rtl"
-                        className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm text-right"
+                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs text-gray-500 mb-2 block text-right">نام خانوادگی</label>
+                      <label className="text-xs text-gray-500 mb-1.5 block">نام خانوادگی</label>
                       <input
-                        value={insuredPerson.lastName}
-                        onChange={(e) => setInsuredPerson((p) => ({ ...p, lastName: e.target.value }))}
+                        value={familyMember.lastName}
+                        onChange={(e) => setFamilyMember((p) => ({ ...p, lastName: e.target.value }))}
                         placeholder="نام خانوادگی"
-                        dir="rtl"
-                        className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm text-right"
+                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                       />
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-4">
-                    <div>
-                      <label className="text-xs text-gray-500 mb-2 block text-right">شماره تلفن همراه</label>
-                      <div className="relative">
-                        <input
-                          value={form.mobile}
-                          onChange={(e) => setField('mobile', e.target.value)}
-                          placeholder="۰۹۱۲●●●●●●●"
-                          dir="rtl"
-                          className="w-full border border-gray-200 rounded-lg px-3 py-3 pr-12 text-sm text-right"
-                        />
-                        <div className="absolute right-4 top-3 text-gray-400">📱</div>
-                      </div>
-                    </div>
 
                     <div>
-                      <label className="text-xs text-gray-500 mb-2 block text-right">تاریخ تولد</label>
-                      <div className="relative">
-                        <input
-                          value={insuredPerson.birthDate}
-                          onChange={(e) => setInsuredPerson((p) => ({ ...p, birthDate: e.target.value }))}
-                          placeholder="تاریخ تولد"
-                          dir="rtl"
-                          className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm text-right"
-                        />
-                        <div className="absolute left-3 top-3 text-gray-400">📅</div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-xs text-gray-500 mb-2 block text-right">کد ملی</label>
-                      <input
-                        value={insuredPerson.nationalId}
-                        onChange={(e) => setInsuredPerson((p) => ({ ...p, nationalId: e.target.value }))}
-                        placeholder="کد ملی"
-                        dir="rtl"
-                        className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm text-right"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-4">
-                    <div>
-                      <label className="text-xs text-gray-500 mb-2 block text-right">شغل</label>
+                      <label className="text-xs text-gray-500 mb-1.5 block">جنسیت</label>
                       <select
-                        value={insuredPerson.job}
-                        onChange={(e) => setInsuredPerson((p) => ({ ...p, job: e.target.value }))}
-                        dir="rtl"
-                        className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm bg-white text-right"
+                        value={familyMember.gender}
+                        onChange={(e) => setFamilyMember((p) => ({ ...p, gender: e.target.value }))}
+                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                       >
-                        <option value="">انتخاب</option>
-                        <option value="کارمند">کارمند</option>
-                        <option value="آزاد">آزاد</option>
-                        <option value="بازنشسته">بازنشسته</option>
+                        <option value="مرد">مرد</option>
+                        <option value="زن">زن</option>
                       </select>
                     </div>
 
                     <div>
-                      <label className="text-xs text-gray-500 mb-2 block text-right">کد پستی</label>
+                      <label className="text-xs text-gray-500 mb-1.5 block">شماره تلفن همراه</label>
                       <input
-                        value={insuredPerson.postalCode}
-                        onChange={(e) => setInsuredPerson((p) => ({ ...p, postalCode: e.target.value }))}
-                        placeholder="کد پستی"
-                        dir="rtl"
-                        className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm text-right"
+                        value={familyMember.mobile}
+                        onChange={(e) => setFamilyMember((p) => ({ ...p, mobile: e.target.value }))}
+                        placeholder="۰۹۱۲●●●●●●●"
+                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                       />
                     </div>
 
-                    <div className="hidden sm:block" />
+                    <div>
+                      <label className="text-xs text-gray-500 mb-1.5 block">شغل</label>
+                      <input
+                        value={familyMember.job}
+                        onChange={(e) => setFamilyMember((p) => ({ ...p, job: e.target.value }))}
+                        placeholder="شغل"
+                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs text-gray-500 mb-1.5 block">کد پستی</label>
+                      <input
+                        value={familyMember.postalCode}
+                        onChange={(e) => setFamilyMember((p) => ({ ...p, postalCode: e.target.value }))}
+                        placeholder="کد پستی"
+                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label className="text-xs text-gray-500 mb-2 block text-right">آدرس</label>
+                    <label className="text-xs text-gray-500 mb-1.5 block">آدرس محل سکونت بیمه‌شده</label>
                     <textarea
-                      value={form.address}
-                      onChange={(e) => setField('address', e.target.value)}
+                      value={familyMember.address}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, address: e.target.value }))}
                       rows={2}
-                      placeholder="آدرس"
-                      dir="rtl"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm resize-none text-right"
+                      placeholder="آدرس دقیق محل سکونت بیمه‌شده"
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs resize-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                     />
                   </div>
-                </>
+                </div>
               )}
 
-              <div className="max-w-2xl mx-auto flex items-center justify-center gap-8 mt-4">
+              <div className="flex items-center justify-center gap-4 pt-4">
                 <button
                   onClick={() => setStep((s) => s + 1)}
-                  className="px-10 py-3 rounded-full text-sm font-semibold text-white shadow-md"
-                  style={{ backgroundColor: '#111827' }}
+                  className="px-10 py-2.5 rounded-xl text-xs font-bold text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-md"
                 >
                   ادامه
                 </button>
-
                 <button
-                  // onClick={() => setView('landing')}
-                  className="px-8 py-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                  onClick={() => setStep((s) => s - 1)}
+                  className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
                 >
-                  انصراف
+                  مرحله قبل
                 </button>
               </div>
             </div>
           )}
 
-          {/* ── مرحله ۳: اطلاعات سرمایه‌گذاری ── */}
+          {/* ── مرحله ۳: اطلاعات سرمایه‌گذاری (مطابق دقیق طرح) ── */}
           {step === 2 && (
-            <div className="space-y-10">
-              <div className="text-right text-sm font-medium text-gray-700">{insuredPerson.name} {insuredPerson.lastName} عزیز</div>
+            <div className="space-y-6" dir="rtl">
+              <div className="text-xs font-bold text-gray-800">
+                {insuredSameAsHolder ? 'سنا رابطاط' : `${familyMember.name || 'بیمه‌شده'} ${familyMember.lastName}`} عزیز
+              </div>
 
-              <div className="w-full">
-                <div className="w-full mx-auto" dir="rtl">
-                  <div className="rounded-full px-5 py-4 text-sm w-full relative" dir="rtl" style={{ backgroundColor: '#eef6ff', color: '#3730a3', border: '1px solid rgba(55,48,163,0.12)' }}>
-                    <div className="text-right pr-14">مبلغ تسهیلاتی که برای صدور بیمه نامه زندگی و مستمری درخواست دارید را اعلام فرمایید تا تعدات طرح فرابیمه نمایش داده شود .</div>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full" style={{ backgroundColor: 'rgba(22,163,74,0.08)' }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#3730a3" opacity="0.08" />
-                        <path d="M11 10h2v6h-2v-6zm0-4h2v2h-2V6z" fill="#3730a3" />
-                      </svg>
-                    </div>
-                  </div>
+              <div className="rounded-2xl p-4 bg-indigo-50/60 border border-indigo-100 text-indigo-900 text-xs flex items-start gap-3">
+                <svg className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>مبلغ تسهیلاتی که برای صدور بیمه نامه زندگی و مستمری درخواست دارید را اعلام فرمایید تا تعهدات طرح فرابیمه نمایش داده شود.</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div>
+                  <label className="text-xs text-gray-500 mb-1.5 block">مبلغ تسهیلاتی درخواستی (ریال)</label>
+                  <input
+                    placeholder="۲,۰۰۰,۰۰۰,۰۰۰"
+                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                  />
+                  <span className="text-[10px] text-gray-400 mt-1 block">حداکثر مبلغ دو میلیارد ریال می‌باشد</span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
-                  <div>
-                    <label className="text-xs text-gray-500 mt-2 block">مبلغ تسهیلات درخواستی (ریال)</label>
-                    <input
-                      placeholder="۲۱۰۰۰۰۰۰۰"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm bg-white"
-                    />
-                    <div className="text-xs text-gray-400 max-w-3xl mx-auto">حداکثر مبلغ دو میلیارد ریال می‌باشد</div>
-                  </div>
-
-                  <div>
-                    <label className="text-xs text-gray-500 mb-2 block">مدت بیمه‌نامه</label>
-                    <input
-                      placeholder="۳۶"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm bg-white"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-xs text-gray-500 mb-2 block">مدت بازپرداخت</label>
-                    <select className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm bg-white">
-                      <option>۳۶ ماه</option>
-                      <option>۶۰ ماه</option>
-                      <option>۱۲ ماه</option>
-                    </select>
-                    
-                  </div>
+                <div>
+                  <label className="text-xs text-gray-500 mb-1.5 block">مدت بیمه‌نامه</label>
+                  <input
+                    defaultValue="۳۶"
+                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                  />
                 </div>
 
-                
-
-                <div className="w-full mt-6">
-                  <div className="w-full mx-auto" dir="rtl">
-                    <div className="rounded-full px-5 py-4 text-sm w-full relative" dir="rtl" style={{ backgroundColor: '#f0fdf4', color: '#16a34a', border: '1px solid rgba(22,163,74,0.12)' }}>
-                      <div className="text-right pr-14">اقساط قابل پرداخت ماهانه : ۹,۸۰۰,۰۰۰ ریال معادل ۹۸۰ هزار تومان</div>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full" style={{ backgroundColor: 'rgba(22,163,74,0.08)' }}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#16a34a" opacity="0.08" />
-                          <path d="M9.29 16.29L5.7 12.7l1.41-1.41 2.18 2.18 6.59-6.59L17.7 8.7z" fill="#16a34a" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-white border border-gray-100 rounded-lg p-5 mt-5">
-                    
-                    <h4 className="text-sm font-medium mb-3">جدول پوشش ها و اندوخته بیمه نامه</h4>
-                    <div dir="rtl" className="w-full flex items-center justify-end gap-4 mt-4 flex-row-reverse">
-                      <div className="text-xs bg-gray-100 px-3 py-1 rounded-full">سن بیمه‌شده: 65 سال</div>
-                      <div className="text-xs bg-gray-100 px-3 py-1 rounded-full">سال بیمه‌ای: 1405</div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm text-gray-700 space-y-4 sm:space-y-0 mt-8">
-                      <div>
-                        <div className="flex items-center justify-end gap-3 text-xs font-semibold text-gray-500 flex-row-reverse border-r-4 pr-3" style={{ borderColor: '#2563eb' }}>
-                          <span>پوشش‌های فوت و حادثه</span>
-                        </div>
-                        <div className="mt-4 space-y-3">
-                          <div className="flex items-center justify-between text-sm text-slate-900 flex-row-reverse gap-3">
-                            <span>۱,۰۰۰,۰۰۰,۰۰۰ ریال</span>
-                            <span className="text-gray-500">سرمایه فوت به هر علت</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm text-slate-900 flex-row-reverse gap-3">
-                            <span>۱,۰۰۰,۰۰۰,۰۰۰ ریال</span>
-                            <span className="text-gray-500">سرمایه فوت در اثر حادثه</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm text-slate-900 flex-row-reverse gap-3">
-                            <span>۱,۰۰۰,۰۰۰,۰۰۰ ریال</span>
-                            <span className="text-gray-500">سرمایه نقص عضو</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm text-slate-900 flex-row-reverse gap-3">
-                            <span>۱,۰۰۰,۰۰۰,۰۰۰ ریال</span>
-                            <span className="text-gray-500">سرمایه هزینه‌های پزشکی حادثه</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="flex items-center justify-end gap-3 text-xs font-semibold text-gray-500 flex-row-reverse border-r-4 pr-3" style={{ borderColor: '#f59e0b' }}>
-                          <span>وضعیت اندوخته‌ها</span>
-                        </div>
-                        <div className="mt-4 space-y-3">
-                          <div className="flex items-center justify-between text-sm flex-row-reverse gap-3">
-                            <span className="text-blue-600">۱,۰۰۰,۰۰۰,۰۰۰ ریال</span>
-                            <span className="text-gray-500">اندوخته با سود علی‌الحساب ۱۶-۱۳-۱۰٪</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm flex-row-reverse gap-3">
-                            <span className="text-blue-600">۸۰,۰۰۰,۰۰۰ ریال</span>
-                            <span className="text-gray-500">اندوخته با سود پیش‌بینی ۲۵٪</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm flex-row-reverse gap-3">
-                            <span className="text-blue-600">۱,۰۰۰,۰۰۰,۰۰۰ ریال</span>
-                            <span className="text-gray-500">اندوخته با سود پیش‌بینی ۲۲٪</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="flex items-center justify-end gap-3 text-xs font-semibold text-gray-500 flex-row-reverse border-r-4 pr-3" style={{ borderColor: '#16a34a' }}>
-                          <span>پوشش امراض خاص</span>
-                        </div>
-                        <div className="mt-4 space-y-3">
-                          <div className="flex items-center justify-between text-sm text-slate-900 flex-row-reverse gap-3">
-                            <span>۱,۰۰۰,۰۰۰,۰۰۰ ریال</span>
-                            <span className="text-gray-500">سرمایه امراض خاص</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm text-slate-900 flex-row-reverse gap-3">
-                            <span>۱,۰۰۰,۰۰۰,۰۰۰ ریال</span>
-                            <span className="text-gray-500">سرمایه امراض خاص تکمیلی</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="max-w-3xl mx-auto flex items-center justify-between gap-8 mt-4">
-                    <button
-                      onClick={() => setStep((s) => s + 1)}
-                      className="px-8 py-3 rounded-full text-sm font-semibold text-white shadow-md"
-                      style={{ backgroundColor: '#111827' }}
-                    >
-                      ادامه
-                    </button>
-
-                    <button
-                      onClick={() => setStep((s) => s - 1)}
-                      className="px-8 py-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
-                    >
-                      مرحله قبل
-                    </button>
-                  </div>
+                <div>
+                  <label className="text-xs text-gray-500 mb-1.5 block">مدت بازپرداخت</label>
+                  <select className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none">
+                    <option>۳۶ ماه</option>
+                    <option>۶۰ ماه</option>
+                  </select>
                 </div>
+              </div>
+
+              <div className="rounded-2xl p-4 bg-emerald-50/60 border border-emerald-100 text-emerald-900 text-xs flex items-center gap-3">
+                <svg className="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="font-semibold">اقساط قابل پرداخت ماهانه : ۹,۸۰۰,۰۰۰ ریال معادل ۹۸۰ هزار تومان</span>
+              </div>
+
+              {/* کارت‌های سه گانه پوشش‌ها و اندوخته */}
+              <div className="space-y-3 pt-2">
+                <h4 className="text-xs font-bold text-gray-800">جدول پوشش‌ها و اندوخته بیمه‌نامه</h4>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  
+                  {/* کارت ۱: پوشش‌های فوت و حادثه */}
+                  <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                    <div className="bg-blue-50/70 border-b border-blue-100 p-3 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                      <span className="font-bold text-xs text-blue-900">پوشش‌های فوت و حادثه</span>
+                    </div>
+                    <div className="p-4 space-y-3 text-xs">
+                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                        <span className="text-gray-500">سرمایه فوت به هر علت</span>
+                        <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      </div>
+                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                        <span className="text-gray-500">فوت در اثر حادثه</span>
+                        <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-500">نقص عضو حادثه</span>
+                        <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* کارت ۲: پیش‌بینی اندوخته‌ها */}
+                  <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                    <div className="bg-amber-50/70 border-b border-amber-100 p-3 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+                      <span className="font-bold text-xs text-amber-900">پیش‌بینی اندوخته سرمایه‌گذاری</span>
+                    </div>
+                    <div className="p-4 space-y-3 text-xs">
+                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                        <span className="text-gray-500">اندوخته با سود ۱۶٪</span>
+                        <span className="font-bold text-orange-600">۲,۱۵۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      </div>
+                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                        <span className="text-gray-500">پیش‌بینی اندوخته ۲۵٪</span>
+                        <span className="font-bold text-orange-600">۲,۸۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-500">معافیت از پرداخت حق‌بیمه</span>
+                        <span className="font-bold text-emerald-600">دارد</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* کارت ۳: پوشش درمان و امراض خاص */}
+                  <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                    <div className="bg-emerald-50/70 border-b border-emerald-100 p-3 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                      <span className="font-bold text-xs text-emerald-900">پوشش‌های تکمیلی و درمان</span>
+                    </div>
+                    <div className="p-4 space-y-3 text-xs">
+                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                        <span className="text-gray-500">غرامت امراض خاص</span>
+                        <span className="font-bold text-gray-800">۵۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      </div>
+                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                        <span className="text-gray-500">هزینه‌ پزشکی حادثه</span>
+                        <span className="font-bold text-gray-800">۲۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-500">پوشش سرطان</span>
+                        <span className="font-bold text-gray-800">۵۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center gap-4 pt-4">
+                <button
+                  onClick={() => setStep((s) => s + 1)}
+                  className="px-10 py-2.5 rounded-xl text-xs font-bold text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-md"
+                >
+                  ادامه
+                </button>
+                <button
+                  onClick={() => setStep((s) => s - 1)}
+                  className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
+                >
+                  مرحله قبل
+                </button>
               </div>
             </div>
           )}
 
           {/* ── مرحله ۴: اطلاعات تکمیلی ── */}
           {step === 3 && (
-            <div className="space-y-10">
-              <h3 className="text-center font-semibold text-gray-800">اطلاعات تکمیلی</h3>
+            <div className="space-y-6" dir="rtl">
+              <h3 className="text-center font-bold text-gray-800 text-xs">اطلاعات تکمیلی</h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 <div>
-                  <label className="text-xs text-gray-500 mb-2 block">نام و نام خانوادگی</label>
+                  <label className="text-xs text-gray-500 mb-1.5 block">نام و نام خانوادگی بیمه‌گذار</label>
                   <input
                     defaultValue="سنا رابطاط"
                     readOnly
-                    className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm bg-gray-50"
+                    className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 mb-2 block">شماره بیمه‌نامه</label>
+                  <label className="text-xs text-gray-500 mb-1.5 block">کد معرف</label>
                   <input
-                    placeholder="مثال: ۱۲۳۴۵۶"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm"
+                    placeholder="کد معرف (اختیاری)"
+                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 mb-2 block">تاریخ صدور</label>
-                  <input
-                    placeholder="۱۴۰۳/۰۱/۰۱"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm bg-gray-50"
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                <div>
-                  <label className="text-xs text-gray-500 mb-2 block">شرکت بیمه</label>
-                  <input
-                    defaultValue="بیمه ما"
-                    readOnly
-                    className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm bg-gray-50"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-2 block">روش پرداخت</label>
-                  <select className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm bg-white">
-                    <option>آنلاین</option>
-                    <option>کارت به کارت</option>
+                  <label className="text-xs text-gray-500 mb-1.5 block">روش پرداخت</label>
+                  <select className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none">
+                    <option>کسر از درگاه تسهیلات</option>
+                    <option>پرداخت آنلاین</option>
                   </select>
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-2 block">کد معرف</label>
-                  <input
-                    placeholder="کد معرف"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm"
-                  />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs text-gray-500 mb-2 block">توضیحات تکمیلی</label>
+                <label className="text-xs text-gray-500 mb-1.5 block">توضیحات تکمیلی</label>
                 <textarea
-                  value={form.address}
-                  onChange={(e) => setField('address', e.target.value)}
                   rows={3}
-                  placeholder="در صورت نیاز توضیح دهید"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-3 text-sm resize-none"
+                  placeholder="در صورت وجود توضیح اضافی وارد نمایید"
+                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs resize-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                 />
               </div>
 
-              <div className="rounded-lg p-3 text-sm" style={{ backgroundColor: '#eef2ff', color: '#1e3a8a' }}>
-                پس از ثبت، اطلاعات نهايي توسط تیم پشتیبانی بررسی می‌شود و در صورت نیاز با شما تماس گرفته خواهد شد.
-              </div>
-
-              <div className="max-w-2xl mx-auto flex items-center justify-center gap-6 mt-4">
+              <div className="flex items-center justify-center gap-4 pt-4">
                 <button
                   onClick={handleSubmit}
-                  className="px-10 py-3 rounded-full text-sm font-semibold text-white shadow-md"
-                  style={{ backgroundColor: '#111827' }}
+                  className="px-10 py-2.5 rounded-xl text-xs font-bold text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-md"
                 >
                   ثبت نهایی
                 </button>
-
                 <button
                   onClick={() => setStep((s) => s - 1)}
-                  className="px-8 py-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                  className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
                 >
                   قبلی
                 </button>
@@ -1089,9 +843,11 @@ export function FormView() {
 }
 
 export default function Insurance() {
+  const [view, setView] = useState<View>('farabima')
+
   return (
-    <div dir="rtl" className="min-h-screen flex justify-center" style={{ backgroundColor: '#f4f5f7', fontFamily: "'Vazirmatn', sans-serif" }}>
-      <div className="w-[90vw]">
+    <div dir="rtl" className="min-h-screen bg-gray-50 font-sans text-gray-900">
+      <div className="pb-12">
         <Outlet />
       </div>
     </div>
