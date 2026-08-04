@@ -1,4 +1,4 @@
-import { Box, Button, Card, Chip, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, Chip, Container, InputBase, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -16,6 +16,7 @@ import FundCard2 from "./FundCard2";
 import ojMellat from "../imports/dashboard/ojMellat.png"
 import andokhteh from "../imports/dashboard/andokhteh.png"
 import zarin from "../imports/dashboard/zarin.png"
+import { useState } from "react";
 
 const c = {
   orange: "#f26822",
@@ -117,6 +118,10 @@ const transactions = [
   { amount: "۴۴۵٬۰۰۰٬۰۰۰ ریال", amountColor: "#00a63e", iconBg: "#f0fdf4", isPlus: true, action: "صدور - 25 واحد", date: "۱۴۰۳/۱۰/۱۵" },
   { amount: "‎−۱۷۲٬۰۰۰٬۰۰۰ ریال", amountColor: "#fb2c36", iconBg: "#fef2f2", isPlus: false, action: "ابطال - 10 واحد", date: "۱۴۰۳/۱۰/۱۵" },
   { amount: "۴۴۵٬۰۰۰٬۰۰۰ ریال", amountColor: "#00a63e", iconBg: "#f0fdf4", isPlus: true, action: "صدور - 25 واحد", date: "۱۴۰۳/۱۰/۱۵" },
+  { amount: "۴۴۵٬۰۰۰٬۰۰۰ ریال", amountColor: "#00a63e", iconBg: "#f0fdf4", isPlus: true, action: "صدور - 25 واحد", date: "۱۴۰۳/۱۰/۱۵" },
+  { amount: "‎−۱۷۲٬۰۰۰٬۰۰۰ ریال", amountColor: "#fb2c36", iconBg: "#fef2f2", isPlus: false, action: "ابطال - 10 واحد", date: "۱۴۰۳/۱۰/۱۵" },
+  { amount: "۴۴۵٬۰۰۰٬۰۰۰ ریال", amountColor: "#00a63e", iconBg: "#f0fdf4", isPlus: true, action: "صدور - 25 واحد", date: "۱۴۰۳/۱۰/۱۵" },
+  { amount: "‎−۱۷۲٬۰۰۰٬۰۰۰ ریال", amountColor: "#fb2c36", iconBg: "#fef2f2", isPlus: false, action: "ابطال - 10 واحد", date: "۱۴۰۳/۱۰/۱۵" },
   { amount: "۴۴۵٬۰۰۰٬۰۰۰ ریال", amountColor: "#00a63e", iconBg: "#f0fdf4", isPlus: true, action: "صدور - 25 واحد", date: "۱۴۰۳/۱۰/۱۵" },
   { amount: "‎−۱۷۲٬۰۰۰٬۰۰۰ ریال", amountColor: "#fb2c36", iconBg: "#fef2f2", isPlus: false, action: "ابطال - 10 واحد", date: "۱۴۰۳/۱۰/۱۵" },
 ];
@@ -463,17 +468,17 @@ function QuickActionsRow() {
           key={qa.title}
           sx={{
             flex: 1,
-            height: 78,
             borderRadius: "15px",
             border: `1px solid ${c.border}`,
             boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "flex-end",
+            alignItems: "flex-start",
             px: 2.5,
-            py: 1.875,
+            py: 2.4,
             cursor: "pointer",
+            gap: 1,
             "&:hover": { boxShadow: "0 4px 12px rgba(0,0,0,0.1)" },
           }}
         >
@@ -490,7 +495,7 @@ function TransactionsSection() {
     <Card
       sx={{
         flex: 1,
-        height: 317,
+        height: 385,
         borderRadius: "15px",
         border: `1px solid ${c.border}`,
         boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
@@ -499,7 +504,7 @@ function TransactionsSection() {
         flexDirection: "column",
       }}
     >
-      <Box sx={{ px: 2.5, py: 2, borderBottom: `1px solid ${c.border}`, display: "flex", justifyContent: "flex-end", flexShrink: 0 }}>
+      <Box sx={{ px: 2.5, py: 2, borderBottom: `1px solid ${c.border}`, display: "flex", justifyContent: "flex-start", flexShrink: 0 }}>
         <Typography sx={{ fontSize: 14, fontWeight: 700, color: c.navy }}>تراکنش در انتظار</Typography>
       </Box>
       <Box sx={{ overflowY: "auto", flex: 1 }}>
@@ -515,26 +520,6 @@ function TransactionsSection() {
               borderBottom: "1px solid #f8fafc",
             }}
           >
-            <Typography sx={{ fontSize: 12, fontWeight: 700, color: tx.amountColor, minWidth: 130 }}>
-              {tx.amount}
-            </Typography>
-            <Chip
-              label="در انتظار تایید"
-              size="small"
-              sx={{
-                bgcolor: "#fffbe6",
-                border: "0.72px solid #ffe58f",
-                color: "#d48806",
-                fontSize: 8.65,
-                height: 17,
-                "& .MuiChip-label": { px: "5.77px" },
-              }}
-            />
-            <Box sx={{ flex: 1 }} />
-            <Box sx={{ textAlign: "left" }}>
-              <Typography sx={{ fontSize: 12, fontWeight: 500, color: "#1d293d" }}>{tx.action}</Typography>
-              <Typography sx={{ fontSize: 12, color: "#90a1b9" }}>{tx.date}</Typography>
-            </Box>
             <Box
               sx={{
                 width: 28,
@@ -552,6 +537,30 @@ function TransactionsSection() {
                 : <SouthEastIcon sx={{ fontSize: 14, color: "#FB2C36" }} />
               }
             </Box>
+            <Box sx={{ textAlign: "left" }}>
+              <Typography sx={{ fontSize: 12, fontWeight: 500, color: "#1d293d" }}>{tx.action}</Typography>
+              <Typography sx={{ fontSize: 12, color: "#90a1b9" }}>{tx.date}</Typography>
+            </Box>
+
+            <Box sx={{ flex: 1 }} />
+
+            <Chip
+              label="در انتظار تایید"
+              size="small"
+              sx={{
+                bgcolor: "#fffbe6",
+                border: "0.72px solid #ffe58f",
+                color: "#d48806",
+                fontSize: 8.65,
+                height: 17,
+                "& .MuiChip-label": { px: "5.77px" },
+              }}
+            />
+            <Typography sx={{ fontSize: 12, fontWeight: 700, color: tx.amountColor, minWidth: 130 }}>
+              {tx.amount}
+            </Typography>
+
+
           </Box>
         ))}
       </Box>
@@ -560,14 +569,56 @@ function TransactionsSection() {
 }
 
 function ProfitCalculator() {
-  const tabs = ["خزانه", "آتیه", "اندوخته", "اوج"];
-  const activeTab = 3;
+  const TABS  = [
+  { id: "ooj", label: "اوج" },
+  { id: "andookhteh", label: "اندوخته" },
+  { id: "atiyeh", label: "آتیه" },
+  { id: "khazaneh", label: "خزانه" },
+]
+
+function formatPersian(n: number) {
+  return Math.round(n)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[+d])
+}
+
+function toEnDigit(s: string) {
+  return s.replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)))
+}
+
+const TAB_DATA: Record<string, { annualRate: number; monthlyRate: number }> = {
+  ooj:        { annualRate: 35, monthlyRate: 2.9 },
+  andookhteh: { annualRate: 28, monthlyRate: 2.3 },
+  atiyeh:     { annualRate: 31, monthlyRate: 2.6 },
+  khazaneh:   { annualRate: 22, monthlyRate: 1.8 },
+}
+
+  const [activeTab, setActiveTab] = useState("ooj")
+  const [amount, setAmount] = useState("۵,۰۰۰,۰۰۰")
+  const [months, setMonths] = useState("۱۲")
+
+  const rawAmount = Number(toEnDigit(amount).replace(/,/g, "")) || 0
+  const rawMonths = Number(toEnDigit(months)) || 0
+  const { annualRate, monthlyRate } = TAB_DATA[activeTab]
+
+  const monthlyReturn = (rawAmount * monthlyRate) / 100
+  const annualReturn  = (rawAmount * annualRate * rawMonths) / (100 * 12)
+
+  const handleAmount = (v: string) => {
+    const digits = toEnDigit(v).replace(/[^0-9]/g, "")
+    if (!digits) { setAmount(""); return }
+    const formatted = Number(digits)
+      .toLocaleString("en")
+      .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[+d])
+    setAmount(formatted)
+  }
 
   return (
     <Card
       sx={{
         width: 468,
-        height: 317,
+        // height: 317,
         borderRadius: "15px",
         border: `1px solid ${c.border}`,
         boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
@@ -578,82 +629,251 @@ function ProfitCalculator() {
       }}
     >
       <OrangeBar height={5} />
-      <Box sx={{ px: 2.5, py: 2, borderBottom: `1px solid ${c.border}`, display: "flex", justifyContent: "flex-end", flexShrink: 0 }}>
+      <Box sx={{ px: 2.5, py: 2, borderBottom: `1px solid ${c.border}`, display: "flex", justifyContent: "flex-start", flexShrink: 0 }}>
         <Typography sx={{ fontSize: 14, fontWeight: 700, color: c.navy }}>محاسبه‌گر سود</Typography>
       </Box>
 
-      <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: 3, flex: 1 }}>
-        {/* Segment control */}
-        <Box sx={{ bgcolor: "#e8ebef", borderRadius: "10px", p: "4px", display: "flex", gap: 0.5 }}>
-          {tabs.map((tab, i) => (
+
+        <Box
+          dir="rtl"
+          sx={{
+            background: "#f5f5f7",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            p: 2,
+          }}
+        >
+          <Box sx={{ width: "100%" }}>
+
+            {/* ── Tab Bar ── */}
             <Box
-              key={tab}
               sx={{
-                flex: 1,
-                borderRadius: "6px",
-                py: 1,
-                textAlign: "center",
-                bgcolor: i === activeTab ? "white" : "transparent",
-                boxShadow: i === activeTab ? "0 1px 6px -1px rgba(0,0,0,0.02), 0 2px 4px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04)" : "none",
-                cursor: "pointer",
+                background: "#e8e8ec",
+                borderRadius: "16px",
+                p: "5px",
+                display: "flex",
+                flexDirection: "row",
+                gap: "4px",
+                mb: 3,
               }}
             >
-              <Typography sx={{ fontSize: 14, color: i === activeTab ? c.navy : c.gray }}>{tab}</Typography>
+              {TABS.map((tab) => {
+                const active = activeTab === tab.id
+                return (
+                  <Box
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    sx={{
+                      flex: 1,
+                      textAlign: "center",
+                      py: 1,
+                      px: 1,
+                      borderRadius: "12px",
+                      cursor: "pointer",
+                      background: active ? "#fff" : "transparent",
+                      boxShadow: active
+                        ? "0 2px 8px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08)"
+                        : "none",
+                      transition: "all 0.2s ease",
+                      userSelect: "none",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: active ? 700 : 400,
+                        color: active ? "#1a1a1a" : "#888",
+                        transition: "color 0.2s ease",
+                      }}
+                    >
+                      {tab.label}
+                    </Typography>
+                  </Box>
+                )
+              })}
             </Box>
-          ))}
-        </Box>
 
-        {/* Number inputs */}
-        <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
-          {[
-            { label: "مدت سرمایه‌گذاری (ماه)", value: "12" },
-            { label: "مبلغ سرمایه‌گذاری (ریال)", value: "5000000" },
-          ].map((inp) => (
-            <Box key={inp.label} sx={{ width: 215 }}>
-              <Typography sx={{ fontSize: 11, color: "#6b7280", mb: 0.75, textAlign: "right" }}>
-                {inp.label}
-              </Typography>
+            {/* ── Input Fields ── */}
+            <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+              {/* مبلغ سرمایه‌گذاری */}
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  sx={{
+                    fontSize: "0.75rem",
+                    color: "#666",
+                    mb: 0.8,
+                    textAlign: "right",
+                  }}
+                >
+                  مبلغ سرمایه‌گذاری (ریال)
+                </Typography>
+                <Box
+                  sx={{
+                    border: "1.5px solid #e0e0e0",
+                    borderRadius: "12px",
+                    background: "#fff",
+                    px: 2,
+                    py: 1.3,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <InputBase
+                    value={amount}
+                    onChange={(e) => handleAmount(e.target.value)}
+                    inputProps={{ style: { textAlign: "right", direction: "ltr" } }}
+                    sx={{
+                      fontFamily: "inherit",
+                      fontSize: "1rem",
+                      fontWeight: 700,
+                      color: "#1a1a1a",
+                      width: "100%",
+                      "& input": { p: 0 },
+                    }}
+                  />
+                </Box>
+              </Box>
+
+              {/* مدت سرمایه‌گذاری */}
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  sx={{
+                    fontSize: "0.75rem",
+                    color: "#666",
+                    mb: 0.8,
+                    fontFamily: "inherit",
+                    textAlign: "right",
+                  }}
+                >
+                  مدت سرمایه‌گذاری (ماه)
+                </Typography>
+                <Box
+                  sx={{
+                    border: "1.5px solid #e0e0e0",
+                    borderRadius: "12px",
+                    background: "#fff",
+                    px: 2,
+                    py: 1.3,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <InputBase
+                    value={months}
+                    onChange={(e) => {
+                      const v = toEnDigit(e.target.value).replace(/[^0-9]/g, "")
+                      setMonths(v.replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[+d]))
+                    }}
+                    inputProps={{ style: { textAlign: "right", direction: "ltr" } }}
+                    sx={{
+                      fontFamily: "inherit",
+                      fontSize: "1rem",
+                      fontWeight: 700,
+                      color: "#1a1a1a",
+                      width: "100%",
+                      "& input": { p: 0 },
+                    }}
+                  />
+                </Box>
+              </Box>
+            </Stack>
+
+            {/* ── Result Card ── */}
+            <Box
+              sx={{
+                border: "1.5px solid #f97316",
+                borderRadius: "16px",
+                background: "linear-gradient(135deg, #fff8f1 0%, #fff 100%)",
+                overflow: "hidden",
+              }}
+            >
+              {/* بازدهی ماهانه */}
               <Box
                 sx={{
-                  bgcolor: "#f9fafb",
-                  borderRadius: "10px",
-                  border: "1px solid rgba(0,0,0,0.08)",
-                  px: 1.5,
-                  py: 1.25,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  px: 2.5,
+                  py: 1.8,
+                  borderBottom: "1px solid #fde8d4",
                 }}
               >
-                <Typography sx={{ fontSize: 13, fontWeight: 700, color: c.navy, textAlign: "right" }}>
-                  {inp.value}
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Box
+                    sx={{
+                      width: 4,
+                      height: 32,
+                      background: "#f97316",
+                      borderRadius: "4px",
+                      flexShrink: 0,
+                    }}
+                  />
+                  <Box>
+                    <Typography
+                      sx={{
+                        fontSize: "1rem",
+                        fontWeight: 800,
+                        color: "#f97316",
+                        fontFamily: "inherit",
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      {formatPersian(monthlyReturn / 1_000_000)} میلیون ریال
+                    </Typography>
+                  </Box>
+                </Box>
+                <Typography sx={{ fontSize: "0.85rem", color: "#444", fontFamily: "inherit", fontWeight: 600 }}>
+                  بازدهی تخمینی ماهانه
+                </Typography>
+              </Box>
+
+              {/* بازدهی سالانه */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  px: 2.5,
+                  py: 1.8,
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Box
+                    sx={{
+                      width: 4,
+                      height: 32,
+                      background: "#f97316",
+                      borderRadius: "4px",
+                      flexShrink: 0,
+                    }}
+                  />
+                  <Box>
+                    <Typography
+                      sx={{
+                        fontSize: "1rem",
+                        fontWeight: 800,
+                        color: "#f97316",
+                        fontFamily: "inherit",
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      {formatPersian(annualReturn / 1_000_000)} میلیون ریال
+                    </Typography>
+                  </Box>
+                </Box>
+                <Typography sx={{ fontSize: "0.85rem", color: "#444", fontFamily: "inherit", fontWeight: 600 }}>
+                  بازدهی تخمینی سالانه
                 </Typography>
               </Box>
             </Box>
-          ))}
+
+          </Box>
         </Box>
 
-        {/* Result */}
-        <Box
-          sx={{
-            bgcolor: "#fffbf3",
-            border: "0.5px solid #ff8037",
-            borderRadius: "15px",
-            px: 1.5,
-            py: 1,
-            display: "flex",
-            flexDirection: "column",
-            gap: 1,
-          }}
-        >
-          {[
-            { value: "۱ میلیون ریال", label: "بازدهی تخمینی ماهانه" },
-            { value: "۱ میلیون ریال", label: "بازدهی تخمینی سالانه" },
-          ].map((row) => (
-            <Box key={row.label} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <Typography sx={{ fontSize: 14, fontWeight: 700, color: "#ff8037" }}>{row.value}</Typography>
-              <Typography sx={{ fontSize: 11, color: "#6b7280" }}>{row.label}</Typography>
-            </Box>
-          ))}
-        </Box>
-      </Box>
+
     </Card>
   );
 }
@@ -676,8 +896,9 @@ export default function Home({ onIssuance }: { onIssuance?: () => void }) {
       <MyFundsSection onIssuance={onIssuance} />
       <QuickActionsRow />
       <Box sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
-        <TransactionsSection />
         <ProfitCalculator />
+        <TransactionsSection />
+
       </Box>
     </Box>
   );
