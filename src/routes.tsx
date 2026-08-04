@@ -6,6 +6,8 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Insurance, { FormView, FaraBimaView } from "./pages/Insurance";
 import Broker from "./pages/Broker";
+import Club from "./pages/Club";
+import Prizes from "./pages/Prizes";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +17,22 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "club",
+        element: <Club />,
+      },
+      {
+        path: "club/prizes",
+        element: <Prizes />,
+      },
+      {
+        path: "club/earn-points",
+        element: <Profile />,
+      },
+      {
+        path: "club/account",
+        element: <Profile />,
       },
       {
         path: "profile",
