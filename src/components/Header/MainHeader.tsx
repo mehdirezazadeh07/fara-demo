@@ -226,6 +226,7 @@ function HeaderLayerRight() {
   );
 }
 function HeaderProfile() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: "16px", height: "55.398px", flexShrink: 0 }}>
       {/* Profile circle */}
@@ -233,10 +234,10 @@ function HeaderProfile() {
         sx={{
           width: 40, height: 40, borderRadius: "50%",
           bgcolor: "#fafafa", border: "3px solid #f5f5f5",
-          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, cursor: 'pointer'
         }}
       >
-        <Avatar src={imgAvatar} sx={{ width: 32, height: 32 }} />
+        <Avatar src={imgAvatar} sx={{ width: 32, height: 32 }} onClick={() => navigate('/profile')} />
       </Box>
       {/* Notification */}
       <Box sx={{ position: "relative", flexShrink: 0 }}>
