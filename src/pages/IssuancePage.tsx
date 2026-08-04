@@ -8,6 +8,7 @@ import rtlPlugin from "stylis-plugin-rtl";
 import svgPaths from "../imports/Group1261157301-1/svg-fyrp5ohfta";
 import svgPathsDb from "../imports/dashboard/svg-d48flf12a8";
 import {useNavigate} from "react-router-dom";
+import IssuanceWizard from "../components/Issuance/IssuanceWizard";
 
 const cacheRTL = createCache({
   key: "muirtl-ip",
@@ -23,9 +24,10 @@ const theme = createTheme({
     background: { default: "#f5f5f5", paper: "#ffffff" },
   },
   shape: { borderRadius: 12 },
+  typography: { fontFamily: "'IranSans', Tahoma, sans-serif" },
   components: {
     MuiButton: {
-      styleOverrides: { root: { textTransform: "none" } },
+      styleOverrides: { root: { textTransform: "none", fontFamily: "'IranSans', Tahoma, sans-serif" } },
     },
   },
 });
@@ -310,27 +312,7 @@ function QuickBuyPanel() {
         {/* Form content */}
         <Box sx={{ width: 530, display: "flex", flexDirection: "column", gap: "32px", alignItems: "flex-end" }}>
           {activeTab === 0 ? (
-            <>
-              {/* Issuance Form */}
-              <FloatingInput label="مبلغ سرمایه‌گذاری" value={amount} onChange={setAmount} />
-              <Box sx={{ width: "100%", height: 56, bgcolor: "#edfff7", borderRadius: "10px", border: "1px solid #dedfe0", display: "flex", alignItems: "center", px: "20px" }}>
-                <InfoRow rightLabel="تعداد واحد (تقریبی)" rightValue="0" rightUnit="واحد" leftLabel="مبلغ هر واحد (تقریبی)" leftValue="10,121" leftUnit="ریال" />
-              </Box>
-              <Box sx={{ width: "100%", height: 56, bgcolor: "#edfff7", borderRadius: "10px", border: "1px solid #dedfe0", display: "flex", alignItems: "center", px: "20px" }}>
-                <InfoRow rightLabel="تعداد واحد (تقریبی)" rightValue="0" rightUnit="واحد" leftLabel="مبلغ هر واحد (تقریبی)" leftValue="10,121" leftUnit="ریال" />
-              </Box>
-              <FloatingInput label="کد معرف (اختیاری)" value={referralCode} onChange={setReferralCode} />
-
-                <Box sx={{ width: "100%", bgcolor: "#f9fafb", borderRadius: "10px", border: "1px solid #e9e9ea", p: "16px", display: "flex", gap: "12px", alignItems: "flex-start" }}>
-                    <Box sx={{ width: 20, height: 20, borderRadius: "4px", bgcolor: "#a0a0a0", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        <Typography sx={{ color: "white", fontSize: 16, fontWeight: "bold" }}>!</Typography>
-                    </Box>
-                    <Box>
-                        <Typography sx={{fontWeight: 700, mb: "4px"}}>زمان‌بندی پرداخت وجه</Typography>
-                        <Typography sx={{fontSize: 12, color: c.gray}}>سرمایه‌گذار محترم پرداخت وجه درخواست‌های ابطال متناسب با زمان ثبت در همان روز یا حداکثر تا ساعت ۱۰ روز کاری بعد واریز می‌شود.</Typography>
-                    </Box>
-                </Box>
-            </>
+            <IssuanceWizard />
           ) : (
             <>
               {/* Cancellation Form */}
@@ -355,31 +337,31 @@ function QuickBuyPanel() {
                     <Button variant="outlined" sx={{ mt: "8px", borderRadius: "8px" }}>جدول زمان‌بندی</Button>
                 </Box>
               </Box>
+
+              {/* Cancellation Legal text & Submit button */}
+              <Typography sx={{ fontSize: 16, color: "#25282d", textAlign: "left", width: 1 }}>
+                ابطال به منزله تایید{" "}
+                <span style={{ color: "#d48806", textDecoration: "underline", cursor: "pointer" }}>قوانین و مقررات</span>
+                {" "}است.
+              </Typography>
+
+              <Button
+                variant="contained"
+                sx={{
+                  width: "100%",
+                  bgcolor: `${c.red} !important`,
+                  borderRadius: "12px",
+                  height: 56,
+                  fontSize: 16,
+                  color: "white",
+                  boxShadow: "none",
+                  "&:hover": { boxShadow: "none", bgcolor: c.red }
+                }}
+              >
+                تایید و ادامه
+              </Button>
             </>
           )}
-
-          {/* Legal text & Submit button */}
-          <Typography sx={{ fontSize: 16, color: "#25282d", textAlign: "left", width: 1 }}>
-            {activeTab === 0 ? "صدور" : "ابطال"} به منزله تایید{" "}
-            <span style={{ color: "#d48806", textDecoration: "underline", cursor: "pointer" }}>قوانین و مقررات</span>
-            {" "}است.
-          </Typography>
-
-          <Button
-            variant="contained"
-            sx={{
-              width: "100%",
-              bgcolor: activeTab === 0 ? `${c.green} !important` : `${c.red} !important`,
-              borderRadius: "12px",
-              height: 56,
-              fontSize: 16,
-              color: "white",
-              boxShadow: "none",
-              "&:hover": { boxShadow: "none", bgcolor: activeTab === 0 ? c.green : c.red }
-            }}
-          >
-            تایید و ادامه
-          </Button>
         </Box>
       </Box>
     </Card>
@@ -652,7 +634,7 @@ function RecentTransactions() {
           <Box sx={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <Box sx={{ width: 40, height: 40, borderRadius: "12px", bgcolor: tx.iconBg, display: "flex", alignItems: "center", justifyContent: "center" }}>
                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d={tx.action === "خرید" ? "M7 17l9-9M9 8h7v7" : "M7 7l9 9M16 16H9V9"} stroke={tx.color === c.green ? "#00a63e" : "#ea1017"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d={tx.action === "خرید" ? "M7 17l9-9M9 8h7v7" : "M7 7l9 9M9 16h7V9"} stroke={tx.color === c.green ? "#00a63e" : "#ea1017"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px" }}>
