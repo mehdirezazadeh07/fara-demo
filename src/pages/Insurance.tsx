@@ -103,26 +103,6 @@ function Navbar({ setView }: { view: View; setView: (v: View) => void }) {
   )
 }
 
-function HeroBanner({ title, subtitle }: { title: string; subtitle?: string }) {
-  return (
-    <div className="w-full bg-gradient-to-r from-amber-500 to-orange-500 relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between relative z-10">
-        <div className="text-white">
-          <h1 className="text-2xl font-bold mb-1">{title}</h1>
-          {subtitle && <p className="text-orange-100 text-xs font-medium">{subtitle}</p>}
-        </div>
-        <div className="hidden sm:flex items-center justify-center w-28 h-20 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
-          <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
-        </div>
-      </div>
-      <div className="absolute -left-8 -top-8 w-32 h-32 rounded-full bg-white/5 pointer-events-none" />
-      <div className="absolute left-20 -bottom-10 w-24 h-24 rounded-full bg-white/5 pointer-events-none" />
-    </div>
-  )
-}
-
 function StepIndicator({ current }: { current: number }) {
   const sublabels = ['طرح فرابیمه', 'بیمه‌گذار / بیمه شده', 'بیمه‌نامه', 'اطلاعات تکمیلی']
   const progressWidth = current === 0 ? 0 : (current / (formSteps.length - 1)) * 100
@@ -318,527 +298,517 @@ export function FormView() {
   }
 
   return (
-    <>
-      <HeroBanner title="درخواست بیمه‌نامه" subtitle="مراحل دریافت بیمه‌نامه خود را طی کنید" />
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
-          <StepIndicator current={step} />
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <StepIndicator current={step} />
 
-          {/* ── مرحله ۱: شرایط طرح ── */}
-          {step === 0 && (
-            <div className="space-y-6" dir="rtl">
-              <h3 className="font-bold text-red-600 text-center text-base">شرایط طرح فرابیمه</h3>
+        {/* ── مرحله ۱: شرایط طرح ── */}
+        {step === 0 && (
+          <div className="space-y-6" dir="rtl">
+            <h3 className="font-bold text-red-600 text-center text-base">شرایط طرح فرابیمه</h3>
 
-              <div className="max-w-2xl mx-auto text-gray-700 text-xs leading-7">
-                <p className="font-semibold mb-3 text-center text-gray-800">شرایط و ضوابط استفاده از طرح فرابیمه عبارتند از:</p>
-                <div className="h-56 overflow-y-auto px-4 py-2 border border-gray-100 rounded-xl bg-gray-50/50">
-                  <ul className="space-y-3 text-gray-600">
-                    {[
-                      'داشتن حساب فعال نزد بانک ملت.',
-                      'تطابق مالکیت شماره تلفن همراه بیمه‌گذار با شماره همراه ثبت‌شده در حساب بانک ملت.',
-                      'عدم وجود چک برگشتی و بدهی معوقه به شبکه بانکی.',
-                      'کارت معافیت دائم یا پایان خدمت برای آقایان.',
-                      'عقد قرارداد درخواست وام به همراه امضای دیجیتال.',
-                      'واریز تسهیلات بانکی تا سقف ۲,۰۰۰,۰۰۰,۰۰۰ ریال به حساب اندوخته بیمه‌ای.',
-                      'پرداخت منظم اقساط.'
-                    ].map((it, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2 shrink-0" />
-                        <span>{it}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="max-w-2xl mx-auto">
-                <div className="rounded-xl p-3.5 flex items-center gap-3 bg-amber-50 border border-amber-200 text-amber-800">
-                  <svg className="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  <span className="text-xs font-medium">ادامه به منزله پذیرش شرایط فرابیمه است</span>
-                </div>
-              </div>
-
-              <div className="max-w-2xl mx-auto text-right">
-                <label className="flex items-center gap-2.5 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={form.accepted}
-                    onChange={(e) => setField('accepted', e.target.checked)}
-                    className="w-4 h-4 rounded text-orange-500 focus:ring-orange-500 border-gray-300"
-                  />
-                  <span className="text-xs font-semibold text-gray-700">شرایط و قوانین را خوانده‌ام و قبول می‌کنم</span>
-                </label>
-              </div>
-
-              <div className="max-w-2xl mx-auto flex items-center justify-center gap-4 pt-4">
-                <button
-                  onClick={() => setStep((s) => s + 1)}
-                  disabled={!form.accepted}
-                  className={`px-10 py-2.5 rounded-xl text-xs font-bold text-white transition-all shadow-md ${
-                    form.accepted ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-300 cursor-not-allowed'
-                  }`}
-                >
-                  ادامه
-                </button>
-                <button className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50">
-                  انصراف
-                </button>
+            <div className="max-w-2xl mx-auto text-gray-700 text-xs leading-7">
+              <p className="font-semibold mb-3 text-center text-gray-800">شرایط و ضوابط استفاده از طرح فرابیمه عبارتند از:</p>
+              <div className="h-56 overflow-y-auto px-4 py-2 border border-gray-100 rounded-xl bg-gray-50/50">
+                <ul className="space-y-3 text-gray-600">
+                  {[
+                    'داشتن حساب فعال نزد بانک ملت.',
+                    'تطابق مالکیت شماره تلفن همراه بیمه‌گذار با شماره همراه ثبت‌شده در حساب بانک ملت.',
+                    'عدم وجود چک برگشتی و بدهی معوقه به شبکه بانکی.',
+                    'کارت معافیت دائم یا پایان خدمت برای آقایان.',
+                    'عقد قرارداد درخواست وام به همراه امضای دیجیتال.',
+                    'واریز تسهیلات بانکی تا سقف ۲,۰۰۰,۰۰۰,۰۰۰ ریال به حساب اندوخته بیمه‌ای.',
+                    'پرداخت منظم اقساط.'
+                  ].map((it, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2 shrink-0" />
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-          )}
 
-          {/* ── مرحله ۲: مشخصات بیمه‌گذار / بیمه‌شده ── */}
-          {step === 1 && (
-            <div className="space-y-6" dir="rtl">
-              <div className="text-xs font-bold text-gray-800 mb-2">اطلاعات بیمه‌گذار</div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">نام و نام خانوادگی</label>
-                  <input
-                    value="سنا رابطاط"
-                    readOnly
-                    disabled
-                    className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">کد ملی</label>
-                  <input
-                    value="۰۰۷۸۵۴۳۲۱"
-                    disabled
-                    className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">تاریخ تولد</label>
-                  <input
-                    value="۱۳۶۵/۰۵/۱۵"
-                    disabled
-                    className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
-                  />
-                </div>
+            <div className="max-w-2xl mx-auto">
+              <div className="rounded-xl p-3.5 flex items-center gap-3 bg-amber-50 border border-amber-200 text-amber-800">
+                <svg className="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span className="text-xs font-medium">ادامه به منزله پذیرش شرایط فرابیمه است</span>
               </div>
+            </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">شماره تلفن همراه</label>
-                  <input
-                    value={form.mobile}
-                    onChange={(e) => setField('mobile', e.target.value)}
-                    placeholder="۰۹۱۲●●●●●●●"
-                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                  />
-                </div>
+            <div className="max-w-2xl mx-auto text-right">
+              <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={form.accepted}
+                  onChange={(e) => setField('accepted', e.target.checked)}
+                  className="w-4 h-4 rounded text-orange-500 focus:ring-orange-500 border-gray-300"
+                />
+                <span className="text-xs font-semibold text-gray-700">شرایط و قوانین را خوانده‌ام و قبول می‌کنم</span>
+              </label>
+            </div>
 
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">شغل</label>
-                  <select
-                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                  >
-                    <option value="">انتخاب کنید</option>
-                    <option value="کارمند">کارمند</option>
-                    <option value="آزاد">آزاد</option>
-                    <option value="بازنشسته">بازنشسته</option>
-                  </select>
-                </div>
+            <div className="max-w-2xl mx-auto flex items-center justify-center gap-4 pt-4">
+              <button
+                onClick={() => setStep((s) => s + 1)}
+                disabled={!form.accepted}
+                className={`px-10 py-2.5 rounded-xl text-xs font-bold text-white transition-all shadow-md ${
+                  form.accepted ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-300 cursor-not-allowed'
+                }`}
+              >
+                ادامه
+              </button>
+              <button className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50">
+                انصراف
+              </button>
+            </div>
+          </div>
+        )}
 
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">کد پستی</label>
-                  <input
-                    placeholder="کد پستی"
-                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                  />
-                </div>
-              </div>
-
+        {/* ── مرحله ۲: مشخصات بیمه‌گذار / بیمه‌شده ── */}
+        {step === 1 && (
+          <div className="space-y-6" dir="rtl">
+            <div className="text-xs font-bold text-gray-800 mb-2">اطلاعات بیمه‌گذار</div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               <div>
-                <label className="text-xs text-gray-500 mb-1.5 block">آدرس</label>
-                <textarea
-                  value={form.address}
-                  onChange={(e) => setField('address', e.target.value)}
-                  rows={2}
-                  placeholder="آدرس دقیق منزل یا محل کار"
-                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs resize-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                <label className="text-xs text-gray-500 mb-1.5 block">نام و نام خانوادگی</label>
+                <input
+                  value="سنا رابطاط"
+                  readOnly
+                  disabled
+                  className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
                 />
               </div>
 
-              {/* سوییچ انتخاب ذینفع بیمه‌نامه */}
-              <div className="pt-4 border-t border-gray-100">
-                <div className="text-xs font-bold text-red-600 mb-3">بیمه‌نامه زندگی و مستمری را برای چه کسی می‌خواهید؟</div>
-                <div className="inline-flex rounded-xl bg-gray-100 p-1 border border-gray-200">
-                  <button
-                    type="button"
-                    onClick={() => setInsuredSameAsHolder(true)}
-                    className={`px-5 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                      insuredSameAsHolder ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'
-                    }`}
-                  >
-                    خودم
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setInsuredSameAsHolder(false)}
-                    className={`px-5 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                      !insuredSameAsHolder ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'
-                    }`}
-                  >
-                    اعضای خانواده
-                  </button>
-                </div>
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">کد ملی</label>
+                <input
+                  value="۰۰۷۸۵۴۳۲۱"
+                  disabled
+                  className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
+                />
               </div>
 
-              {/* ── بخش اعضای خانواده ── */}
-              {!insuredSameAsHolder && (
-                <div className="p-6 border border-gray-200 bg-gray-50/50 rounded-2xl space-y-5">
-                  <div className="text-xs font-bold text-gray-800 border-b border-gray-200 pb-2">اطلاعات بیمه‌شده (عضو خانواده)</div>
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">تاریخ تولد</label>
+                <input
+                  value="۱۳۶۵/۰۵/۱۵"
+                  disabled
+                  className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
+                />
+              </div>
+            </div>
 
-                  {/* بخش ۱: استعلام */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end bg-white p-4 rounded-xl border border-gray-100">
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1.5 block">کد ملی بیمه‌شده</label>
-                      <input
-                        value={familyMember.nationalId}
-                        onChange={(e) => setFamilyMember((p) => ({ ...p, nationalId: e.target.value }))}
-                        placeholder="کد ملی ۱۰ رقمی"
-                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                      />
-                    </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">شماره تلفن همراه</label>
+                <input
+                  value={form.mobile}
+                  onChange={(e) => setField('mobile', e.target.value)}
+                  placeholder="۰۹۱۲●●●●●●●"
+                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                />
+              </div>
 
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1.5 block">تاریخ تولد بیمه‌شده</label>
-                      <input
-                        value={familyMember.birthDate}
-                        onChange={(e) => setFamilyMember((p) => ({ ...p, birthDate: e.target.value }))}
-                        placeholder="۱۳۷۵/۰۱/۰۱"
-                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                      />
-                    </div>
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">شغل</label>
+                <select
+                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                >
+                  <option value="">انتخاب کنید</option>
+                  <option value="کارمند">کارمند</option>
+                  <option value="آزاد">آزاد</option>
+                  <option value="بازنشسته">بازنشسته</option>
+                </select>
+              </div>
 
-                    <button
-                      type="button"
-                      className="w-full py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold transition-colors shadow-sm"
-                    >
-                      استعلام بیمه‌شده
-                    </button>
-                  </div>
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">کد پستی</label>
+                <input
+                  placeholder="کد پستی"
+                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                />
+              </div>
+            </div>
 
-                  {/* بخش ۲: فرم مشخصات کامل */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1.5 block">نسبت با بیمه‌گذار</label>
-                      <select
-                        value={familyMember.relation}
-                        onChange={(e) => setFamilyMember((p) => ({ ...p, relation: e.target.value }))}
-                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                      >
-                        <option value="فرزند">فرزند</option>
-                        <option value="همسر">همسر</option>
-                        <option value="پدر">پدر</option>
-                        <option value="مادر">مادر</option>
-                        <option value="برادر">برادر</option>
-                        <option value="خواهر">خواهر</option>
-                      </select>
-                    </div>
+            <div>
+              <label className="text-xs text-gray-500 mb-1.5 block">آدرس</label>
+              <textarea
+                value={form.address}
+                onChange={(e) => setField('address', e.target.value)}
+                rows={2}
+                placeholder="آدرس دقیق منزل یا محل کار"
+                className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs resize-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+              />
+            </div>
 
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1.5 block">نام</label>
-                      <input
-                        value={familyMember.name}
-                        onChange={(e) => setFamilyMember((p) => ({ ...p, name: e.target.value }))}
-                        placeholder="نام"
-                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                      />
-                    </div>
+            {/* سوییچ انتخاب ذینفع بیمه‌نامه */}
+            <div className="pt-4 border-t border-gray-100">
+              <div className="text-xs font-bold text-red-600 mb-3">بیمه‌نامه زندگی و مستمری را برای چه کسی می‌خواهید؟</div>
+              <div className="inline-flex rounded-xl bg-gray-100 p-1 border border-gray-200">
+                <button
+                  type="button"
+                  onClick={() => setInsuredSameAsHolder(true)}
+                  className={`px-5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    insuredSameAsHolder ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'
+                  }`}
+                >
+                  خودم
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setInsuredSameAsHolder(false)}
+                  className={`px-5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    !insuredSameAsHolder ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'
+                  }`}
+                >
+                  اعضای خانواده
+                </button>
+              </div>
+            </div>
 
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1.5 block">نام خانوادگی</label>
-                      <input
-                        value={familyMember.lastName}
-                        onChange={(e) => setFamilyMember((p) => ({ ...p, lastName: e.target.value }))}
-                        placeholder="نام خانوادگی"
-                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                      />
-                    </div>
+            {/* ── بخش اعضای خانواده ── */}
+            {!insuredSameAsHolder && (
+              <div className="p-6 border border-gray-200 bg-gray-50/50 rounded-2xl space-y-5">
+                <div className="text-xs font-bold text-gray-800 border-b border-gray-200 pb-2">اطلاعات بیمه‌شده (عضو خانواده)</div>
 
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1.5 block">جنسیت</label>
-                      <select
-                        value={familyMember.gender}
-                        onChange={(e) => setFamilyMember((p) => ({ ...p, gender: e.target.value }))}
-                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                      >
-                        <option value="مرد">مرد</option>
-                        <option value="زن">زن</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1.5 block">شماره تلفن همراه</label>
-                      <input
-                        value={familyMember.mobile}
-                        onChange={(e) => setFamilyMember((p) => ({ ...p, mobile: e.target.value }))}
-                        placeholder="۰۹۱۲●●●●●●●"
-                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1.5 block">شغل</label>
-                      <input
-                        value={familyMember.job}
-                        onChange={(e) => setFamilyMember((p) => ({ ...p, job: e.target.value }))}
-                        placeholder="شغل"
-                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1.5 block">کد پستی</label>
-                      <input
-                        value={familyMember.postalCode}
-                        onChange={(e) => setFamilyMember((p) => ({ ...p, postalCode: e.target.value }))}
-                        placeholder="کد پستی"
-                        className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                      />
-                    </div>
+                {/* بخش ۱: استعلام */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end bg-white p-4 rounded-xl border border-gray-100">
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1.5 block">کد ملی بیمه‌شده</label>
+                    <input
+                      value={familyMember.nationalId}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, nationalId: e.target.value }))}
+                      placeholder="کد ملی ۱۰ رقمی"
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                    />
                   </div>
 
                   <div>
-                    <label className="text-xs text-gray-500 mb-1.5 block">آدرس محل سکونت بیمه‌شده</label>
-                    <textarea
-                      value={familyMember.address}
-                      onChange={(e) => setFamilyMember((p) => ({ ...p, address: e.target.value }))}
-                      rows={2}
-                      placeholder="آدرس دقیق محل سکونت بیمه‌شده"
-                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs resize-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                    <label className="text-xs text-gray-500 mb-1.5 block">تاریخ تولد بیمه‌شده</label>
+                    <input
+                      value={familyMember.birthDate}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, birthDate: e.target.value }))}
+                      placeholder="۱۳۷۵/۰۱/۰۱"
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    className="w-full py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold transition-colors shadow-sm"
+                  >
+                    استعلام بیمه‌شده
+                  </button>
+                </div>
+
+                {/* بخش ۲: فرم مشخصات کامل */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1.5 block">نسبت با بیمه‌گذار</label>
+                    <select
+                      value={familyMember.relation}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, relation: e.target.value }))}
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                    >
+                      <option value="فرزند">فرزند</option>
+                      <option value="همسر">همسر</option>
+                      <option value="پدر">پدر</option>
+                      <option value="مادر">مادر</option>
+                      <option value="برادر">برادر</option>
+                      <option value="خواهر">خواهر</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1.5 block">نام</label>
+                    <input
+                      value={familyMember.name}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, name: e.target.value }))}
+                      placeholder="نام"
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1.5 block">نام خانوادگی</label>
+                    <input
+                      value={familyMember.lastName}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, lastName: e.target.value }))}
+                      placeholder="نام خانوادگی"
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1.5 block">جنسیت</label>
+                    <select
+                      value={familyMember.gender}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, gender: e.target.value }))}
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                    >
+                      <option value="مرد">مرد</option>
+                      <option value="زن">زن</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1.5 block">شماره تلفن همراه</label>
+                    <input
+                      value={familyMember.mobile}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, mobile: e.target.value }))}
+                      placeholder="۰۹۱۲●●●●●●●"
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1.5 block">شغل</label>
+                    <input
+                      value={familyMember.job}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, job: e.target.value }))}
+                      placeholder="شغل"
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1.5 block">کد پستی</label>
+                    <input
+                      value={familyMember.postalCode}
+                      onChange={(e) => setFamilyMember((p) => ({ ...p, postalCode: e.target.value }))}
+                      placeholder="کد پستی"
+                      className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                     />
                   </div>
                 </div>
-              )}
 
-              <div className="flex items-center justify-center gap-4 pt-4">
-                <button
-                  onClick={() => setStep((s) => s + 1)}
-                  className="px-10 py-2.5 rounded-xl text-xs font-bold text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-md"
-                >
-                  ادامه
-                </button>
-                <button
-                  onClick={() => setStep((s) => s - 1)}
-                  className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
-                >
-                  مرحله قبل
-                </button>
+                <div>
+                  <label className="text-xs text-gray-500 mb-1.5 block">آدرس محل سکونت بیمه‌شده</label>
+                  <textarea
+                    value={familyMember.address}
+                    onChange={(e) => setFamilyMember((p) => ({ ...p, address: e.target.value }))}
+                    rows={2}
+                    placeholder="آدرس دقیق محل سکونت بیمه‌شده"
+                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs resize-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                  />
+                </div>
               </div>
+            )}
+
+            <div className="flex items-center justify-center gap-4 pt-4">
+              <button
+                onClick={() => setStep((s) => s + 1)}
+                className="px-10 py-2.5 rounded-xl text-xs font-bold text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-md"
+              >
+                ادامه
+              </button>
+              <button
+                onClick={() => setStep((s) => s - 1)}
+                className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
+              >
+                مرحله قبل
+              </button>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* ── مرحله ۳: اطلاعات سرمایه‌گذاری (مطابق دقیق طرح) ── */}
-          {step === 2 && (
-            <div className="space-y-6" dir="rtl">
-              <div className="text-xs font-bold text-gray-800">
-                {insuredSameAsHolder ? 'سنا رابطاط' : `${familyMember.name || 'بیمه‌شده'} ${familyMember.lastName}`} عزیز
-              </div>
-
-              <div className="rounded-2xl p-4 bg-indigo-50/60 border border-indigo-100 text-indigo-900 text-xs flex items-start gap-3">
-                <svg className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>مبلغ تسهیلاتی که برای صدور بیمه نامه زندگی و مستمری درخواست دارید را اعلام فرمایید تا تعهدات طرح فرابیمه نمایش داده شود.</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">مبلغ تسهیلاتی درخواستی (ریال)</label>
-                  <input
-                    placeholder="۲,۰۰۰,۰۰۰,۰۰۰"
-                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                  />
-                  <span className="text-[10px] text-gray-400 mt-1 block">حداکثر مبلغ دو میلیارد ریال می‌باشد</span>
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">مدت بیمه‌نامه</label>
-                  <input
-                    defaultValue="۳۶"
-                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">مدت بازپرداخت</label>
-                  <select className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none">
-                    <option>۳۶ ماه</option>
-                    <option>۶۰ ماه</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="rounded-2xl p-4 bg-emerald-50/60 border border-emerald-100 text-emerald-900 text-xs flex items-center gap-3">
-                <svg className="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="font-semibold">اقساط قابل پرداخت ماهانه : ۹,۸۰۰,۰۰۰ ریال معادل ۹۸۰ هزار تومان</span>
-              </div>
-
-              {/* کارت‌های سه گانه پوشش‌ها و اندوخته */}
-              <div className="space-y-3 pt-2">
-                <h4 className="text-xs font-bold text-gray-800">جدول پوشش‌ها و اندوخته بیمه‌نامه</h4>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  
-                  {/* کارت ۱: پوشش‌های فوت و حادثه */}
-                  <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
-                    <div className="bg-blue-50/70 border-b border-blue-100 p-3 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-                      <span className="font-bold text-xs text-blue-900">پوشش‌های فوت و حادثه</span>
-                    </div>
-                    <div className="p-4 space-y-3 text-xs">
-                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
-                        <span className="text-gray-500">سرمایه فوت به هر علت</span>
-                        <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
-                      </div>
-                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
-                        <span className="text-gray-500">فوت در اثر حادثه</span>
-                        <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-500">نقص عضو حادثه</span>
-                        <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* کارت ۲: پیش‌بینی اندوخته‌ها */}
-                  <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
-                    <div className="bg-amber-50/70 border-b border-amber-100 p-3 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
-                      <span className="font-bold text-xs text-amber-900">پیش‌بینی اندوخته سرمایه‌گذاری</span>
-                    </div>
-                    <div className="p-4 space-y-3 text-xs">
-                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
-                        <span className="text-gray-500">اندوخته با سود ۱۶٪</span>
-                        <span className="font-bold text-orange-600">۲,۱۵۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
-                      </div>
-                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
-                        <span className="text-gray-500">پیش‌بینی اندوخته ۲۵٪</span>
-                        <span className="font-bold text-orange-600">۲,۸۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-500">معافیت از پرداخت حق‌بیمه</span>
-                        <span className="font-bold text-emerald-600">دارد</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* کارت ۳: پوشش درمان و امراض خاص */}
-                  <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
-                    <div className="bg-emerald-50/70 border-b border-emerald-100 p-3 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                      <span className="font-bold text-xs text-emerald-900">پوشش‌های تکمیلی و درمان</span>
-                    </div>
-                    <div className="p-4 space-y-3 text-xs">
-                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
-                        <span className="text-gray-500">غرامت امراض خاص</span>
-                        <span className="font-bold text-gray-800">۵۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
-                      </div>
-                      <div className="flex justify-between items-center pb-2 border-b border-gray-50">
-                        <span className="text-gray-500">هزینه‌ پزشکی حادثه</span>
-                        <span className="font-bold text-gray-800">۲۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-500">پوشش سرطان</span>
-                        <span className="font-bold text-gray-800">۵۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div className="flex items-center justify-center gap-4 pt-4">
-                <button
-                  onClick={() => setStep((s) => s + 1)}
-                  className="px-10 py-2.5 rounded-xl text-xs font-bold text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-md"
-                >
-                  ادامه
-                </button>
-                <button
-                  onClick={() => setStep((s) => s - 1)}
-                  className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
-                >
-                  مرحله قبل
-                </button>
-              </div>
+        {/* ── مرحله ۳: اطلاعات سرمایه‌گذاری ── */}
+        {step === 2 && (
+          <div className="space-y-6" dir="rtl">
+            <div className="text-xs font-bold text-gray-800">
+              {insuredSameAsHolder ? 'سنا رابطاط' : `${familyMember.name || 'بیمه‌شده'} ${familyMember.lastName}`} عزیز
             </div>
-          )}
 
-          {/* ── مرحله ۴: اطلاعات تکمیلی ── */}
-          {step === 3 && (
-            <div className="space-y-6" dir="rtl">
-              <h3 className="text-center font-bold text-gray-800 text-xs">اطلاعات تکمیلی</h3>
+            <div className="rounded-2xl p-4 bg-indigo-50/60 border border-indigo-100 text-indigo-900 text-xs flex items-start gap-3">
+              <svg className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>مبلغ تسهیلاتی که برای صدور بیمه نامه زندگی و مستمری درخواست دارید را اعلام فرمایید تا تعهدات طرح فرابیمه نمایش داده شود.</span>
+            </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">نام و نام خانوادگی بیمه‌گذار</label>
-                  <input
-                    defaultValue="سنا رابطاط"
-                    readOnly
-                    className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">کد معرف</label>
-                  <input
-                    placeholder="کد معرف (اختیاری)"
-                    className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs text-gray-500 mb-1.5 block">روش پرداخت</label>
-                  <select className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none">
-                    <option>کسر از درگاه تسهیلات</option>
-                    <option>پرداخت آنلاین</option>
-                  </select>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">مبلغ تسهیلاتی درخواستی (ریال)</label>
+                <input
+                  placeholder="۲,۰۰۰,۰۰۰,۰۰۰"
+                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                />
+                <span className="text-[10px] text-gray-400 mt-1 block">حداکثر مبلغ دو میلیارد ریال می‌باشد</span>
               </div>
 
               <div>
-                <label className="text-xs text-gray-500 mb-1.5 block">توضیحات تکمیلی</label>
-                <textarea
-                  rows={3}
-                  placeholder="در صورت وجود توضیح اضافی وارد نمایید"
-                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs resize-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                <label className="text-xs text-gray-500 mb-1.5 block">مدت بیمه‌نامه</label>
+                <input
+                  defaultValue="۳۶"
+                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
                 />
               </div>
 
-              <div className="flex items-center justify-center gap-4 pt-4">
-                <button
-                  onClick={handleSubmit}
-                  className="px-10 py-2.5 rounded-xl text-xs font-bold text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-md"
-                >
-                  ثبت نهایی
-                </button>
-                <button
-                  onClick={() => setStep((s) => s - 1)}
-                  className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
-                >
-                  قبلی
-                </button>
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">مدت بازپرداخت</label>
+                <select className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none">
+                  <option>۳۶ ماه</option>
+                  <option>۶۰ ماه</option>
+                </select>
               </div>
             </div>
-          )}
 
-        </div>
+            <div className="rounded-2xl p-4 bg-emerald-50/60 border border-emerald-100 text-emerald-900 text-xs flex items-center gap-3">
+              <svg className="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="font-semibold">اقساط قابل پرداخت ماهانه : ۹,۸۰۰,۰۰۰ ریال معادل ۹۸۰ هزار تومان</span>
+            </div>
+
+            <div className="space-y-3 pt-2">
+              <h4 className="text-xs font-bold text-gray-800">جدول پوشش‌ها و اندوخته بیمه‌نامه</h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                  <div className="bg-blue-50/70 border-b border-blue-100 p-3 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                    <span className="font-bold text-xs text-blue-900">پوشش‌های فوت و حادثه</span>
+                  </div>
+                  <div className="p-4 space-y-3 text-xs">
+                    <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                      <span className="text-gray-500">سرمایه فوت به هر علت</span>
+                      <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                      <span className="text-gray-500">فوت در اثر حادثه</span>
+                      <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500">نقص عضو حادثه</span>
+                      <span className="font-bold text-gray-800">۱,۰۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                  <div className="bg-amber-50/70 border-b border-amber-100 p-3 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+                    <span className="font-bold text-xs text-amber-900">پیش‌بینی اندوخته سرمایه‌گذاری</span>
+                  </div>
+                  <div className="p-4 space-y-3 text-xs">
+                    <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                      <span className="text-gray-500">اندوخته با سود ۱۶٪</span>
+                      <span className="font-bold text-orange-600">۲,۱۵۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                      <span className="text-gray-500">پیش‌بینی اندوخته ۲۵٪</span>
+                      <span className="font-bold text-orange-600">۲,۸۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500">معافیت از پرداخت حق‌بیمه</span>
+                      <span className="font-bold text-emerald-600">دارد</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                  <div className="bg-emerald-50/70 border-b border-emerald-100 p-3 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span className="font-bold text-xs text-emerald-900">پوشش‌های تکمیلی و درمان</span>
+                  </div>
+                  <div className="p-4 space-y-3 text-xs">
+                    <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                      <span className="text-gray-500">غرامت امراض خاص</span>
+                      <span className="font-bold text-gray-800">۵۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                      <span className="text-gray-500">هزینه‌ پزشکی حادثه</span>
+                      <span className="font-bold text-gray-800">۲۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500">پوشش سرطان</span>
+                      <span className="font-bold text-gray-800">۵۰۰,۰۰۰,۰۰۰ <span className="text-[10px] text-gray-400 font-normal">ریال</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-4 pt-4">
+              <button
+                onClick={() => setStep((s) => s + 1)}
+                className="px-10 py-2.5 rounded-xl text-xs font-bold text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-md"
+              >
+                ادامه
+              </button>
+              <button
+                onClick={() => setStep((s) => s - 1)}
+                className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
+              >
+                مرحله قبل
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ── مرحله ۴: اطلاعات تکمیلی ── */}
+        {step === 3 && (
+          <div className="space-y-6" dir="rtl">
+            <h3 className="text-center font-bold text-gray-800 text-xs">اطلاعات تکمیلی</h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">نام و نام خانوادگی بیمه‌گذار</label>
+                <input
+                  defaultValue="سنا رابطاط"
+                  readOnly
+                  className="w-full border border-gray-200 rounded-xl bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">کد معرف</label>
+                <input
+                  placeholder="کد معرف (اختیاری)"
+                  className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs text-gray-500 mb-1.5 block">روش پرداخت</label>
+                <select className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none">
+                  <option>کسر از درگاه تسهیلات</option>
+                  <option>پرداخت آنلاین</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-xs text-gray-500 mb-1.5 block">توضیحات تکمیلی</label>
+              <textarea
+                rows={3}
+                placeholder="در صورت وجود توضیح اضافی وارد نمایید"
+                className="w-full border border-gray-200 rounded-xl bg-white px-3.5 py-2.5 text-xs resize-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
+              />
+            </div>
+
+            <div className="flex items-center justify-center gap-4 pt-4">
+              <button
+                onClick={handleSubmit}
+                className="px-10 py-2.5 rounded-xl text-xs font-bold text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-md"
+              >
+                ثبت نهایی
+              </button>
+              <button
+                onClick={() => setStep((s) => s - 1)}
+                className="px-8 py-2.5 rounded-xl text-xs font-semibold border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
+              >
+                قبلی
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   )
 }
 
