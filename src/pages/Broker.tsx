@@ -36,7 +36,7 @@ export default function Broker() {
 
   return (
     <div dir="rtl" className="w-full bg-[#f8f9fa] min-h-screen py-8 px-4 font-sans">
-      <div className="max-w-5xl mx-auto overflow-hidden rounded-3xl shadow-sm bg-white border border-gray-100">
+      <div className="max-w-8/12 mx-auto overflow-hidden rounded-3xl shadow-sm bg-white border border-gray-100">
         
         {/* هدر کارگزاری ملت */}
         <div 
