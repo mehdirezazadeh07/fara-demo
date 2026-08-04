@@ -816,7 +816,7 @@ export function FormView() {
 
 export default function Insurance() {
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 font-sans text-gray-900">
+    <div dir="rtl" className="min-h-screen bg-gray-50 font-['IranSans'] text-gray-900">
       <div className="pb-12">
         <Outlet />
       </div>
