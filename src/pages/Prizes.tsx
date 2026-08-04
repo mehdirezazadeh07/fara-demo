@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ClubFooter from "../components/Club/ClubFooter";
-import { BackArrowIcon, ChevronLeftIcon, LotteryIcon, PercentIcon, RocketIcon, SearchIcon } from "../components/Club/icons";
+import { RightArrowIcon, ChevronLeftIcon, LotteryIcon, PercentIcon, RocketIcon, SearchIcon } from "../components/Club/icons";
 import { clubColors } from "../theme";
 import productEarbuds from "../assets/club/product-earbuds.png";
 import productPhone from "../assets/club/product-phone.png";
@@ -15,7 +15,9 @@ type ModalItem = {
   subtitle: string;
   image: string;
   brand?: string;
+  brandColor?: string;
   percent?: string;
+  oldPrice?: string;
   pointsLabel: string;
   productTitle: string;
   productDescription: string;
@@ -190,17 +192,19 @@ const CREDIT_ITEMS: PrizeItem[] = [
 function buildModalFromPrize(item: PrizeItem): ModalItem {
   return {
     title: item.title,
-    subtitle: item.subtitle,
+    subtitle: item.subtitle.startsWith("مدل") ? item.subtitle : `مدل ${item.subtitle}`,
     image: item.image,
+    brand: item.tag,
+    brandColor: clubColors.orange,
     pointsLabel: `${item.cost.toLocaleString("fa-IR")} امتیاز`,
     productTitle: `${item.title} (${item.subtitle})`,
     productDescription:
-      "این محصول با کیفیت ساخت مناسب و طراحی مدرن ارائه شده است. با تایید این درخواست، امتیاز مورد نیاز از حساب شما کسر شده و آیتم برای شما ثبت خواهد شد.",
+      "این هندزفری با صدای شفاف، طراحی ارگونومیک و باتری بادوام، تجربه‌ای لذت‌بخش از موسیقی و مکالمه را برای شما فراهم می‌کند. اتصال سریع بلوتوث، کیفیت ساخت بالا و مناسب استفاده روزمره از ویژگی‌های اصلی آن است.",
     usageText:
-      "پس از انتخاب گزینه دریافت جایزه، درخواست شما ثبت می‌شود و نتیجه نهایی از طریق پیام داخل سامانه اطلاع‌رسانی خواهد شد.",
+      "پس از دریافت جایزه، کد تخفیف مربوطه در حساب کاربری شما در اپلیکیشن اسنپ فعال خواهد شد و می‌توانید هنگام خرید از آن استفاده کنید.",
     rules: [
       "برای بهره‌مندی کامل از سرویس‌ها، تکمیل اطلاعات حساب کاربری الزامی است.",
-      "مسئولیت نگهداری اطلاعات حساب و رمز عبور بر عهده کاربر است.",
+      "مسئولیت نگهداری اطلاعات حساب کاربری و رمز عبور بر عهده کاربر است.",
       "پس از ثبت درخواست، امکان بازگشت امتیاز وجود ندارد.",
     ],
   };
@@ -212,13 +216,15 @@ function buildModalFromDiscount(item: DiscountItem): ModalItem {
     subtitle: item.subtitle,
     image: item.image,
     brand: item.badgeTitle,
+    brandColor: item.badgeColor,
     percent: item.percent,
+    oldPrice: item.percent ? "۵۰۰,۰۰۰,۰۰۰" : undefined,
     pointsLabel: item.disabled ? "منقضی شده" : `${item.points.toLocaleString("fa-IR")} امتیاز`,
     productTitle: item.title,
     productDescription:
-      "کد تخفیف انتخابی پس از تایید برای شما فعال می‌شود. می‌توانید در سرویس مربوطه با رعایت شرایط درج‌شده از آن استفاده کنید.",
+      "کد تخفیف انتخابی پس از تایید برای شما فعال می‌شود. می‌توانید در سرویس مربوطه با رعایت شرایط درج‌شده از آن استفاده کنید و از مزایای باشگاه مشتریان بهره‌مند شوید.",
     usageText:
-      "پس از تایید، کد تخفیف در بخش کدهای فعال نمایش داده می‌شود. هنگام پرداخت، کد را وارد کرده و تخفیف را اعمال کنید.",
+      "پس از دریافت جایزه، کد تخفیف مربوطه در حساب کاربری شما فعال خواهد شد و می‌توانید هنگام خرید از آن استفاده کنید.",
     rules: [
       "هر کد تخفیف تنها در بازه زمانی و سرویس مشخص‌شده معتبر است.",
       "کد تخفیف قابل انتقال به حساب کاربری دیگر نیست.",
@@ -230,21 +236,22 @@ function buildModalFromDiscount(item: DiscountItem): ModalItem {
 function SectionCard({ title, icon, children }: { title: string; icon: ReactNode; children: ReactNode }) {
   return (
     <Box sx={{ bgcolor: "white", border: `1px solid ${clubColors.border}`, borderRadius: "16px", p: 2 }}>
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 0.8, mb: 1.5 }}>
-        <Typography sx={{ fontSize: 20, fontWeight: 700, color: clubColors.text }}>{title}</Typography>
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 0.8, mb: 1.5 }}>
         <Box
           sx={{
-            width: 28,
-            height: 28,
+            width: 30,
+            height: 30,
             borderRadius: "8px",
             bgcolor: clubColors.orangeSoft,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            marginRight: 1,
           }}
         >
           {icon}
         </Box>
+        <Typography sx={{ fontSize: 20, fontWeight: 700, color: clubColors.text }}>{title}</Typography>
       </Box>
       {children}
     </Box>
@@ -316,30 +323,70 @@ function PrizeListCard({ item, onOpen }: { item: PrizeItem; onOpen: (item: Modal
       onClick={() => onOpen(buildModalFromPrize(item))}
       sx={{ border: `1px solid ${clubColors.border}`, borderRadius: "12px", overflow: "hidden", bgcolor: "white", cursor: "pointer" }}
     >
-      <Box sx={{ p: 1.25, display: "flex", gap: 1.25 }}>
-        <Box sx={{ flex: 1 }}>
-          <Typography sx={{ fontSize: 12, color: clubColors.orange, fontWeight: 500, mb: 0.35 }}>{item.tag}</Typography>
-          <Typography sx={{ fontSize: 13, fontWeight: 700, color: clubColors.text, lineHeight: 1.45 }}>{item.title}</Typography>
-          <Typography sx={{ fontSize: 12, color: clubColors.mutedDark, lineHeight: 1.4 }}>{item.subtitle}</Typography>
+      <Box sx={{ p: 1.25, display: "flex", gap: 1, alignItems: "center" }}>
+        <Box
+          sx={{
+            flex: 1,
+            minWidth: 0,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-end",
+            gap: 0.4,
+          }}
+        >
+          <Typography sx={{ fontSize: 12, color: clubColors.orange, fontWeight: 400, lineHeight: 1.35 }}>
+            {item.tag}
+          </Typography>
+          <Typography sx={{ fontSize: 13, fontWeight: 400, color: clubColors.text, lineHeight: 1.4 }}>
+            {item.title}
+          </Typography>
+          <Typography sx={{ fontSize: 12, fontWeight: 400, color: clubColors.mutedDark, lineHeight: 1.4 }}>
+            {item.subtitle}
+          </Typography>
         </Box>
-        <Box component="img" src={item.image} alt={item.title} sx={{ width: 72, height: 72, borderRadius: "10px", bgcolor: "#F7F7F7", objectFit: "cover" }} />
+        <Box
+          sx={{
+            width: 72,
+            height: 72,
+            borderRadius: "10px",
+            bgcolor: "#F7F7F7",
+            flexShrink: 0,
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Box
+            component="img"
+            src={item.image}
+            alt={item.title}
+            sx={{ width: "100%", height: "100%", objectFit: "contain", p: 0.5 }}
+          />
+        </Box>
       </Box>
 
       <Box sx={{ mx: 1.25, borderTop: `1px dashed ${clubColors.border}`, py: 1.1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Typography sx={{ fontSize: 12, color: clubColors.text }}>{item.chances.toLocaleString("fa-IR")} شانس</Typography>
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.2 }}>
-          <Typography sx={{ fontSize: 13, fontWeight: 700, color: clubColors.orange }}>{item.cost.toLocaleString("fa-IR")}</Typography>
-          <Typography sx={{ fontSize: 12, color: clubColors.text }}>امتیاز</Typography>
           <ChevronLeftIcon size={13} color={clubColors.muted} />
+          <Typography sx={{ fontSize: 13, fontWeight: 700, color: clubColors.orange, paddingLeft: 1, paddingRight: 1 }}>{item.cost.toLocaleString("fa-IR")}</Typography>
+          <Typography sx={{ fontSize: 12, color: clubColors.text }}>امتیاز</Typography>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.2 }}>
+          <Typography sx={{ fontSize: 12, color: clubColors.text }}> شانس قرعه کشی</Typography>
+          <Typography sx={{ fontSize: 12, color: clubColors.text }}>{item.chances.toLocaleString("fa-IR")}</Typography>
         </Box>
       </Box>
 
       <Box sx={{ bgcolor: "#FAFAFA", borderTop: `1px solid ${clubColors.borderLight}`, px: 1.25, py: 0.9, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Typography sx={{ fontSize: 10.5, color: clubColors.muted }}>زمان باقی‌مانده تا قرعه‌کشی</Typography>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, bgcolor: clubColors.orangeSoft, borderRadius: "999px", px: 1, py: 0.5 }}>
           <Typography sx={{ fontSize: 11.5, color: clubColors.text }}>{item.days.toLocaleString("fa-IR")} روز</Typography>
           <Typography sx={{ fontSize: 11, color: clubColors.muted }}>:</Typography>
           <Typography sx={{ fontSize: 11.5, color: clubColors.text }}>{item.hours.toLocaleString("fa-IR")} ساعت</Typography>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+          <Typography sx={{ fontSize: 10.5, color: clubColors.muted }}>زمان باقی‌مانده تا قرعه‌کشی</Typography>
         </Box>
       </Box>
     </Box>
@@ -359,7 +406,15 @@ function PrizesGridSection({
 }) {
   return (
     <SectionCard title={title} icon={icon}>
-      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "repeat(4, 1fr)" }, gap: 1.25 }}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "repeat(4, 1fr)" },
+          gap: 1.25,
+          direction: "ltr",
+          "& > *": { direction: "rtl" },
+        }}
+      >
         {items.map((item) => (
           <PrizeListCard key={`${title}-${item.id}`} item={item} onOpen={onOpen} />
         ))}
@@ -380,9 +435,9 @@ export default function Prizes() {
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
             <Box
               onClick={() => navigate("/club")}
-              sx={{ width: 24, height: 24, borderRadius: "50%", bgcolor: clubColors.orange, display: "grid", placeItems: "center", flexShrink: 0, cursor: "pointer" }}
+              sx={{ width: 30, height: 30, borderRadius: "8px", bgcolor: clubColors.orangeSoft, display: "grid", placeItems: "center", flexShrink: 0, cursor: "pointer" }}
             >
-              <BackArrowIcon />
+              <RightArrowIcon />
             </Box>
             <Typography sx={{ fontSize: 20, fontWeight: 700, color: clubColors.text }}>جوایز و هدایا</Typography>
           </Box>
@@ -407,7 +462,15 @@ export default function Prizes() {
 
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <SectionCard title="کد تخفیف" icon={<PercentIcon />}>
-            <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "repeat(4, 1fr)" }, gap: 1.25 }}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "repeat(4, 1fr)" },
+                gap: 1.25,
+                direction: "ltr",
+                "& > *": { direction: "rtl" },
+              }}
+            >
               {DISCOUNTS.map((item) => (
                 <DiscountCard key={item.id} item={item} onOpen={setSelectedItem} />
               ))}
@@ -432,64 +495,215 @@ export default function Prizes() {
           backdrop: {
             sx: { backdropFilter: "blur(2px)", bgcolor: "rgba(0,0,0,0.35)" },
           },
+          paper: {
+            sx: {
+              borderRadius: "24px !important",
+              boxShadow: "0 16px 48px rgba(0,0,0,0.12)",
+              overflow: "hidden",
+              m: { xs: 1.5, sm: 2 },
+              maxHeight: "calc(100% - 32px)",
+            },
+          },
         }}
       >
         {selectedItem && (
-          <DialogContent sx={{ p: { xs: 2, md: 3 }, borderRadius: "16px" }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 2 }}>
+          <DialogContent sx={{ p: { xs: 3, md: 4.5 }, direction: "rtl", position: "relative" }}>
+            {/* Close alone at top corner */}
+            <Box sx={{ position: "absolute", top: 15, right: 15 }}>
               <IconButton
                 onClick={() => setSelectedItem(null)}
                 size="small"
-                sx={{ border: `1px solid ${clubColors.border}`, color: clubColors.mutedDark, mt: 0.2 }}
+                sx={{
+                  width: 24,
+                  height: 24,
+                  border: `1px solid ${clubColors.border}`,
+                  color: clubColors.mutedDark,
+                  fontSize: 16,
+                  p: 0,
+                }}
               >
                 ×
               </IconButton>
+            </Box>
 
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1.25, mr: "auto", ml: 2 }}>
+            {/* Three header items aligned: brand | title | points (swapped sides) */}
+            <Box
+              sx={{
+                direction: "ltr",
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", sm: "minmax(120px,auto) 1fr minmax(140px,auto)" },
+                alignItems: "center",
+                columnGap: 2.5,
+                rowGap: 1.5,
+                mb: 2.5,
+              }}
+            >
+              {/* Physical LEFT: brand / product image */}
+              <Box sx={{ justifySelf: { xs: "center", sm: "start" } }}>
                 <Box
-                  component="img"
-                  src={selectedItem.image}
-                  alt={selectedItem.title}
-                  sx={{ width: 96, height: 72, borderRadius: "10px", objectFit: "contain", border: `1px solid ${clubColors.borderLight}`, p: 0.8 }}
-                />
-                <Box sx={{ textAlign: "right" }}>
-                  <Typography sx={{ fontSize: 18, fontWeight: 700, color: clubColors.text }}>{selectedItem.title}</Typography>
-                  <Typography sx={{ fontSize: 13.5, color: clubColors.mutedDark, mt: 0.4 }}>{selectedItem.subtitle}</Typography>
+                  sx={{
+                    minWidth: 100,
+                    height: 64,
+                    px: 1.75,
+                    borderRadius: "16px",
+                    border: `1px solid ${clubColors.border}`,
+                    bgcolor: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 1,
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={selectedItem.image}
+                    alt={selectedItem.brand || selectedItem.title}
+                    sx={{ width: 40, height: 40, objectFit: "contain" }}
+                  />
+                  {selectedItem.brand && (
+                    <Typography
+                      sx={{
+                        fontSize: 15,
+                        fontWeight: 700,
+                        color: selectedItem.brandColor || clubColors.text,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {selectedItem.brand}
+                    </Typography>
+                  )}
                 </Box>
               </Box>
 
-              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 0.8, ml: 2 }}>
-                {selectedItem.percent && (
-                  <Box sx={{ px: 1, py: 0.2, borderRadius: "999px", bgcolor: "#E8F8EF", color: "#24B874", fontSize: 12, fontWeight: 700 }}>
-                    {selectedItem.percent}
+              {/* Physical CENTER: title + subtitle */}
+              <Box sx={{ textAlign: "center", minWidth: 0, direction: "rtl" }}>
+                <Typography sx={{ fontSize: { xs: 16, md: 18 }, fontWeight: 700, color: "#1A1A1A", lineHeight: 1.5 }}>
+                  {selectedItem.title}
+                </Typography>
+                <Typography sx={{ fontSize: 13, color: "#8A8A8A", mt: 0.5, lineHeight: 1.5 }}>
+                  {selectedItem.subtitle}
+                </Typography>
+              </Box>
+
+              {/* Physical RIGHT: percent + points */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: { xs: "center", sm: "flex-end" },
+                  gap: 1,
+                  justifySelf: { xs: "center", sm: "end" },
+                }}
+              >
+                {(selectedItem.percent || selectedItem.oldPrice) && (
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, direction: "ltr" }}>
+                    {selectedItem.oldPrice && (
+                      <Typography
+                        sx={{
+                          fontSize: 12,
+                          color: "#B0B0B0",
+                          textDecoration: "line-through",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {selectedItem.oldPrice}
+                      </Typography>
+                    )}
+                    {selectedItem.percent && (
+                      <Box
+                        sx={{
+                          px: 1.1,
+                          py: 0.25,
+                          borderRadius: "999px",
+                          bgcolor: "#24B874",
+                          color: "white",
+                          fontSize: 12,
+                          fontWeight: 700,
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        {selectedItem.percent}
+                      </Box>
+                    )}
                   </Box>
                 )}
-                {selectedItem.brand && (
-                  <Typography sx={{ fontSize: 11, color: clubColors.mutedDark }}>{selectedItem.brand}</Typography>
-                )}
-                <Box sx={{ px: 1.5, py: 0.5, borderRadius: "10px", border: `1px solid ${clubColors.orange}`, color: clubColors.orange, fontWeight: 700 }}>
+
+                <Box
+                  sx={{
+                    px: 1.5,
+                    py: 0.55,
+                    borderRadius: "10px",
+                    border: `1.5px solid ${clubColors.orange}`,
+                    color: clubColors.orange,
+                    fontWeight: 700,
+                    fontSize: 13,
+                    whiteSpace: "nowrap",
+                    direction: "rtl",
+                  }}
+                >
                   {selectedItem.pointsLabel}
                 </Box>
               </Box>
             </Box>
 
-            <Box sx={{ mb: 2.25 }}>
-              <Typography sx={{ fontSize: 17, fontWeight: 700, color: clubColors.orange, mb: 1.25 }}>{selectedItem.productTitle}</Typography>
-              <Typography sx={{ fontSize: 14, color: clubColors.text, lineHeight: 2 }}>{selectedItem.productDescription}</Typography>
+
+            <Box sx={{ textAlign: "left", mb: 2.5 }}>
+              <Typography sx={{ fontSize: 16, fontWeight: 700, color: clubColors.orange, mb: 1.25, lineHeight: 1.6 }}>
+                {selectedItem.productTitle}
+              </Typography>
+              <Typography sx={{ fontSize: 14, color: "#2A2A2A", lineHeight: 2.1 }}>
+                {selectedItem.productDescription}
+              </Typography>
             </Box>
 
-            <Box sx={{ borderTop: `1px solid ${clubColors.border}`, my: 1.8 }} />
+            <Box sx={{ height: "1px", bgcolor: clubColors.border, mb: 2.75 }} />
 
-            <Box sx={{ mb: 2.5 }}>
-              <Typography sx={{ fontSize: 16, fontWeight: 700, color: clubColors.orange, mb: 1 }}>نحوه استفاده از جایزه:</Typography>
-              <Typography sx={{ fontSize: 14, color: clubColors.text, lineHeight: 2, mb: 1.75 }}>{selectedItem.usageText}</Typography>
+            <Box sx={{ textAlign: "left", mb: 2.25 }}>
+              <Typography sx={{ fontSize: 15, fontWeight: 700, color: clubColors.orange, mb: 1 }}>
+                نحوه استفاده از جایزه
+              </Typography>
+              <Typography sx={{ fontSize: 14, color: "#2A2A2A", lineHeight: 2.1 }}>
+                {selectedItem.usageText}
+              </Typography>
+            </Box>
 
-              <Typography sx={{ fontSize: 16, fontWeight: 700, color: clubColors.orange, mb: 0.75 }}>قوانین استفاده:</Typography>
-              <Box component="ul" sx={{ m: 0, pr: 2.5, pl: 0 }}>
+            <Box sx={{ textAlign: "left", mb: 3 }}>
+              <Typography sx={{ fontSize: 15, fontWeight: 700, color: clubColors.orange, mb: 1 }}>
+                قوانین استفاده
+              </Typography>
+              <Box
+                component="ul"
+                sx={{
+                  m: 0,
+                  p: 0,
+                  listStyle: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 0.75,
+                  direction: "ltr",
+                }}
+              >
                 {selectedItem.rules.map((rule) => (
-                  <Typography component="li" key={rule} sx={{ fontSize: 14, color: clubColors.text, lineHeight: 2, mb: 0.4 }}>
-                    {rule}
-                  </Typography>
+                  <Box
+                    key={rule}
+                    component="li"
+                    sx={{
+                      display: "flex",
+                      gap: 1,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        bgcolor: "#2A2A2A",
+                        mt: 1.1,
+                        flexShrink: 0,
+                      }}
+                    />
+                    <Typography sx={{ fontSize: 14, color: "#2A2A2A", lineHeight: 2 }}>{rule}</Typography>
+                  </Box>
                 ))}
               </Box>
             </Box>
@@ -497,20 +711,21 @@ export default function Prizes() {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Button
                 variant="contained"
+                fullWidth
                 onClick={() => {
                   setSelectedItem(null);
                   setToastOpen(true);
                 }}
                 sx={{
-                  minWidth: { xs: 220, sm: 390 },
-                  bgcolor: "#1F242D",
+                  maxWidth: 420,
+                  bgcolor: "#2A2F38",
                   color: "white",
                   borderRadius: "12px",
-                  py: 1,
-                  px: 4,
+                  py: 1.15,
                   fontSize: 16,
                   fontWeight: 700,
-                  "&:hover": { bgcolor: "#151A22" },
+                  boxShadow: "none",
+                  "&:hover": { bgcolor: "#1C2129", boxShadow: "none" },
                 }}
               >
                 دریافت جایزه
