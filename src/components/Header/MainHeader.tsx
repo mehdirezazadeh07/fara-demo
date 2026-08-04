@@ -164,14 +164,14 @@ function HeaderNavBar() {
         borderRadius: "9999px", flexShrink: 0, width: "687px",
       }}
     >
-      <NavPillGift />
-      <Box onClick={() => navigate('/broker')}>
-        <NavPillBag />
-      </Box>
+      <NavPillGift />      
+      <NavPillBag />      
       <Box onClick={() => navigate('/insurance')}>
         <NavPillShield />
       </Box>
-      <NavPillStatusUp />
+      <Box onClick={() => navigate('/broker')}>        
+        <NavPillStatusUp />
+      </Box>
       <NavPillActiveInvest />
     </Box>
   );
