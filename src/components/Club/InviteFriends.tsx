@@ -86,9 +86,9 @@ export default function InviteFriends() {
             lineHeight: 1.8,
           }}
         >
-          دوستان خود را دعوت کنید
+          دوستـان خود را دعـوت کنی
           <br />
-          هدیه بگیرید!
+          هـدیـه بگیـرید!
         </Typography>
 
         {/* Input on right, dark icon button on left (RTL default row) */}
@@ -97,7 +97,7 @@ export default function InviteFriends() {
             className="club-invite-input"
             value={mobile}
             onChange={(e) => setMobile(e.target.value)}
-            placeholder="شماره همراه معرف"
+            placeholder="تلفن همراه دوست خود را وارد کنید"
             sx={{
               flex: 1,
               height: 42,
@@ -138,7 +138,7 @@ export default function InviteFriends() {
               bgcolor: "#FFF",
               display: "flex",
               alignItems: "center",
-              justifyContent: "flex-start",
+              justifyContent: "space-between",
               gap: 0.75,
             }}
           >

@@ -1,12 +1,16 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import promoBanner from "../../assets/club/promo-banner.png";
+import promoSlide1 from "../../assets/club/promo-slide-1.png";
+import promoSlide2 from "../../assets/club/promo-slide-2.png";
+import promoSlide3 from "../../assets/club/promo-slide-3.png";
+import promoSlide4 from "../../assets/club/promo-slide-4.png";
 import { clubColors } from "../../theme";
 
 const SLIDES = [
-  { id: 1, image: promoBanner },
-  { id: 2, image: promoBanner },
-  { id: 3, image: promoBanner },
+  { id: 1, image: promoSlide1, alt: "همکار ما باشید درآمد کسب کنید" },
+  { id: 2, image: promoSlide2, alt: "تخفیف بیمه شخص ثالث ویژه باشگاه مشتریان" },
+  { id: 3, image: promoSlide3, alt: "جایزه‌های هیجان‌انگیز" },
+  { id: 4, image: promoSlide4, alt: "سرمایه‌گذار دعوت کن درآمد کسب کن" },
 ];
 
 export default function PromoSlider() {
@@ -25,7 +29,7 @@ export default function PromoSlider() {
         sx={{
           position: "relative",
           width: "100%",
-          aspectRatio: "274 / 320",
+          aspectRatio: "1 / 1",
           bgcolor: "#F7F7F7",
         }}
       >
@@ -43,7 +47,7 @@ export default function PromoSlider() {
             <Box
               component="img"
               src={slide.image}
-              alt="بنر باشگاه مشتریان"
+              alt={slide.alt}
               sx={{
                 width: "100%",
                 height: "100%",

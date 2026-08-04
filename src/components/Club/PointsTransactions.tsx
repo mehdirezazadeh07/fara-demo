@@ -91,7 +91,7 @@ export default function PointsTransactions() {
                   fontSize: 12,
                   color: clubColors.mutedDark,
                   fontWeight: 500,
-                  textAlign: col.key === "status" || col.key === "points" ? "center" : "right",
+                  textAlign: "center",
                 }}
               >
                 {col.label}
@@ -111,12 +111,18 @@ export default function PointsTransactions() {
                 borderBottom: i < TRANSACTIONS.length - 1 ? `1px solid ${clubColors.borderLight}` : "none",
               }}
             >
-              <Typography sx={{ flex: 1.4, fontSize: 12, color: clubColors.text }}>{tx.time}</Typography>
-              <Typography sx={{ flex: 1, fontSize: 12, color: clubColors.text }}>{tx.type}</Typography>
+              <Typography sx={{ flex: 1.4, fontSize: 12, color: clubColors.text, textAlign: "center" }}>
+                {tx.time}
+              </Typography>
+              <Typography sx={{ flex: 1, fontSize: 12, color: clubColors.text, textAlign: "center" }}>
+                {tx.type}
+              </Typography>
               <Typography sx={{ flex: 0.8, fontSize: 13, fontWeight: 700, color: clubColors.text, textAlign: "center" }}>
                 {tx.points.toLocaleString("fa-IR")}
               </Typography>
-              <Typography sx={{ flex: 1.4, fontSize: 12, color: clubColors.text }}>{tx.description}</Typography>
+              <Typography sx={{ flex: 1.4, fontSize: 12, color: clubColors.text, textAlign: "center" }}>
+                {tx.description}
+              </Typography>
               <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
                 <Box
                   sx={{

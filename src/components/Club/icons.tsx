@@ -96,10 +96,10 @@ export function RocketIcon() {
   );
 }
 
-export function BackArrowIcon() {
+export function RightArrowIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M8.5 3L4.5 7L8.5 11" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5.5 3L9.5 7L5.5 11" stroke="orange" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

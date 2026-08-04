@@ -8,6 +8,7 @@ import Insurance, { FormView, FaraBimaView } from "./pages/Insurance";
 import Broker from "./pages/Broker";
 import Club from "./pages/Club";
 import Prizes from "./pages/Prizes";
+import PointsReport from "./pages/PointsReport";
 import IssuancePage from "./pages/IssuancePage";
 
 export const router = createBrowserRouter([
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "club/prizes",
         element: <Prizes />,
+      },
+      {
+        path: "club/points-report",
+        element: <PointsReport />,
       },
       {
         path: "club/earn-points",
