@@ -8,6 +8,7 @@ import Insurance, { FormView, FaraBimaView } from "./pages/Insurance";
 import Broker from "./pages/Broker";
 import Club from "./pages/Club";
 import Prizes from "./pages/Prizes";
+import IssuancePage from "./pages/IssuancePage";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,11 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "dashboard",
+        element: <Home />
+
       },
       {
         path: "club",
@@ -37,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "issuance",
+        element: <IssuancePage />,
       },
       {
         path: "insurance",
