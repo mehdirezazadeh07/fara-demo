@@ -103,15 +103,31 @@ function NavPillGift({ active = false }: { active?: boolean }) {
     </Box>
   );
 }
-function NavPillShield() {
+function NavPillShield({active = false}) {
+    const navigate = useNavigate();
+  const stroke = active ? "white" : "#6D6E71";
+
   return (
-    <Box sx={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", px: "16px", py: "12px", borderRadius: "9999px", bgcolor: "white", boxShadow: "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)", flexShrink: 0, cursor: "pointer" }}>
-      <Typography sx={{ fontSize: 14, color: "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>فرا بیمه</Typography>
+    <Box
+          onClick={() => navigate("/profile")}
+
+     sx={{
+       display: "flex", gap: "8px", alignItems: "center",
+        justifyContent: "center", px: "16px", py: "12px",
+        borderRadius: "9999px",
+        flexShrink: 0, cursor: "pointer",
+        bgcolor: active ? "#f26822" : "white",
+        boxShadow: active
+          ? "0px 4px 12px rgba(242,104,34,0.7)"
+          : "0px 3px 8px rgba(0,0,0,0.04), 0px 0px 2px rgba(0,0,0,0.06)",
+
+    }}>
+      <Typography sx={{ fontSize: 14, color: active ? "white" : "#6d6e71", whiteSpace: "nowrap", lineHeight: "24px" }}>فرا بیمه</Typography>
       <Box sx={{ width: 20, height: 20, position: "relative" }}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
           <g id="shield-tick">
-            <path d={svgPaths.p31b37b00} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-            <path d={svgPaths.pea4ac80} stroke="#6D6E71" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+            <path d={svgPaths.p31b37b00} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+            <path d={svgPaths.pea4ac80} stroke={stroke} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
           </g>
         </svg>
       </Box>
@@ -159,12 +175,12 @@ function NavPillStatusUp() {
   );
 }
 
-function NavPillActiveInvest({ active = true }: { active?: boolean }) {
+function NavPillActiveInvest({ active = false }: { active?: boolean }) {
   const navigate = useNavigate();
 
   return (
     <Box
-      onClick={() => navigate("/")}
+      onClick={() => navigate("/issuance")}
       sx={{
         display: "flex",
         gap: "8px",
@@ -194,6 +210,8 @@ function NavPillActiveInvest({ active = true }: { active?: boolean }) {
 function HeaderNavBar() {
   const { pathname } = useLocation();
   const isClub = pathname.startsWith("/club");
+  const isProfile = pathname.startsWith("/profile");
+  const isIssuance = pathname.startsWith("/issuance");
 
   return (
     <Box
@@ -204,10 +222,10 @@ function HeaderNavBar() {
       }}
     >
       <NavPillGift active={isClub} />
-      <NavPillShield />
+      <NavPillShield active={isProfile} />
       <NavPillBag />
       <NavPillStatusUp />
-      <NavPillActiveInvest active={!isClub} />
+      <NavPillActiveInvest active={isIssuance} />
     </Box>
   );
 }
@@ -226,6 +244,7 @@ function HeaderLayerRight() {
   );
 }
 function HeaderProfile() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: "16px", height: "55.398px", flexShrink: 0 }}>
       {/* Profile circle */}
@@ -233,10 +252,10 @@ function HeaderProfile() {
         sx={{
           width: 40, height: 40, borderRadius: "50%",
           bgcolor: "#fafafa", border: "3px solid #f5f5f5",
-          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, cursor: 'pointer'
         }}
       >
-        <Avatar src={imgAvatar} sx={{ width: 32, height: 32 }} />
+        <Avatar src={imgAvatar} sx={{ width: 32, height: 32 }} onClick={() => navigate('/profile')} />
       </Box>
       {/* Notification */}
       <Box sx={{ position: "relative", flexShrink: 0 }}>

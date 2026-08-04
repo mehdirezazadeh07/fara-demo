@@ -1,4 +1,4 @@
-import { Box, Button, Card, Chip, Container, InputBase, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, Chip, InputBase, Stack, Typography, Collapse } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -17,6 +17,7 @@ import ojMellat from "../imports/dashboard/ojMellat.png"
 import andokhteh from "../imports/dashboard/andokhteh.png"
 import zarin from "../imports/dashboard/zarin.png"
 import { useState } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "../components/Club/icons";
 
 const c = {
   orange: "#f26822",
@@ -139,9 +140,12 @@ function OrangeBar({ height = 6 }: { height?: number }) {
   );
 }
 
-function HeroSection() {
+function HeroSection({ defaultOpen = false }: { defaultOpen?: boolean }) {
+    const [open, setOpen] = useState(defaultOpen);
+
   return (
     <Card
+            onClick={() => setOpen((v) => !v)}
       sx={{
         width: "100%",
         borderRadius: "15px",
@@ -167,7 +171,9 @@ function HeroSection() {
               justifyContent: "center",
             }}
           >
-            <ExpandLessIcon sx={{ color: c.orange, fontSize: 16 }} />
+            {/* <ExpandLessIcon sx={{ color: c.orange, fontSize: 16 }} /> */}
+                        {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            
           </Box>
           <Typography sx={{ fontSize: 14, color: c.lightGray }}>ارزش کل دارایی‌ها (ریال)</Typography>
 
@@ -185,7 +191,10 @@ function HeroSection() {
         
       </Box>
 
-      {/* Pie + table */}
+
+
+          <Collapse in={open}>
+                {/* Pie + table */}
       <Box sx={{ px: 3, pb: 4, pt: 1, display: "flex", gap: 6, alignItems: "center" }}>
         <Box sx={{ flex: 1 }}>
           {/* Column headers */}
@@ -224,6 +233,8 @@ function HeroSection() {
         </Box>
         <PortfolioPie />
       </Box>
+
+          </Collapse>
     </Card>
   );
 }
