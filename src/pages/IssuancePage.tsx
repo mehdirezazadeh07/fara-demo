@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
-import { Box, Card, Typography, Button, Chip, Tabs, Tab } from "@mui/material";
+import { Box, Card, Typography, Button, Chip, Dialog, DialogContent, Tabs, Tab } from "@mui/material";
 // @ts-ignore
 import rtlPlugin from "stylis-plugin-rtl";
 import svgPaths from "../imports/Group1261157301-1/svg-fyrp5ohfta";
@@ -283,8 +283,10 @@ function QuickBuyPanel() {
   const [activeTab, setActiveTab] = useState(0); // 0: issuance, 1: cancel
   const [amount, setAmount] = useState("");
   const [referralCode, setReferralCode] = useState("");
+  const [scheduleOpen, setScheduleOpen] = useState(false);
 
   return (
+    <>
     <Card sx={{ width: 580, borderRadius: "15px", border: `1px solid ${c.border}`, boxShadow: "0 1px 3px rgba(0,0,0,0.1)", overflow: "hidden", flexShrink: 0 }}>
       {/* Orange gradient bar */}
       <Box sx={{ height: 5, background: "linear-gradient(90deg, #f26822 0%, #f89521 31%, #f89521 64%, #fbb042 100%)" }} />
@@ -334,7 +336,7 @@ function QuickBuyPanel() {
                 <Box>
                     <Typography sx={{fontWeight: 700, mb: "4px"}}>زمان‌بندی پرداخت وجه</Typography>
                     <Typography sx={{fontSize: 12, color: c.gray}}>سرمایه‌گذار محترم پرداخت وجه درخواست‌های ابطال متناسب با زمان ثبت در همان روز یا حداکثر تا ساعت ۱۰ روز کاری بعد واریز می‌شود.</Typography>
-                    <Button variant="outlined" sx={{ mt: "8px", borderRadius: "8px" }}>جدول زمان‌بندی</Button>
+                    <Button onClick={() => setScheduleOpen(true)} variant="outlined" sx={{ mt: "8px", borderRadius: "8px" }}>جدول زمان‌بندی</Button>
                 </Box>
               </Box>
 
@@ -365,6 +367,94 @@ function QuickBuyPanel() {
         </Box>
       </Box>
     </Card>
+    <Dialog
+      open={scheduleOpen}
+      onClose={() => setScheduleOpen(false)}
+      fullWidth
+      maxWidth="sm"
+      dir="rtl"
+      slotProps={{
+        paper: {
+          sx: {
+            width: 650,
+            maxWidth: "calc(100% - 32px)",
+            borderRadius: "14px",
+            m: 2,
+          },
+        },
+      }}
+    >
+      <DialogContent sx={{ p: "34px 36px 36px", direction: "rtl" }}>
+        <Typography
+          style={{ textAlign: "right" }}
+          sx={{ width: "100%", color: "#25282d", fontSize: 19, fontWeight: 800, mb: "24px" }}
+        >
+          زمان‌بندی پرداخت وجه
+        </Typography>
+
+        <Typography
+          style={{ textAlign: "right" }}
+          sx={{ width: "100%", color: c.gray, fontSize: 14, lineHeight: 2, mb: "26px" }}
+        >
+          سرمایه‌گذار محترم وجه درخواست‌های ابطال، متناسب با زمان ثبت، در همان روز یا حداکثر تا ساعت ۱۰:۰۰ روز کاری بعد واریز می‌شود.
+        </Typography>
+
+        <Box sx={{ border: "1px solid #d7d7d7", mb: "42px" }}>
+          {[
+            ["زمان ثبت درخواست ابطال", "زمان پرداخت وجه"],
+            ["از ۰۰:۰۰ تا ۹:۰۰", "تا ۱۰:۰۰ همان روز"],
+            ["از ۹:۰۰ تا ۱۲:۰۰", "تا ۱۳:۰۰ همان روز"],
+            ["از ۱۲:۰۰ تا ۲۳:۵۹", "تا ۱۰:۰۰ روز کاری بعد"],
+          ].map((row, rowIndex) => (
+            <Box
+              key={row.join("-")}
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                minHeight: 36,
+                bgcolor: rowIndex === 0 ? "#f7f7f7" : "white",
+                borderBottom: rowIndex < 3 ? "1px solid #d7d7d7" : "none",
+              }}
+            >
+              {row.map((cell, cellIndex) => (
+                <Typography
+                  key={cell}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    px: 1,
+                    color: "#25282d",
+                    fontSize: 13,
+                    fontWeight: rowIndex === 0 ? 700 : 500,
+                    borderLeft: cellIndex === 0 ? "1px solid #d7d7d7" : "none",
+                  }}
+                >
+                  {cell}
+                </Typography>
+              ))}
+            </Box>
+          ))}
+        </Box>
+
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={() => setScheduleOpen(false)}
+          sx={{
+            height: 52,
+            borderRadius: "10px",
+            bgcolor: "#e9e9e9",
+            color: "#25282d",
+            boxShadow: "none",
+            "&:hover": { bgcolor: "#dedede", boxShadow: "none" },
+          }}
+        >
+          متوجه شدم
+        </Button>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
 
