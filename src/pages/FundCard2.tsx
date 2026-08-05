@@ -16,7 +16,7 @@ function BarChartIcon() {
   )
 }
 
-export default function FundCard2({logo}: any) {
+export default function FundCard2({ logo, tags = [], buttonVariant = "buy-sell" }: any) {
   const [activeTab, setActiveTab] = useState(0)
   const navigate = useNavigate();
   return (
@@ -27,19 +27,20 @@ export default function FundCard2({logo}: any) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            p: 2,
+            width: "100%",
+            p: 0.5,
           }}
         >
-          <Grid sx={{ width: "40vh" }}>
+          <Grid sx={{ width: "100%", minWidth: 0 }}>
 
             {/* ── Golden Header ── */}
             <Box
               sx={{
                 background: "linear-gradient(to right, #EFDBB7 0%, #EFDBB7 15%, #EFDBB790 30%, #fff 100%)",
                 borderRadius: "20px 20px 0 0",
-                px: 4.5,
-                pt: 3,
-                pb: 3,
+                px: 2.5,
+                pt: 2.2,
+                pb: 2.2,
                 display: "flex",
                 flexDirection: "column",
                 gap: 1.8,
@@ -49,9 +50,12 @@ export default function FundCard2({logo}: any) {
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <img style={{width: "100%"}} src={logo} />
                 </Box>
-                <Box sx={{display: 'flex', fontSize: 8, gap: 2}}>
-                        <Box sx={{background: "#F2F3F5", borderRadius: 15, border: 1, borderColor: "gray"}} style={{ padding: "4px 10px"}} >صدور و ابطالی</Box>
-                        <Box sx={{background: "#F2F3F5", borderRadius: 15, border: 1, borderColor: "gray"}} style={{ padding: "4px 10px"}}>ETF</Box>
+                <Box sx={{display: 'flex', fontSize: 8, gap: 1}}>
+                  {tags.map((tag: string) => (
+                    <Box key={tag} sx={{background: "#F2F3F5", borderRadius: 15, border: 1, borderColor: "#b7bcc2", whiteSpace: "nowrap"}} style={{ padding: "4px 10px"}}>
+                      {tag}
+                    </Box>
+                  ))}
                 </Box>
               </Box>
 
@@ -165,7 +169,7 @@ export default function FundCard2({logo}: any) {
               </Stack>
 
               {/* Action buttons */}
-              <Stack direction="row" spacing={1.5}>
+              {buttonVariant === "buy-sell" && <Stack direction="row" spacing={1.5}>
                 <Button
                   fullWidth
                   variant="outlined"
@@ -203,7 +207,42 @@ export default function FundCard2({logo}: any) {
                 >
                   صدور
                 </Button>
-              </Stack>
+              </Stack>}
+              {buttonVariant === "buy-only" && (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={() => navigate("/issuance")}
+                  sx={{
+                    borderRadius: "10px",
+                    fontSize: "14px",
+                    py: 1,
+                    fontWeight: 400,
+                    background: "#22c55e",
+                    color: "#fff",
+                    textTransform: "none",
+                    boxShadow: "none",
+                    "&:hover": { background: "#16a34a", boxShadow: "none" },
+                  }}
+                >
+                  صدور
+                </Button>
+              )}
+              {buttonVariant === "info" && (
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  sx={{
+                    borderRadius: "10px",
+                    fontSize: "14px",
+                    py: 1,
+                    color: "#6d6e71",
+                    borderColor: "#d8d9da",
+                  }}
+                >
+                  اطلاعات بیشتر
+                </Button>
+              )}
             </Card>
 
           </Grid>

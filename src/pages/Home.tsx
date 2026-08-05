@@ -55,7 +55,7 @@ const fundCards: FundCardData[] = [
       { label: "هر واحد ابطال", value: "1,100,000" },
       { label: "هر واحد صدور", value: "1,100,000" },
     ],
-    buttonVariant: "info",
+    buttonVariant: "buy-sell",
   },
   {
     logo: andokhteh,
@@ -66,7 +66,7 @@ const fundCards: FundCardData[] = [
       { label: "هر واحد ابطال", value: "1,100,000" },
       { label: "هر واحد صدور", value: "1,100,000" },
     ],
-    buttonVariant: "info",
+    buttonVariant: "buy-sell",
   },
   {
     logo: zarin,
@@ -77,7 +77,7 @@ const fundCards: FundCardData[] = [
       { label: "هر واحد ابطال", value: "1,100,000" },
       { label: "هر واحد صدور", value: "1,100,000" },
     ],
-    buttonVariant: "info",
+    buttonVariant: "buy-only",
   },
   {
     logo: ojMellat,
@@ -679,7 +679,7 @@ function MyFundsSection({ onIssuance }: { onIssuance?: () => void }) {
     <Card
       sx={{
         width: "100%",
-        height: 520,
+        height: 425,
         borderRadius: "15px",
         border: `1px solid ${c.border}`,
         boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
@@ -694,8 +694,8 @@ function MyFundsSection({ onIssuance }: { onIssuance?: () => void }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          px: 2.5,
-          py: 1.5,
+          px: 3,
+          minHeight: 66,
           borderBottom: `1px solid ${c.border}`,
           flexShrink: 0,
         }}
@@ -727,10 +727,10 @@ function MyFundsSection({ onIssuance }: { onIssuance?: () => void }) {
       <Box
         sx={{
           display: "flex",
-          gap: 3,
-          px: 2,
-          pb: 2,
-          pt: 1,
+          gap: 2,
+          px: 2.5,
+          pb: 1.5,
+          pt: 1.5,
           overflowX: "auto",
           flex: 1,
           alignItems: "flex-end",
@@ -739,8 +739,9 @@ function MyFundsSection({ onIssuance }: { onIssuance?: () => void }) {
         }}
       >
         {fundCards.map((card, i) => (
-          // <FundCard key={i} {...card} onIssuance={onIssuance} />
-          <FundCard2 {...card} />
+          <Box key={i} sx={{ flex: "0 0 calc((100% - 48px) / 3.5)", minWidth: 285 }}>
+            <FundCard2 {...card} />
+          </Box>
         ))}
       </Box>
     </Card>
