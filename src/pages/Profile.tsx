@@ -23,7 +23,7 @@ interface SectionBoxProps {
   minHeight?: number | string;
 }
 const COLORS = {
-  headerBar: "#3a4149",
+  headerBar: "#F2F3F7",
   pageBg: "#eef0f3",
   cardBg: "#ffffff",
   softBorder: "#e6e8eb",
@@ -50,17 +50,17 @@ function SectionBox({ title, children, minHeight }: SectionBoxProps) {
     >
       <Box
         sx={{
-          background: "#4a4a5a",
+          background: "#F2F3F7",
           px: 2,
-          py: 1,
+          py: 1.7,
         }}
       >
         <Typography
           sx={{
-            color: "#fff",
+            color: COLORS.textPrimary,
             fontSize: "0.82rem",
             fontWeight: 600,
-            textAlign: "right",
+            textAlign: "left",
           }}
         >
           {title}
@@ -546,7 +546,7 @@ function HeaderPanel({ title, children, sx }: any) {
           py: 1.4,
         }}
       >
-        <Typography sx={{ color: "#fff", fontWeight: 600, fontSize: 15 }}>
+        <Typography sx={{ color: "#292525", fontWeight: 600, fontSize: 15 }}>
           {title}
         </Typography>
       </Box>
