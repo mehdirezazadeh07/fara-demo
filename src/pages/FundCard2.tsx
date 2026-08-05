@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { Avatar, Box, Button, Card, Stack, Typography } from "@mui/material"
+import { Avatar, Box, Button, Card, Grid, Stack, Typography } from "@mui/material"
 import ojMellat from "../imports/dashboard/ojMellat.png"
 import { useNavigate } from "react-router-dom"
 const tabs = ["صدور و ابطالی", "درآمد ثابت"]
@@ -30,7 +30,7 @@ export default function FundCard2({logo}: any) {
             p: 2,
           }}
         >
-          <Box sx={{ width: "100%" }}>
+          <Grid sx={{ width: "40vh" }}>
 
             {/* ── Golden Header ── */}
             <Box
@@ -206,7 +206,7 @@ export default function FundCard2({logo}: any) {
               </Stack>
             </Card>
 
-          </Box>
+          </Grid>
         </Box>
   )
 }
