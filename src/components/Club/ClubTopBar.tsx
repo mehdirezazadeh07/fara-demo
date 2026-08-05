@@ -9,7 +9,7 @@ export default function ClubTopBar() {
       sx={{
         height: 6,
         flexShrink: 0,
-        background: `linear-gradient(90deg, ${clubColors.orangeBarStart} 0%, ${clubColors.orange} 48%, ${clubColors.orangeBarEnd} 100%)`,
+        background: `linear-gradient(90deg, ${clubColors.orangeBarEnd} 0%, ${clubColors.orange} 48%, ${clubColors.orangeBarStart} 100%)`,
       }}
     />
   );
