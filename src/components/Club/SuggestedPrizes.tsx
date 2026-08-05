@@ -52,7 +52,7 @@ export const SUGGESTED_PRIZES: SuggestedPrize[] = [
     minPoints: 300,
     chances: 1,
     cost: 10,
-    image: productWatch,
+    image: productPhone,
     days: 12,
     hours: 12,
   },
@@ -64,7 +64,7 @@ export const SUGGESTED_PRIZES: SuggestedPrize[] = [
     minPoints: 300,
     chances: 1,
     cost: 10,
-    image: productEarbuds,
+    image: productVault,
     days: 12,
     hours: 12,
   },
@@ -85,41 +85,61 @@ function PrizeCard({ prize }: { prize: SuggestedPrize }) {
         flexDirection: "column",
       }}
     >
-      <Box sx={{ display: "flex", gap: 1.5, p: 1.5, alignItems: "flex-start" }}>
-        <Box
+      <Box sx={{ p: 1.5, pb: 1.25 }}>
+        <Box sx={{ display: "flex", gap: 1.5, alignItems: "stretch" }}>
+          <Box
+            sx={{
+              width: 72,
+              height: 72,
+              borderRadius: "10px",
+              bgcolor: "#F7F7F7",
+              flexShrink: 0,
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              component="img"
+              src={prize.image}
+              alt={prize.title}
+              sx={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center", p: 0.5 }}
+            />
+          </Box>
+          <Box
+            sx={{
+              flex: 1,
+              minWidth: 0,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: 0.35,
+            }}
+          >
+            <Typography sx={{ fontSize: 12, color: clubColors.orange, fontWeight: 500, lineHeight: 1.3 }}>
+              {prize.tag}
+            </Typography>
+            <Typography sx={{ fontSize: 13, fontWeight: 700, color: clubColors.text, lineHeight: 1.35 }}>
+              {prize.title}
+            </Typography>
+            <Typography sx={{ fontSize: 12, color: clubColors.mutedDark, lineHeight: 1.35 }}>
+              {prize.subtitle}
+            </Typography>
+          </Box>
+        </Box>
+
+        <Typography
           sx={{
-            width: 72,
-            height: 72,
-            borderRadius: "10px",
-            bgcolor: "#F7F7F7",
-            flexShrink: 0,
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            fontSize: 11,
+            color: clubColors.muted,
+            mt: 1,
+            lineHeight: 1.4,
+            whiteSpace: "nowrap",
           }}
         >
-          <Box
-            component="img"
-            src={prize.image}
-            alt={prize.title}
-            sx={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "right center" }}
-          />
-        </Box>
-        <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Typography sx={{ fontSize: 12, color: clubColors.orange, fontWeight: 500, mb: 0.25 }}>
-            {prize.tag}
-          </Typography>
-          <Typography sx={{ fontSize: 13, fontWeight: 700, color: clubColors.text, lineHeight: 1.4 }}>
-            {prize.title}
-          </Typography>
-          <Typography sx={{ fontSize: 12, color: clubColors.mutedDark, lineHeight: 1.4 }}>
-            {prize.subtitle}
-          </Typography>
-          <Typography sx={{ fontSize: 11, color: clubColors.muted, mt: 0.75 }}>
-            حداقل امتیاز مورد نیاز: {prize.minPoints.toLocaleString("fa-IR")}
-          </Typography>
-        </Box>
+          حداقل امتیاز مورد نیاز: {prize.minPoints.toLocaleString("fa-IR")}
+        </Typography>
       </Box>
 
       <Box
@@ -139,10 +159,10 @@ function PrizeCard({ prize }: { prize: SuggestedPrize }) {
           <Typography component="span" sx={{ fontSize: 13, fontWeight: 700, color: clubColors.orange }}>
             {prize.cost.toLocaleString("fa-IR")}
           </Typography>
-          <Typography component="span" sx={{ fontSize: 12, color: clubColors.text }}>
+          <Typography component="span" sx={{ fontSize: 12, color: clubColors.text, paddingLeft: 0.5 }}>
             امتیاز
           </Typography>
-          <ChevronLeftIcon color={clubColors.orange} />
+          <ChevronLeftIcon />
         </Box>
       </Box>
 
@@ -232,7 +252,7 @@ export default function SuggestedPrizes() {
           mt: 1.5,
           fontSize: 12,
           color: clubColors.orange,
-          textAlign: "center",
+          textAlign: "left",
           lineHeight: 1.7,
         }}
       >

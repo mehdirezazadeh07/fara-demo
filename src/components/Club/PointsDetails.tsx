@@ -26,7 +26,9 @@ function DonutChart() {
   const size = 210;
   const center = size / 2;
   const radius = 78;
-  const stroke = 14;
+  const stroke = 10;
+  const innerRingGap = 10;
+  const innerBorderRadius = radius - stroke / 2 - innerRingGap;
   const circumference = 2 * Math.PI * radius;
   const segmentCount = POINT_ROWS.length;
   const gapRatio = 0.18;
@@ -39,7 +41,7 @@ function DonutChart() {
         <circle
           cx={center}
           cy={center}
-          r={radius - stroke / 2 - 5}
+          r={innerBorderRadius}
           fill="none"
           stroke="#D8D8D8"
           strokeWidth={1.4}
@@ -111,15 +113,8 @@ export default function PointsDetails({ defaultOpen = false }: { defaultOpen?: b
           userSelect: "none",
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <CoinsIcon size={26} />
-          <Typography sx={{ fontSize: 15, fontWeight: 700, color: clubColors.text }}>
-            {TOTAL.toLocaleString("fa-IR")} امتیاز
-          </Typography>
-        </Box>
-
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-          <Typography sx={{ fontSize: 13, color: clubColors.mutedDark }}>جزئیات امتیازات</Typography>
+          <Typography sx={{ fontSize: 14, color: clubColors.mutedDark }}>جزئیات امتیازات</Typography>
           <Box
             sx={{
               width: 24,
@@ -133,6 +128,13 @@ export default function PointsDetails({ defaultOpen = false }: { defaultOpen?: b
           >
             {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </Box>
+        </Box>
+        
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Typography sx={{ fontSize: 15, fontWeight: 700, color: clubColors.text }}>
+            {TOTAL.toLocaleString("fa-IR")} امتیاز
+          </Typography>
+          <CoinsIcon size={26} />
         </Box>
       </Box>
 
