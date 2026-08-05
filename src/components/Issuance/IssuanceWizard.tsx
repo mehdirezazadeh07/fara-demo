@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, TextField } from "@mui/material";
 import TermsModal from "./TermsModal";
-// Assuming FloatingInput and InfoRow are available from somewhere or I need to import them/recreate them locally.
-// For now, I'll use basic styled inputs to mimic the layout.
-
 const c = {
   orange: "#f26822",
   green: "#1ac475",
@@ -13,15 +10,6 @@ const c = {
   lightGray: "#949699",
   border: "rgba(0,0,0,0.08)",
 };
-
-// Simplified input to match layout
-function InputField({ label, value, onChange }: { label: string, value: string, onChange: (v: string) => void }) {
-    return (
-        <Box sx={{ width: "100%", height: 56, border: `1px solid ${c.border}`, borderRadius: "10px", display: "flex", alignItems: "center", px: "16px" }}>
-            <input value={value} onChange={(e) => onChange(e.target.value)} placeholder={label} style={{ width: "100%", border: "none", outline: "none", textAlign: "right", fontSize: 16 }} />
-        </Box>
-    )
-}
 
 export default function IssuanceWizard() {
   const [step, setStep] = useState(1);
@@ -41,7 +29,39 @@ export default function IssuanceWizard() {
       
       {step === 1 && (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%" }}>
-            <InputField label="مبلغ سرمایه‌گذاری" value={amount} onChange={setAmount} />
+            <TextField
+              dir="rtl"
+              fullWidth
+              label="مبلغ سرمایه‌گذاری"
+              value={amount}
+              onChange={(event) => setAmount(event.target.value)}
+              variant="outlined"
+              slotProps={{
+                htmlInput: {
+                  dir: "rtl",
+                  style: { textAlign: "right" },
+                },
+                inputLabel: {
+                  dir: "rtl",
+                  style: {
+                    right: 14,
+                    left: "auto",
+                    transformOrigin: "top right",
+                    textAlign: "right",
+                  },
+                },
+              }}
+              sx={{
+                direction: "rtl",
+                "& .MuiOutlinedInput-root": { borderRadius: "10px" },
+                "& .MuiInputLabel-root": {
+                  transform: "translate(0, 16px) scale(1)",
+                },
+                "& .MuiInputLabel-shrink": {
+                  transform: "translate(0, -9px) scale(0.75)",
+                },
+              }}
+            />
             
             {/* Info Box */}
             <Box sx={{ width: "100%", height: 56, bgcolor: "#edfff7", borderRadius: "10px", border: "1px solid #dedfe0", display: "flex", alignItems: "center", px: "20px", justifyContent: "space-between" }}>
@@ -52,7 +72,39 @@ export default function IssuanceWizard() {
                 </Box>
             </Box>
 
-            <InputField label="کد معرف (اختیاری)" value={referralCode} onChange={setReferralCode} />
+            <TextField
+              dir="rtl"
+              fullWidth
+              label="کد معرف (اختیاری)"
+              value={referralCode}
+              onChange={(event) => setReferralCode(event.target.value)}
+              variant="outlined"
+              slotProps={{
+                htmlInput: {
+                  dir: "rtl",
+                  style: { textAlign: "right" },
+                },
+                inputLabel: {
+                  dir: "rtl",
+                  style: {
+                    right: 14,
+                    left: "auto",
+                    transformOrigin: "top right",
+                    textAlign: "right",
+                  },
+                },
+              }}
+              sx={{
+                direction: "rtl",
+                "& .MuiOutlinedInput-root": { borderRadius: "10px" },
+                "& .MuiInputLabel-root": {
+                  transform: "translate(0, 16px) scale(1)",
+                },
+                "& .MuiInputLabel-shrink": {
+                  transform: "translate(0, -9px) scale(0.75)",
+                },
+              }}
+            />
 
             {/* Warning Box */}
             <Box sx={{ width: "100%", bgcolor: "#f9fafb", borderRadius: "10px", border: "1px solid #e9e9ea", p: "16px", display: "flex", gap: "12px", alignItems: "flex-start" }}>
